@@ -1,0 +1,12 @@
+﻿@page "/"
+@inject IModalService Modal
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<hr class="mb-5" />
+
+<button onclick="@(() => Modal.Show("Sign Up Form", typeof(SignUpForm)))" class="btn btn-primary">Show Modal</button>

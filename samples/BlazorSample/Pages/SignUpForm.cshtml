@@ -1,0 +1,35 @@
+﻿@if (ShowForm)
+{
+    <div class="simple-form">
+        <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input bind="@FirstName" type="text" class="form-control" id="first-name" placeholder="Enter First Name" />
+        </div>
+
+        <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input bind="@LastName" type="text" class="form-control" id="last-name" placeholder="Enter Last Name" />
+        </div>
+
+        <button onclick="@SubmitForm" class="btn btn-primary">Submit</button>
+    </div>
+}
+else
+{
+    <div class="alert alert-success" role="alert">
+        Thanks @FirstName @LastName, form submitted successfully.
+    </div>
+}
+
+@functions {
+
+bool ShowForm { get; set; } = true;
+string FirstName { get; set; }
+string LastName { get; set; }
+
+void SubmitForm()
+{
+    ShowForm = false;
+}
+
+}
