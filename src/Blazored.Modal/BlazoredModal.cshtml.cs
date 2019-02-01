@@ -27,18 +27,17 @@ namespace Blazored.Modal
             Title = "";
             Content = null;
             StateHasChanged();
+            ModalService.Close();
         }
 
         public void Dispose()
         {
             ModalService.OnShow -= ShowModal;
-            ModalService.OnClose -= CloseModal;
         }
 
         protected override void OnInit()
         {
             ModalService.OnShow += ShowModal;
-            ModalService.OnClose += CloseModal;
         }
     }
 }

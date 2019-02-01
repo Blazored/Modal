@@ -56,3 +56,32 @@ Welcome to Blazored Modal.
 
 <button onclick="@(() => Modal.Show("My Movies", typeof(Movies)))" class="btn btn-primary">View Movies</button>
 ```
+
+If you need to know when the modal has closed, for example to trigger a update of data. The modal service exposes a `OnClose` event which you can attach to. 
+
+```html
+@page "/"
+@inject IModalService Modal
+
+<h1>Hello, world!</h1>
+
+Welcome to Blazored Modal.
+
+<button onclick="@ShowModal" class="btn btn-primary">View Movies</button>
+
+@functions {
+
+    void ShowModal()
+    {
+        Modal.OnClose += CloseModalCallback;
+        Modal.Show("My Movies", typeof(Movies));
+    }
+
+    void CloseModalCallback()
+    {
+        Console.WriteLine("Modal has closed");
+        Modal.OnClose -= CloseModalCallback;
+    }
+
+}
+```
