@@ -11,7 +11,7 @@ namespace Blazored.Modal
         protected string Title { get; set; }
         protected RenderFragment Content { get; set; }
 
-        [Inject] private ModalService ModalService { get; set; }
+        [Inject] private IModalService ModalService { get; set; }
 
         public void ShowModal(string title, RenderFragment content)
         {
