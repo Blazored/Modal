@@ -9,4 +9,20 @@ Welcome to your new app.
 
 <hr class="mb-5" />
 
-<button onclick="@(() => Modal.Show("Sign Up Form", typeof(SignUpForm)))" class="btn btn-primary">Show Modal</button>
+<button onclick="@(ShowModal)" class="btn btn-primary">Show Modal</button>
+
+@functions {
+
+    void ShowModal()
+    {
+        Modal.OnClose += CloseModalCallback;
+        Modal.Show("Sign Up Form", typeof(SignUpForm));
+    }
+
+    void CloseModalCallback()
+    {
+        Console.WriteLine("Modal has closed");
+        Modal.OnClose -= CloseModalCallback;
+    }
+
+}
