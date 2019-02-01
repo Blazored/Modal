@@ -12,7 +12,6 @@ namespace Blazored.Modal.Services
 
         public void Show(string title, Type contentType)
         {
-            Console.WriteLine(OnClose.Target.ToString());
             if (contentType.BaseType != typeof(BlazorComponent))
             {
                 throw new ArgumentException($"{contentType.FullName} must be a Blazor Component");

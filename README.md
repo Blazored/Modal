@@ -39,10 +39,10 @@ Second, add the following to your *_ViewImports.cshtml*
 ```
 
 ### 3. Add Modal Component
-Third and finally you will need to add the `<BlazoredModal />` component in your applications *MainLayout.cshtml*.
+Third and finally, you will need to add the `<BlazoredModal />` component in your applications *MainLayout.cshtml*.
 
 ## Usage
-In order to show the modal you have to inject the `IModalService` into the component or service you want to invoke the modal. You can then call the `Show` method passing in the title for the modal and the type of the component you want the modal to display. 
+In order to show the modal, you have to inject the `IModalService` into the component or service you want to invoke the modal. You can then call the `Show` method passing in the title for the modal and the type of the component you want the modal to display. 
 
 For example, say I have a component called `Movies` which I want to display in the modal and I want to call it from the `Index` component on a button click.
 
@@ -57,7 +57,7 @@ Welcome to Blazored Modal.
 <button onclick="@(() => Modal.Show("My Movies", typeof(Movies)))" class="btn btn-primary">View Movies</button>
 ```
 
-If you need to know when the modal has closed, for example to trigger a update of data. The modal service exposes a `OnClose` event which you can attach to. 
+If you need to know when the modal has closed, for example to trigger an update of data. The modal service exposes a `OnClose` event which you can attach to. 
 
 ```html
 @page "/"
