@@ -73,14 +73,14 @@ Welcome to Blazored Modal.
 
     void ShowModal()
     {
-        Modal.OnClose += CloseModalCallback;
+        Modal.OnClose += ModalClosed;
         Modal.Show("My Movies", typeof(Movies));
     }
 
-    void CloseModalCallback()
+    void ModalClosed()
     {
         Console.WriteLine("Modal has closed");
-        Modal.OnClose -= CloseModalCallback;
+        Modal.OnClose -= ModalClosed;
     }
 
 }
