@@ -18,13 +18,8 @@ steps:
   inputs:
     versionSpec: '4.9.2'
 
-- task: DotNetCoreCLI@2
-  displayName: 'Generating Nuget Package... '
-  inputs:
-    command: pack
-    packagesToPack: src/Blazored.Modal/Blazored.Modal.csproj
-    configuration: $(buildConfiguration)
-    verbosityPack: Detailed
+- script: dotnet build --configuration $(buildConfiguration) src/Blazored.Modal/Blazored.Modal.csproj
+  displayName: 'Building $(buildConfiguration)...'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publishing Build Artifacts...'
