@@ -26,6 +26,7 @@ namespace Blazored.Modal
             IsVisible = false;
             Title = "";
             Content = null;
+
             StateHasChanged();
             ModalService.Close();
         }
