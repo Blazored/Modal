@@ -1,6 +1,7 @@
 ﻿@if (ShowForm)
 {
     <div class="simple-form">
+
         <div class="form-group">
             <label for="first-name">First Name</label>
             <input bind="@FirstName" type="text" class="form-control" id="first-name" placeholder="Enter First Name" />
@@ -17,15 +18,23 @@
 else
 {
     <div class="alert alert-success" role="alert">
-        Thanks @FirstName @LastName, form submitted successfully.
+        Thanks @FirstName @LastName, form (Id: @FormId) submitted successfully.
     </div>
 }
 
 @functions {
 
+[CascadingParameter] ModalParameters Parameters { get; set; }
+
 bool ShowForm { get; set; } = true;
 string FirstName { get; set; }
 string LastName { get; set; }
+int FormId { get; set; }
+
+protected override void OnInit()
+{
+    FormId = Parameters.Get<int>("FormId");
+}
 
 void SubmitForm()
 {

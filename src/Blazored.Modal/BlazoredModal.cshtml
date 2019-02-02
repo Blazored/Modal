@@ -12,7 +12,9 @@
             </button>
         </div>
         <div class="blazored-modal-content">
-            @Content
+            <CascadingValue Value="@Parameters">
+                @Content
+            </CascadingValue>
         </div>
     </div>
 </div>

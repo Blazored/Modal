@@ -6,11 +6,16 @@ namespace Blazored.Modal.Services
 {
     public class ModalService : IModalService
     {
-        public event Action<string, RenderFragment> OnShow;
-
         public event Action OnClose;
 
+        internal event Action<string, RenderFragment, ModalParameters> OnShow;
+
         public void Show(string title, Type contentType)
+        {
+            Show(title, contentType, new ModalParameters());
+        }
+
+        public void Show(string title, Type contentType, ModalParameters parameters)
         {
             if (contentType.BaseType != typeof(BlazorComponent))
             {
@@ -19,10 +24,10 @@ namespace Blazored.Modal.Services
 
             var content = new RenderFragment(x => { x.OpenComponent(1, contentType); x.CloseComponent(); });
 
-            OnShow?.Invoke(title, content);
+            OnShow?.Invoke(title, content, parameters);
         }
 
-        public void Close()
+        internal void Close()
         {
             OnClose?.Invoke();
         }
