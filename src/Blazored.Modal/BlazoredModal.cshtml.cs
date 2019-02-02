@@ -10,13 +10,16 @@ namespace Blazored.Modal
         protected bool IsVisible { get; set; }
         protected string Title { get; set; }
         protected RenderFragment Content { get; set; }
+        protected ModalParameters Parameters { get; set; }
 
         [Inject] private IModalService ModalService { get; set; }
 
-        public void ShowModal(string title, RenderFragment content)
+        public void ShowModal(string title, RenderFragment content, ModalParameters parameters)
         {
             Title = title;
             Content = content;
+            Parameters = parameters;
+
             IsVisible = true;
             StateHasChanged();
         }
@@ -28,17 +31,17 @@ namespace Blazored.Modal
             Content = null;
 
             StateHasChanged();
-            ModalService.Close();
+            ((ModalService)ModalService).Close();
         }
 
         public void Dispose()
         {
-            ModalService.OnShow -= ShowModal;
+            ((ModalService)ModalService).OnShow -= ShowModal;
         }
 
         protected override void OnInit()
         {
-            ModalService.OnShow += ShowModal;
+            ((ModalService)ModalService).OnShow += ShowModal;
         }
     }
 }

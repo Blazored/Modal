@@ -13,16 +13,20 @@ Welcome to your new app.
 
 @functions {
 
-    void ShowModal()
-    {
-        Modal.OnClose += CloseModalCallback;
-        Modal.Show("Sign Up Form", typeof(SignUpForm));
-    }
+void ShowModal()
+{
+    var parameters = new ModalParameters();
 
-    void CloseModalCallback()
-    {
-        Console.WriteLine("Modal has closed");
-        Modal.OnClose -= CloseModalCallback;
-    }
+    parameters.Add("FormId", 11);
+
+    Modal.OnClose += ModalClosed;
+    Modal.Show("Sign Up Form", typeof(SignUpForm), parameters);
+}
+
+void ModalClosed()
+{
+    Console.WriteLine("Modal has closed");
+    Modal.OnClose -= ModalClosed;
+}
 
 }

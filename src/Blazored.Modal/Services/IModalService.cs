@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Blazor;
-using System;
+﻿using System;
 
 namespace Blazored.Modal.Services
 {
@@ -7,10 +6,8 @@ namespace Blazored.Modal.Services
     {
         event Action OnClose;
 
-        event Action<string, RenderFragment> OnShow;
-
-        void Close();
-
         void Show(string title, Type contentType);
+
+        void Show(string title, Type contentType, ModalParameters parameters);
     }
 }
