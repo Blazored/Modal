@@ -11,7 +11,7 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: 'Installing .NET Core SDK...'
   inputs:
-    version: 2.2.100
+    version: 3.0.100-preview-010184
 
 - task: NuGetToolInstaller@0
   displayName: 'Installing Nuget Tools...'
