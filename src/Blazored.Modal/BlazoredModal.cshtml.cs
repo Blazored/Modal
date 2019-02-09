@@ -1,11 +1,10 @@
 ﻿using Blazored.Modal.Services;
-using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Components;
+using Microsoft.AspNetCore.Components;
 using System;
 
 namespace Blazored.Modal
 {
-    public class BlazoredModalBase : BlazorComponent, IDisposable
+    public class BlazoredModalBase : ComponentBase, IDisposable
     {
         protected bool IsVisible { get; set; }
         protected string Title { get; set; }
