@@ -33,6 +33,7 @@ Second, add the following to your *_ViewImports.cshtml*
 
 ```csharp
 @using Blazored
+@using Blazored.Modal
 @using Blazored.Modal.Services
 
 @addTagHelper *, Blazored.Modal
