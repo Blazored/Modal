@@ -30,17 +30,18 @@ namespace Blazored.Modal
             Content = null;
 
             StateHasChanged();
-            ((ModalService)ModalService).Close();
         }
 
         public void Dispose()
         {
             ((ModalService)ModalService).OnShow -= ShowModal;
+            ModalService.OnClose -= CloseModal;
         }
 
         protected override void OnInit()
         {
             ((ModalService)ModalService).OnShow += ShowModal;
+            ModalService.OnClose += CloseModal;
         }
     }
 }

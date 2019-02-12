@@ -26,7 +26,7 @@ namespace Blazored.Modal.Services
             OnShow?.Invoke(title, content, parameters);
         }
 
-        internal void Close()
+        public void Close()
         {
             OnClose?.Invoke();
         }
