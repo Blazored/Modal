@@ -9,5 +9,7 @@ namespace Blazored.Modal.Services
         void Show(string title, Type contentType);
 
         void Show(string title, Type contentType, ModalParameters parameters);
+
+        void Close();
     }
 }
