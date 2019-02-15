@@ -16,7 +16,7 @@ namespace Blazored.Modal.Services
 
         public void Show(string title, Type contentType, ModalParameters parameters)
         {
-            if (contentType.BaseType != typeof(ComponentBase))
+            if (!typeof(ComponentBase).IsAssignableFrom(contentType))
             {
                 throw new ArgumentException($"{contentType.FullName} must be a Blazor Component");
             }
