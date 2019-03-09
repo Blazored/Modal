@@ -10,6 +10,8 @@ There is currently an issue with [ASP.NET Core Razor Components apps](https://de
 
 You can still use this package, however, you will need to manually add the CSS to your apps `wwwroot` folder. You will then need to add a reference to it in the `head` tag of your apps `index.html` page.
 
+Alternativly, there is a great package by [Mister Magoo](https://github.com/SQL-MisterMagoo/BlazorEmbedLibrary) which offers a solution to this problem without having to manually copy files.
+
 ## Getting Setup
 You can install the package via the nuget package manager just search for *Blazored.Modal*. You can also install via powershell using the following command.
 
