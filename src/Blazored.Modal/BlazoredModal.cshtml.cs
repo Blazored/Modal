@@ -6,12 +6,18 @@ namespace Blazored.Modal
 {
     public class BlazoredModalBase : ComponentBase, IDisposable
     {
+        [Inject] private IModalService ModalService { get; set; }
+
         protected bool IsVisible { get; set; }
         protected string Title { get; set; }
         protected RenderFragment Content { get; set; }
         protected ModalParameters Parameters { get; set; }
 
-        [Inject] private IModalService ModalService { get; set; }
+        protected override void OnInit()
+        {
+            ((ModalService)ModalService).OnShow += ShowModal;
+            ModalService.OnClose += CloseModal;
+        }
 
         public void ShowModal(string title, RenderFragment content, ModalParameters parameters)
         {
@@ -36,12 +42,6 @@ namespace Blazored.Modal
         {
             ((ModalService)ModalService).OnShow -= ShowModal;
             ModalService.OnClose -= CloseModal;
-        }
-
-        protected override void OnInit()
-        {
-            ((ModalService)ModalService).OnShow += ShowModal;
-            ModalService.OnClose += CloseModal;
         }
     }
 }
