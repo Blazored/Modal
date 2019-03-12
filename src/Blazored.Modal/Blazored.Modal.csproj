@@ -12,7 +12,7 @@
     <PackageLicenseUrl>https://github.com/Blazored/Modal/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Blazored/Modal</PackageProjectUrl>
     <PackageIconUrl>https://avatars1.githubusercontent.com/u/39194025</PackageIconUrl>
-    <RepositoryUrl>https://github.com/Blazored/Toast</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Blazored/Modal</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Blazored Blazor Razor Components Modal Dialogue</PackageTags>
     <Description>A JavaScript free modal library for Blazor and Razor Components applications.</Description>
