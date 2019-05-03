@@ -36,18 +36,16 @@ public void ConfigureServices(IServiceCollection services)
 ```
 
 ### 2. Add Imports
-Second, add the following to your *_ViewImports.cshtml*
+Second, add the following to your *_Imports.razor*
 
 ```csharp
 @using Blazored
 @using Blazored.Modal
 @using Blazored.Modal.Services
-
-@addTagHelper *, Blazored.Modal
 ```
 
 ### 3. Add Modal Component
-Third and finally, you will need to add the `<BlazoredModal />` component in your applications *MainLayout.cshtml*.
+Third and finally, you will need to add the `<BlazoredModal />` component in your applications *MainLayout.razor*.
 
 ## Usage
 ### Displaying the modal
@@ -101,6 +99,7 @@ If you need to pass values to the component you are displaying in the modal, the
 **EditMovie Component**
 ```html
 @inject IMovieService MovieService
+@inject IModalService ModalService
 
 <div class="simple-form">
 
@@ -115,6 +114,7 @@ If you need to pass values to the component you are displaying in the modal, the
     </div>
 
     <button onclick="@SaveMovie" class="btn btn-primary">Submit</button>
+    <button onclick="@Cancel" class="btn btn-secondary">Cancel</button>
 </div>
 
 @functions {
@@ -140,11 +140,16 @@ If you need to pass values to the component you are displaying in the modal, the
         MovieService.Save(Movie);
     }
 
+    void Cancel()
+    {
+        ModalService.Cancel();
+    }
+
 }
 ```
 
 ### Modal Closed Event
-If you need to know when the modal has closed, for example to trigger an update of data. The modal service exposes a `OnClose` event which you can attach to. 
+If you need to know when the modal has closed, for example to trigger an update of data. The modal service exposes a `OnClose` event which returns a `ModalResult` type. This type is used to identify how the modal was closed. If the modal was cancelled you can return `ModalResult.Cancelled()`. If you want to return a object from your modal you can return `ModalResult.Ok(myResultObject)` which can be accessed via the `ModalResult.Data` property. There is also a `ModalResult.DataType` property which contains the type of the data property, if required.
 
 ```html
 @page "/"
@@ -162,9 +167,17 @@ If you need to know when the modal has closed, for example to trigger an update 
         Modal.Show("My Movies", typeof(Movies));
     }
 
-    void ModalClosed()
+    void ModalClosed(ModalResult modalResult)
     {
-        Console.WriteLine("Modal has closed");
+        if (modalResult.Cancelled)
+        {
+            Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            Console.WriteLine(modalResult.Data);
+        }
+
         Modal.OnClose -= ModalClosed;
     }
 
