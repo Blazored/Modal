@@ -5,6 +5,13 @@ This is a JavaScript free modal implementation for [Blazor](https://blazor.net) 
 
 ![Nuget](https://img.shields.io/nuget/v/blazored.modal.svg)
 
+## Important Notice For ASP.NET Core Razor Components Apps
+There is currently an issue with [ASP.NET Core Razor Components apps](https://devblogs.microsoft.com/aspnet/aspnet-core-3-preview-2/#sharing-component-libraries) (not Blazor). They are unable to import static assets from component libraries such as this one. 
+
+You can still use this package, however, you will need to manually add the CSS to your apps `wwwroot` folder. You will then need to add a reference to it in the `head` tag of your apps `index.html` page.
+
+Alternatively, there is a great package by [Mister Magoo](https://github.com/SQL-MisterMagoo/BlazorEmbedLibrary) which offers a solution to this problem without having to manually copy files.
+
 ## Getting Setup
 You can install the package via the nuget package manager just search for *Blazored.Modal*. You can also install via powershell using the following command.
 
