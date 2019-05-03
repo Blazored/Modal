@@ -7,12 +7,7 @@ namespace Blazored.Modal.Services
         /// <summary>
         /// Invoked when the modal component closes.
         /// </summary>
-        event Action OnClose;
-
-        /// <summary>
-        /// Invoked when the modal component closes.
-        /// </summary>
-        event Action<object> OnClose;
+        event Action<ModalResult> OnClose;
 
         /// <summary>
         /// Shows the modal using the specified title and component type.
@@ -31,14 +26,14 @@ namespace Blazored.Modal.Services
         void Show(string title, Type contentType, ModalParameters parameters);
 
         /// <summary>
-        /// Closes the modal and invokes the <see cref="OnClose"/> event.
+        /// Cancels the modal and invokes the <see cref="OnClose"/> event.
         /// </summary>
-        void Close();
+        void Cancel();
 
         /// <summary>
-        /// Closes the modal and invokes the <see cref="OnClose"/> event with the specified <paramref name="returnValue"/>.
+        /// Closes the modal and invokes the <see cref="OnClose"/> event with the specified <paramref name="modalResult"/>.
         /// </summary>
-        /// <param name="returnValue"></param>
-        void Close(object returnValue);
+        /// <param name="modalResult"></param>
+        void Close(ModalResult modalResult);
     }
 }
