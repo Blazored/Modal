@@ -138,6 +138,7 @@ If you need to pass values to the component you are displaying in the modal, the
     void SaveMovie()
     {
         MovieService.Save(Movie);
+        ModalService.Close(ModalResult.Ok<Movie>(Movie));
     }
 
     void Cancel()
