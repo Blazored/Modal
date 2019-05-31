@@ -11,7 +11,7 @@
     <Authors>Chris Sainty</Authors>
     <Company></Company>
     <Copyright>Copyright 2018 (c) Chris Sainty. All rights reserved.</Copyright>
-    <PackageLicenseUrl>https://github.com/Blazored/Modal/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Blazored/Modal</PackageProjectUrl>
     <PackageIconUrl>https://avatars1.githubusercontent.com/u/39194025</PackageIconUrl>
     <RepositoryUrl>https://github.com/Blazored/Modal</RepositoryUrl>
@@ -19,7 +19,7 @@
     <PackageTags>Blazored Blazor Razor Components Modal Dialogue</PackageTags>
     <Description>A JavaScript free modal library for Blazor and Razor Components applications.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
