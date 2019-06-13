@@ -6,12 +6,12 @@ namespace Blazored.Modal
 {
     public class BlazoredModalBase : ComponentBase, IDisposable
     {
+        [Inject] protected IModalService ModalService { get; set; }
+
         protected bool IsVisible { get; set; }
         protected string Title { get; set; }
         protected RenderFragment Content { get; set; }
         protected ModalParameters Parameters { get; set; }
-
-        [Inject] protected IModalService ModalService { get; set; }
 
         protected override void OnInit()
         {

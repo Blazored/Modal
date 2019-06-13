@@ -2,12 +2,12 @@
 
 <div class="blazored-modal-container @(IsVisible ? "blazored-modal-active" : string.Empty)">
 
-    <div class="blazored-modal-overlay" onclick="@(() => ModalService.Cancel())"></div>
+    <div class="blazored-modal-overlay" @onclick="@(() => ModalService.Cancel())"></div>
 
     <div class="blazored-modal">
         <div class="blazored-modal-header">
             <h3 class="blazored-modal-title">@Title</h3>
-            <button type="button" class="blazored-modal-close" onclick="@(() => ModalService.Cancel())">
+            <button type="button" class="blazored-modal-close" @onclick="@(() => ModalService.Cancel())">
                 <span>&times;</span>
             </button>
         </div>

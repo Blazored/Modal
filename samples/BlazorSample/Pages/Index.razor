@@ -9,9 +9,9 @@ Welcome to your new app.
 
 <hr class="mb-5" />
 
-<button onclick="@(ShowModal)" class="btn btn-primary">Show Modal</button>
+<button @onclick="@(ShowModal)" class="btn btn-primary">Show Modal</button>
 
-@functions {
+@code {
 
     void ShowModal()
     {
