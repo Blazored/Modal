@@ -61,7 +61,7 @@ For example, say I have a component called `Movies` which I want to display in t
 
 Welcome to Blazored Modal.
 
-<button onclick="@(() => Modal.Show("My Movies", typeof(Movies)))" class="btn btn-primary">View Movies</button>
+<button @onclick="@(() => Modal.Show("My Movies", typeof(Movies)))" class="btn btn-primary">View Movies</button>
 ```
 
 ### Passing Parameters
@@ -77,11 +77,11 @@ If you need to pass values to the component you are displaying in the modal, the
 <ul>
     @foreach (var movie in Movies)
     {
-        <li>@movie.Name (@movie.Year) - <button onclick="@(() => ShowEditMovie(movie.Id))" class="btn btn-primary">Edit Movie</button></li>
+        <li>@movie.Name (@movie.Year) - <button @onclick="@(() => ShowEditMovie(movie.Id))" class="btn btn-primary">Edit Movie</button></li>
     }
 </ul>
 
-@functions {
+@code {
 
     List<Movies> Movies { get; set; }
 
@@ -105,19 +105,19 @@ If you need to pass values to the component you are displaying in the modal, the
 
     <div class="form-group">
         <label for="movie-name">Movie Name</label>
-        <input bind="@Movie.Name" type="text" class="form-control" id="movie-name" />
+        <input @bind="@Movie.Name" type="text" class="form-control" id="movie-name" />
     </div>
 
     <div class="form-group">
         <label for="year">Year</label>
-        <input bind="@Movie.Year" type="text" class="form-control" id="year" />
+        <input @bind="@Movie.Year" type="text" class="form-control" id="year" />
     </div>
 
-    <button onclick="@SaveMovie" class="btn btn-primary">Submit</button>
-    <button onclick="@Cancel" class="btn btn-secondary">Cancel</button>
+    <button @onclick="@SaveMovie" class="btn btn-primary">Submit</button>
+    <button @onclick="@Cancel" class="btn btn-secondary">Cancel</button>
 </div>
 
-@functions {
+@code {
 
     [CascadingParameter] ModalParameters Parameters { get; set; }
     
@@ -158,9 +158,9 @@ If you need to know when the modal has closed, for example to trigger an update 
 
 <h1>My Movies</h1>
 
-<button onclick="@ShowModal" class="btn btn-primary">View Movies</button>
+<button @onclick="@ShowModal" class="btn btn-primary">View Movies</button>
 
-@functions {
+@code {
 
     void ShowModal()
     {
