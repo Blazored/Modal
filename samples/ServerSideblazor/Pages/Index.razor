@@ -1,0 +1,41 @@
+﻿@page "/"
+@inject IModalService Modal
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<hr class="mb-5" />
+
+<button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
+
+@code {
+
+    void ShowModal()
+    {
+        var parameters = new ModalParameters();
+
+        parameters.Add("FormId", 11);
+
+        Modal.OnClose += ModalClosed;
+        Modal.Show("Sign Up Form", typeof(SignUpForm), parameters);
+    }
+
+    void ModalClosed(ModalResult modalResult)
+    {
+        Console.WriteLine("Modal has closed");
+
+        if (modalResult.Cancelled)
+        {
+            Console.WriteLine("Modal was Cancelled");
+        }
+        else
+        {
+            Console.WriteLine(modalResult.Data.ToString());
+        }
+
+        Modal.OnClose -= ModalClosed;
+    }
+
+}
+
