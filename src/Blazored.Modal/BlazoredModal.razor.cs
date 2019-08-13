@@ -13,7 +13,7 @@ namespace Blazored.Modal
         protected RenderFragment Content { get; set; }
         protected ModalParameters Parameters { get; set; }
 
-        protected override void OnInit()
+        protected override void OnInitialized()
         {
             ((ModalService)ModalService).OnShow += ShowModal;
             ModalService.OnClose += CloseModal;

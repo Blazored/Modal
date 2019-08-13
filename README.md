@@ -5,13 +5,6 @@ This is a JavaScript free modal implementation for [Blazor](https://blazor.net) 
 
 ![Nuget](https://img.shields.io/nuget/v/blazored.modal.svg)
 
-## Important Notice for Blazor Apps Regarding the CSS Content in Blazored Toast
-As of ASP.Net Core Preview 6 content can be embedded in a Razor class Library. However there were two outstanding issues that prevent easy use of said content. These were resolved in Preview7. You should add:
-
-`<link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />`
-
-To your `index.html` (client side) or `_Host.cshtml` (server side). This is what is included in both the BlazorSample project as well as the BlazorServerSideSample project.
-
 ## Getting Setup
 You can install the package via the nuget package manager just search for *Blazored.Modal*. You can also install via powershell using the following command.
 
@@ -26,7 +19,7 @@ dotnet add package Blazored.Modal
 ```
 
 ### 1. Register Services
-First, you will need to add the following line to your applications `Startup.ConfigureServices` method.
+You will need to add the following line to your applications `Startup.ConfigureServices` method.
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -36,7 +29,7 @@ public void ConfigureServices(IServiceCollection services)
 ```
 
 ### 2. Add Imports
-Second, add the following to your *_Imports.razor*
+Add the following to your *_Imports.razor*
 
 ```csharp
 @using Blazored
@@ -45,7 +38,14 @@ Second, add the following to your *_Imports.razor*
 ```
 
 ### 3. Add Modal Component
-Third and finally, you will need to add the `<BlazoredModal />` component in your applications *MainLayout.razor*.
+Add the `<BlazoredModal />` tag into your applications *MainLayout.razor*.
+
+### 4. Add reference to style sheet
+Add the following line to the `head` tag of your `index.html` (Blazor WebAssembly App) or `_Host.cshtml` (Blazor Server app).
+
+```html
+<link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
+```
 
 ## Usage
 ### Displaying the modal
