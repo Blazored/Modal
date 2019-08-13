@@ -35,7 +35,7 @@ else
     string LastName { get; set; }
     int FormId { get; set; }
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
         FormId = Parameters.Get<int>("FormId");
     }
