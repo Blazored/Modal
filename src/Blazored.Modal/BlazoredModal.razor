@@ -8,9 +8,12 @@
     <div class="blazored-modal">
         <div class="blazored-modal-header">
             <h3 class="blazored-modal-title">@Title</h3>
-            <button type="button" class="blazored-modal-close" @onclick="@(() => ModalService.Cancel())">
-                <span>&times;</span>
-            </button>
+            @if (!HideCloseButton)
+            {
+                <button type="button" class="blazored-modal-close" @onclick="@(() => ModalService.Cancel())">
+                    <span>&times;</span>
+                </button>
+            }
         </div>
         <div class="blazored-modal-content">
             <CascadingValue Value="@Parameters">

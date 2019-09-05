@@ -40,6 +40,10 @@ Add the following to your *_Imports.razor*
 ### 3. Add Modal Component
 Add the `<BlazoredModal />` tag into your applications *MainLayout.razor*.
 
+There is an option to hide the close button in the top right of the modal if you wish using the `HideCloseButton` parameter.
+
+`<BlazoredModal HideCloseButton="true" />`
+
 ### 4. Add reference to style sheet
 Add the following line to the `head` tag of your `index.html` (Blazor WebAssembly App) or `_Host.cshtml` (Blazor Server app).
 

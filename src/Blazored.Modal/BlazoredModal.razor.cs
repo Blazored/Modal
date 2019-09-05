@@ -8,6 +8,8 @@ namespace Blazored.Modal
     {
         [Inject] protected IModalService ModalService { get; set; }
 
+        [Parameter] public bool HideCloseButton { get; set; }
+
         protected bool IsVisible { get; set; }
         protected string Title { get; set; }
         protected RenderFragment Content { get; set; }
