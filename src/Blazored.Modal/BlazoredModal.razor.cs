@@ -9,6 +9,7 @@ namespace Blazored.Modal
         [Inject] protected IModalService ModalService { get; set; }
 
         [Parameter] public bool HideCloseButton { get; set; }
+        [Parameter] public bool DisableBackgroundCancel { get; set; }
 
         protected bool IsVisible { get; set; }
         protected string Title { get; set; }
@@ -38,6 +39,13 @@ namespace Blazored.Modal
             Content = null;
 
             StateHasChanged();
+        }
+
+        protected void HandleBackgroundClick()
+        {
+            if (DisableBackgroundCancel) return;
+
+            ModalService.Cancel();
         }
 
         public void Dispose()
