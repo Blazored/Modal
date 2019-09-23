@@ -15,6 +15,7 @@ namespace Blazored.Modal
         protected string Title { get; set; }
         protected RenderFragment Content { get; set; }
         protected ModalParameters Parameters { get; set; }
+        protected string Style { get; set; }
 
         protected override void OnInitialized()
         {
@@ -22,11 +23,12 @@ namespace Blazored.Modal
             ModalService.OnClose += CloseModal;
         }
 
-        public void ShowModal(string title, RenderFragment content, ModalParameters parameters)
+        public void ShowModal(string title, RenderFragment content, ModalParameters parameters, string style)
         {
             Title = title;
             Content = content;
             Parameters = parameters;
+            Style = style ?? "blazored-modal";
 
             IsVisible = true;
             StateHasChanged();
@@ -37,6 +39,7 @@ namespace Blazored.Modal
             IsVisible = false;
             Title = "";
             Content = null;
+            Style = "";
 
             StateHasChanged();
         }
