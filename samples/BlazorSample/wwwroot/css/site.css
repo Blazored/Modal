@@ -125,5 +125,5 @@ app {
 .blazored-custom-modal {
     width: 80vw;
     height: 60vh;
-    background-color: #d8d8d8 !important;
+    background-color: #d8d8d8;
 }
