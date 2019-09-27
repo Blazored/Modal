@@ -5,6 +5,8 @@ This is a JavaScript free modal implementation for [Blazor](https://blazor.net) 
 
 ![Nuget](https://img.shields.io/nuget/v/blazored.modal.svg)
 
+![Screenshot of the component in action](screenshot.png)
+
 ## Getting Setup
 You can install the package via the nuget package manager just search for *Blazored.Modal*. You can also install via powershell using the following command.
 
