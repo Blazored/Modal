@@ -28,7 +28,7 @@ namespace Blazored.Modal
             Title = title;
             Content = content;
             Parameters = parameters;
-            Style = string.IsNullOrWhiteSpace(Style) ? "blazored-modal" : $"blazored-model {Style}";
+            Style = $"{style}";
 
             IsVisible = true;
             StateHasChanged();

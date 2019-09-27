@@ -31,7 +31,7 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
         /// <param name="style">Modal's custom CSS style selector.</param>
-        public void Show(string title, Type componentType, string style = "blazored-modal")
+        public void Show(string title, Type componentType, string style)
         {
             Show(title, componentType, new ModalParameters(), style);
         }
@@ -56,7 +56,7 @@ namespace Blazored.Modal.Services
         /// <param name="componentType">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="style">Modal's custom CSS style selector.</param>
-        public void Show(string title, Type componentType, ModalParameters parameters, string style = "blazored-modal")
+        public void Show(string title, Type componentType, ModalParameters parameters, string style)
         {
             if (!typeof(ComponentBase).IsAssignableFrom(componentType))
             {
