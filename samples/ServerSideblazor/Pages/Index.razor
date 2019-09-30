@@ -6,7 +6,6 @@
 <hr class="mb-5" />
 
 <button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
-<button @onclick="@(ShowModalCustomStyle)" class="btn btn-outline-primary">Show Modal using custom style</button>
 
 @code {
 
@@ -19,17 +18,6 @@
         Modal.OnClose += ModalClosed;
         Modal.Show("Sign Up Form", typeof(SignUpForm), parameters);
     }
-
-    void ShowModalCustomStyle()
-    {
-        var parameters = new ModalParameters();
-
-        parameters.Add("FormId", 11);
-
-        Modal.OnClose += ModalClosed;
-        Modal.Show("Sign Up Form", typeof(SignUpForm), parameters, "blazored-custom-modal");
-    }
-
 
     void ModalClosed(ModalResult modalResult)
     {
