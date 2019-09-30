@@ -34,9 +34,10 @@
     void ShowModalCustomStyle()
     {
         var parameters = new ModalParameters();
+        var options = new ModalOptions() { Style = "blazored-prompt-modal" };
 
         Modal.OnClose += ModalClosed;
-        Modal.Show("Delete record?", typeof(YesNoPrompt), "blazored-prompt-modal");
+        Modal.Show("Delete record?", typeof(YesNoPrompt), options);
     }
 
 

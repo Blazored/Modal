@@ -13,7 +13,7 @@ namespace Blazored.Modal.Services
         /// <summary>
         /// Internal event used to trigger the modal component to show.
         /// </summary>
-        internal event Action<string, RenderFragment, ModalParameters, string> OnShow;
+        internal event Action<string, RenderFragment, ModalParameters, ModalOptions> OnShow;
 
         /// <summary>
         /// Shows the modal using the specified title and component type.
@@ -22,7 +22,7 @@ namespace Blazored.Modal.Services
         /// <param name="componentType">Type of component to display.</param>
         public void Show(string title, Type componentType)
         {
-            Show(title, componentType, new ModalParameters());
+            Show(title, componentType, new ModalParameters(), new ModalOptions());
         }
 
         /// <summary>
@@ -30,10 +30,10 @@ namespace Blazored.Modal.Services
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
-        /// <param name="style">Modal's custom CSS style selector.</param>
-        public void Show(string title, Type componentType, string style)
+        /// <param name="options">Options to configure the modal.</param>
+        public void Show(string title, Type componentType, ModalOptions options)
         {
-            Show(title, componentType, new ModalParameters(), style);
+            Show(title, componentType, new ModalParameters(), options);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Blazored.Modal.Services
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         public void Show(string title, Type componentType, ModalParameters parameters)
         {
-            Show(title, componentType, parameters, null);
+            Show(title, componentType, parameters, new ModalOptions());
         }
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
-        /// <param name="style">Modal's custom CSS style selector.</param>
-        public void Show(string title, Type componentType, ModalParameters parameters, string style)
+        /// <param name="options">Options to configure the modal.</param>
+        public void Show(string title, Type componentType, ModalParameters parameters, ModalOptions options)
         {
             if (!typeof(ComponentBase).IsAssignableFrom(componentType))
             {
@@ -65,7 +65,7 @@ namespace Blazored.Modal.Services
 
             var content = new RenderFragment(x => { x.OpenComponent(1, componentType); x.CloseComponent(); });
 
-            OnShow?.Invoke(title, content, parameters, style);
+            OnShow?.Invoke(title, content, parameters, options);
         }
 
         /// <summary>

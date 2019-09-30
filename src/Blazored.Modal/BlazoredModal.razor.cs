@@ -6,13 +6,16 @@ namespace Blazored.Modal
 {
     public class BlazoredModalBase : ComponentBase, IDisposable
     {
+        const string DefaultStyle = "blazored-modal";
+
         [Inject] protected IModalService ModalService { get; set; }
 
         [Parameter] public bool HideCloseButton { get; set; }
         [Parameter] public bool DisableBackgroundCancel { get; set; }
-        [Parameter] public string Style { get; set; } = "blazored-modal";
+        [Parameter] public string Style { get; set; }
 
         protected string ComponentStyle { get; set; }
+        protected ModalOptions Options { get; set; }
         protected bool IsVisible { get; set; }
         protected string Title { get; set; }
         protected RenderFragment Content { get; set; }
@@ -24,12 +27,15 @@ namespace Blazored.Modal
             ModalService.OnClose += CloseModal;
         }
 
-        public void ShowModal(string title, RenderFragment content, ModalParameters parameters, string style)
+        public void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
         {
             Title = title;
             Content = content;
             Parameters = parameters;
-            ComponentStyle = string.IsNullOrWhiteSpace(style) ? Style : style;
+
+            ComponentStyle = string.IsNullOrWhiteSpace(options.Style) ? Style : options.Style;
+            if (string.IsNullOrWhiteSpace(ComponentStyle))
+                ComponentStyle = DefaultStyle;
 
             IsVisible = true;
             StateHasChanged();

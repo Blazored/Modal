@@ -21,8 +21,8 @@ namespace Blazored.Modal.Services
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
-        /// <param name="style">Modal's custom CSS style selector.</param>
-        void Show(string title, Type componentType, string style);
+        /// <param name="options">Options to configure the modal.</param>
+        void Show(string title, Type componentType, ModalOptions options);
 
         /// <summary>
         /// Shows the modal using the specified <paramref name="title"/> and <paramref name="componentType"/>, 
@@ -40,8 +40,8 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
-        /// <param name="style">Modal's custom CSS style selector.</param>
-        void Show(string title, Type componentType, ModalParameters parameters, string style);
+        /// <param name="options">Options to configure the modal.</param>
+        void Show(string title, Type componentType, ModalParameters parameters, ModalOptions options);
 
         /// <summary>
         /// Cancels the modal and invokes the <see cref="OnClose"/> event.
