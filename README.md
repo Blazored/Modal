@@ -194,8 +194,13 @@ If you need to know when the modal has closed, for example to trigger an update 
 ```
 
 ### Custom CSS styling
-You can pass an alternative CSS style for the modal if you want to customize the look and feel of your modal. This is useful when your web application requires different kinds of modals, like a warning, confirmation or an input form.
+You can set an alternative CSS style for the modal if you want to customize the look and feel of your modal. This is useful when your web application requires different kinds of modals, like a warning, confirmation or an input form.
 
+To set a custom style globally, use:
+`<BlazoredModal Style="custom-modal" />`
+
+A custom style can also be set as a parameter on the `Modal.Show()` method.
+```csharp
 @code {
     void ShowModal()
     {
@@ -203,3 +208,4 @@ You can pass an alternative CSS style for the modal if you want to customize the
         Modal.Show("My Movies", typeof(Movies), "blazored-modal-custom");
     }
 }
+```
