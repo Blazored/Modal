@@ -10,12 +10,13 @@ namespace Blazored.Modal
 
         [Parameter] public bool HideCloseButton { get; set; }
         [Parameter] public bool DisableBackgroundCancel { get; set; }
+        [Parameter] public string Style { get; set; } = "blazored-modal";
 
+        protected string ComponentStyle { get; set; }
         protected bool IsVisible { get; set; }
         protected string Title { get; set; }
         protected RenderFragment Content { get; set; }
         protected ModalParameters Parameters { get; set; }
-        protected string Style { get; set; }
 
         protected override void OnInitialized()
         {
@@ -28,7 +29,7 @@ namespace Blazored.Modal
             Title = title;
             Content = content;
             Parameters = parameters;
-            Style = string.IsNullOrWhiteSpace(style) ? "blazored-modal" : style;
+            ComponentStyle = string.IsNullOrWhiteSpace(style) ? Style : style;
 
             IsVisible = true;
             StateHasChanged();
@@ -39,7 +40,7 @@ namespace Blazored.Modal
             IsVisible = false;
             Title = "";
             Content = null;
-            Style = "";
+            ComponentStyle = "";
 
             StateHasChanged();
         }
