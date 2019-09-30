@@ -204,8 +204,10 @@ A custom style can also be set as a parameter on the `Modal.Show()` method.
 @code {
     void ShowModal()
     {
+		var options = new ModalOptions() { Style = "blazored-modal-movies" };
+
         Modal.OnClose += ModalClosed;
-        Modal.Show("My Movies", typeof(Movies), "blazored-modal-custom");
+        Modal.Show("My Movies", typeof(Movies), options);
     }
 }
 ```
