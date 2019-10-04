@@ -6,16 +6,16 @@
 
         <div class="form-group">
             <label for="first-name">First Name</label>
-            <input @bind="@FirstName" type="text" class="form-control" id="first-name" placeholder="Enter First Name" />
+            <input @bind="FirstName" type="text" class="form-control" id="first-name" placeholder="Enter First Name" />
         </div>
 
         <div class="form-group">
             <label for="last-name">Last Name</label>
-            <input @bind="@LastName" type="text" class="form-control" id="last-name" placeholder="Enter Last Name" />
+            <input @bind="LastName" type="text" class="form-control" id="last-name" placeholder="Enter Last Name" />
         </div>
 
-        <button @onclick="@SubmitForm" class="btn btn-primary">Submit</button>
-        <button @onclick="@Cancel" class="btn btn-secondary">Cancel</button>
+        <button @onclick="SubmitForm" class="btn btn-primary">Submit</button>
+        <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
     </div>
 }
 else

@@ -11,11 +11,11 @@
     CSS styling.
 </p>
 
-<button @onclick="@(()=>@PositionCustom("blazored-modal-topleft"))" class="btn btn-secondary">Top left</button>
-<button @onclick="@(()=>@PositionCustom("blazored-modal-topright"))" class="btn btn-secondary">Top right</button>
+<button @onclick="@(() => PositionCustom("blazored-modal-topleft"))" class="btn btn-secondary">Top left</button>
+<button @onclick="@(() => PositionCustom("blazored-modal-topright"))" class="btn btn-secondary">Top right</button>
 <button @onclick="PositionCenter" class="btn btn-primary">Center</button>
-<button @onclick="@(()=>@PositionCustom("blazored-modal-bottomleft"))" class="btn btn-secondary">Bottom left</button>
-<button @onclick="@(()=>@PositionCustom("blazored-modal-bottomright"))" class="btn btn-secondary">Bottom right</button>
+<button @onclick="@(() => PositionCustom("blazored-modal-bottomleft"))" class="btn btn-secondary">Bottom left</button>
+<button @onclick="@(() => PositionCustom("blazored-modal-bottomright"))" class="btn btn-secondary">Bottom right</button>
 
 @code {
 
