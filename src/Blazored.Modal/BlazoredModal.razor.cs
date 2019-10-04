@@ -14,6 +14,7 @@ namespace Blazored.Modal
         [Parameter] public bool DisableBackgroundCancel { get; set; }
         [Parameter] public string Style { get; set; }
 
+        protected bool ComponentHideCloseButton { get; set; }
         protected string ComponentStyle { get; set; }
         protected ModalOptions Options { get; set; }
         protected bool IsVisible { get; set; }
@@ -37,6 +38,10 @@ namespace Blazored.Modal
             if (string.IsNullOrWhiteSpace(ComponentStyle))
                 ComponentStyle = DefaultStyle;
 
+            ComponentHideCloseButton = HideCloseButton;
+            if (options.HideCloseButton.HasValue)
+                ComponentHideCloseButton = options.HideCloseButton.Value;
+            
             IsVisible = true;
             StateHasChanged();
         }

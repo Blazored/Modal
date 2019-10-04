@@ -8,7 +8,7 @@
     <div class="@ComponentStyle">
         <div class="blazored-modal-header">
             <h3 class="blazored-modal-title">@Title</h3>
-            @if (!HideCloseButton)
+            @if (!ComponentHideCloseButton)
             {
                 <button type="button" class="blazored-modal-close" @onclick="@(() => ModalService.Cancel())">
                     <span>&times;</span>
