@@ -14,6 +14,7 @@ namespace Blazored.Modal
         [Parameter] public bool DisableBackgroundCancel { get; set; }
         [Parameter] public string Style { get; set; }
 
+        protected bool ComponentDisableBackgroundCancel { get; set; }
         protected bool ComponentHideCloseButton { get; set; }
         protected string ComponentStyle { get; set; }
         protected ModalOptions Options { get; set; }
@@ -41,7 +42,11 @@ namespace Blazored.Modal
             ComponentHideCloseButton = HideCloseButton;
             if (options.HideCloseButton.HasValue)
                 ComponentHideCloseButton = options.HideCloseButton.Value;
-            
+
+            ComponentDisableBackgroundCancel = DisableBackgroundCancel;
+            if (options.DisableBackgroundCancel.HasValue)
+                ComponentDisableBackgroundCancel = options.DisableBackgroundCancel.Value;
+
             IsVisible = true;
             StateHasChanged();
         }
@@ -58,7 +63,7 @@ namespace Blazored.Modal
 
         protected void HandleBackgroundClick()
         {
-            if (DisableBackgroundCancel) return;
+            if (ComponentDisableBackgroundCancel) return;
 
             ModalService.Cancel();
         }
