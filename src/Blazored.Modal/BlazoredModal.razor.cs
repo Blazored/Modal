@@ -38,21 +38,7 @@ namespace Blazored.Modal
             Content = content;
             Parameters = parameters;
 
-            ComponentHideCloseButton = HideCloseButton;
-            if (options.HideCloseButton.HasValue)
-                ComponentHideCloseButton = options.HideCloseButton.Value;
-
-            ComponentDisableBackgroundCancel = DisableBackgroundCancel;
-            if (options.DisableBackgroundCancel.HasValue)
-                ComponentDisableBackgroundCancel = options.DisableBackgroundCancel.Value;
-
-            ComponentPosition = string.IsNullOrWhiteSpace(options.Position) ? Position : options.Position;
-            if (string.IsNullOrWhiteSpace(ComponentPosition))
-                ComponentPosition = DefaultPosition;
-
-            ComponentStyle = string.IsNullOrWhiteSpace(options.Style) ? Style : options.Style;
-            if (string.IsNullOrWhiteSpace(ComponentStyle))
-                ComponentStyle = DefaultStyle;
+            SetModalOptions(options);
 
             IsVisible = true;
             StateHasChanged();
@@ -79,6 +65,25 @@ namespace Blazored.Modal
         {
             ((ModalService)ModalService).OnShow -= ShowModal;
             ModalService.OnClose -= CloseModal;
+        }
+
+        private void SetModalOptions(ModalOptions options)
+        {
+            ComponentHideCloseButton = HideCloseButton;
+            if (options.HideCloseButton.HasValue)
+                ComponentHideCloseButton = options.HideCloseButton.Value;
+
+            ComponentDisableBackgroundCancel = DisableBackgroundCancel;
+            if (options.DisableBackgroundCancel.HasValue)
+                ComponentDisableBackgroundCancel = options.DisableBackgroundCancel.Value;
+
+            ComponentPosition = string.IsNullOrWhiteSpace(options.Position) ? Position : options.Position;
+            if (string.IsNullOrWhiteSpace(ComponentPosition))
+                ComponentPosition = DefaultPosition;
+
+            ComponentStyle = string.IsNullOrWhiteSpace(options.Style) ? Style : options.Style;
+            if (string.IsNullOrWhiteSpace(ComponentStyle))
+                ComponentStyle = DefaultStyle;
         }
     }
 }
