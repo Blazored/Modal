@@ -7,15 +7,18 @@ namespace Blazored.Modal
     public class BlazoredModalBase : ComponentBase, IDisposable
     {
         const string DefaultStyle = "blazored-modal";
+        const string DefaultPosition = "blazored-modal-center";
 
         [Inject] protected IModalService ModalService { get; set; }
 
         [Parameter] public bool HideCloseButton { get; set; }
         [Parameter] public bool DisableBackgroundCancel { get; set; }
+        [Parameter] public string Position { get; set; }
         [Parameter] public string Style { get; set; }
 
         protected bool ComponentDisableBackgroundCancel { get; set; }
         protected bool ComponentHideCloseButton { get; set; }
+        protected string ComponentPosition { get; set; }
         protected string ComponentStyle { get; set; }
         protected ModalOptions Options { get; set; }
         protected bool IsVisible { get; set; }
@@ -35,10 +38,6 @@ namespace Blazored.Modal
             Content = content;
             Parameters = parameters;
 
-            ComponentStyle = string.IsNullOrWhiteSpace(options.Style) ? Style : options.Style;
-            if (string.IsNullOrWhiteSpace(ComponentStyle))
-                ComponentStyle = DefaultStyle;
-
             ComponentHideCloseButton = HideCloseButton;
             if (options.HideCloseButton.HasValue)
                 ComponentHideCloseButton = options.HideCloseButton.Value;
@@ -46,6 +45,14 @@ namespace Blazored.Modal
             ComponentDisableBackgroundCancel = DisableBackgroundCancel;
             if (options.DisableBackgroundCancel.HasValue)
                 ComponentDisableBackgroundCancel = options.DisableBackgroundCancel.Value;
+
+            ComponentPosition = string.IsNullOrWhiteSpace(options.Position) ? Position : options.Position;
+            if (string.IsNullOrWhiteSpace(ComponentPosition))
+                ComponentPosition = DefaultPosition;
+
+            ComponentStyle = string.IsNullOrWhiteSpace(options.Style) ? Style : options.Style;
+            if (string.IsNullOrWhiteSpace(ComponentStyle))
+                ComponentStyle = DefaultStyle;
 
             IsVisible = true;
             StateHasChanged();
