@@ -1,6 +1,6 @@
 # Blazored Modal
 
-A beautiful and customizable modal implementation for [Blazor](https://blazor.net) and Razor Components applications. It's free-range, gluten-free and 100% JavaScript free.
+A beautiful and customizable modal implementation for [Blazor](https://blazor.net) applications. It's free-range, gluten-free and 100% JavaScript free.
 
 [![Build Status](https://dev.azure.com/blazored/Modal/_apis/build/status/Blazored.Modal?branchName=master)](https://dev.azure.com/blazored/Modal/_build/latest?definitionId=4&branchName=master)
 
