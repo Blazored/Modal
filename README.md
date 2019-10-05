@@ -1,5 +1,6 @@
 # Blazored Modal
-This is a JavaScript free modal implementation for [Blazor](https://blazor.net) and Razor Components applications.
+
+A beautiful and customizable modal implementation for [Blazor](https://blazor.net) and Razor Components applications. It's free-range, gluten-free and 100% JavaScript free.
 
 [![Build Status](https://dev.azure.com/blazored/Modal/_apis/build/status/Blazored.Modal?branchName=master)](https://dev.azure.com/blazored/Modal/_build/latest?definitionId=4&branchName=master)
 
@@ -8,6 +9,7 @@ This is a JavaScript free modal implementation for [Blazor](https://blazor.net) 
 ![Screenshot of the component in action](screenshot.png)
 
 ## Getting Setup
+
 You can install the package via the nuget package manager just search for *Blazored.Modal*. You can also install via powershell using the following command.
 
 ```powershell
@@ -21,6 +23,7 @@ dotnet add package Blazored.Modal
 ```
 
 ### 1. Register Services
+
 You will need to add the following line to your applications `Startup.ConfigureServices` method.
 
 ```csharp
@@ -31,6 +34,7 @@ public void ConfigureServices(IServiceCollection services)
 ```
 
 ### 2. Add Imports
+
 Add the following to your *_Imports.razor*
 
 ```csharp
@@ -40,17 +44,11 @@ Add the following to your *_Imports.razor*
 ```
 
 ### 3. Add Modal Component
+
 Add the `<BlazoredModal />` tag into your applications *MainLayout.razor*.
 
-There is an option to hide the close button in the top right of the modal if you wish using the `HideCloseButton` parameter.
-
-`<BlazoredModal HideCloseButton="true" />`
-
-You can also disable cancelling the modal by clicking on the background using the `DisableBackgroundCancel` parameter.
-
-`<BlazoredModal DisableBackgroundCancel="true" />`
-
 ### 4. Add reference to style sheet
+
 Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server app).
 
 ```html
@@ -58,8 +56,10 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server a
 ```
 
 ## Usage
+
 ### Displaying the modal
-In order to show the modal, you have to inject the `IModalService` into the component or service you want to invoke the modal. You can then call the `Show` method passing in the title for the modal and the type of the component you want the modal to display. 
+
+In order to show the modal, you have to inject the `IModalService` into the component or service you want to invoke the modal. You can then call the `Show` method passing in the title for the modal and the type of the component you want the modal to display.
 
 For example, say I have a component called `Movies` which I want to display in the modal and I want to call it from the `Index` component on a button click.
 
@@ -75,9 +75,11 @@ Welcome to Blazored Modal.
 ```
 
 ### Passing Parameters
-If you need to pass values to the component you are displaying in the modal, then you can use the `ModalParameters` object. Any component which is displayed in the modal has access to this object as a `[CascadingParameter]`. 
 
-**Index Component**
+If you need to pass values to the component you are displaying in the modal, then you can use the `ModalParameters` object. Any component which is displayed in the modal has access to this object as a `[CascadingParameter]`.
+
+#### Index Component
+
 ```html
 @page "/"
 @inject IModalService Modal
@@ -106,7 +108,8 @@ If you need to pass values to the component you are displaying in the modal, the
 }
 ```
 
-**EditMovie Component**
+#### EditMovie Component
+
 ```html
 @inject IMovieService MovieService
 @inject IModalService ModalService
@@ -130,7 +133,7 @@ If you need to pass values to the component you are displaying in the modal, the
 @code {
 
     [CascadingParameter] ModalParameters Parameters { get; set; }
-    
+
     int MovieId { get; set; }
     Movie Movie { get; set; }
 
@@ -160,6 +163,7 @@ If you need to pass values to the component you are displaying in the modal, the
 ```
 
 ### Modal Closed Event
+
 If you need to know when the modal has closed, for example to trigger an update of data. The modal service exposes a `OnClose` event which returns a `ModalResult` type. This type is used to identify how the modal was closed. If the modal was cancelled you can return `ModalResult.Cancelled()`. If you want to return a object from your modal you can return `ModalResult.Ok(myResultObject)` which can be accessed via the `ModalResult.Data` property. There is also a `ModalResult.DataType` property which contains the type of the data property, if required.
 
 ```html
@@ -195,20 +199,99 @@ If you need to know when the modal has closed, for example to trigger an update 
 }
 ```
 
-### Custom CSS styling
-You can set an alternative CSS style for the modal if you want to customize the look and feel of your modal. This is useful when your web application requires different kinds of modals, like a warning, confirmation or an input form.
+### Customizing the modal
 
-To set a custom style globally, use:
-`<BlazoredModal Style="custom-modal" />`
+The modals can be customized to fit a wide variety of uses. These options can be set globally or changed programatically.
 
-A custom style can also be set as a parameter on the `Modal.Show()` method.
+#### Hiding the close button
+
+A modal has a close button in the top right hand corner by default. The close button can be hidden by using the `HideCloseButton` parameter:
+
+`<BlazoredModal HideCloseButton="true" />`
+
+Or in the `Modal.Show()` method:
+
 ```csharp
 @code {
     void ShowModal()
     {
-		var options = new ModalOptions() { Style = "blazored-modal-movies" };
+        var options = new ModalOptions()
+        {
+            HideCloseButton = false
+        };
 
-        Modal.OnClose += ModalClosed;
+        Modal.Show("My Movies", typeof(Movies), options);
+    }
+}
+```
+
+#### Disabling background click cancellation
+
+You can disable cancelling the modal by clicking on the background using the `DisableBackgroundCancel` parameter.
+
+`<BlazoredModal DisableBackgroundCancel="true" />`
+
+Or in the `Modal.Show()` method:
+
+```csharp
+@code {
+    void ShowModal()
+    {
+        var options = new ModalOptions()
+        {
+            DisableBackgroundCancel = true
+        };
+
+        Modal.Show("My Movies", typeof(Movies), options);
+    }
+}
+```
+
+#### Styling the modal
+
+You can set an alternative CSS style for the modal if you want to customize the look and feel. This is useful when your web application requires different kinds of modals, like a warning, confirmation or an input form.
+
+Use the `Style` parameter to set the custom styling globally:
+
+`<BlazoredModal Style="custom-modal" />`
+
+Or in the `Modal.Show()` method:
+
+```csharp
+@code {
+    void ShowModal()
+    {
+        var options = new ModalOptions()
+        {
+            Style = "blazored-modal-movies"
+        };
+
+        Modal.Show("My Movies", typeof(Movies), options);
+    }
+}
+```
+
+#### Setting the position
+
+Modals are shown in the center of the viewport by default. The modal can be shown in different positions if needed. The positioning is flexible as it is set using CSS styling.
+
+The following positioning styles are available out of the box: `blazored-modal-center`, `blazored-modal-topleft`, `blazored-modal-topright`, `blazored-modal-bottomleft` and `blazored-modal-bottomright`.
+
+Use the `Style` parameter to set the custom styling globally:
+
+`<BlazoredModal Position="blazored-modal-bottomleft" />`
+
+Or in the `Modal.Show()` method:
+
+```csharp
+@code {
+    void ShowModal()
+    {
+        var options = new ModalOptions()
+        {
+            Position = "blazored-modal-bottomleft"
+        };
+
         Modal.Show("My Movies", typeof(Movies), options);
     }
 }
