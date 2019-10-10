@@ -296,3 +296,16 @@ Or in the `Modal.Show()` method:
     }
 }
 ```
+
+#### Alternative syntax
+
+The above examples can be called using an alternative generic syntax, e.g.:
+
+```csharp
+@code {
+    void ShowModal()
+    {
+        Modal.Show<Movies>("My Movies");
+    }
+}
+```
