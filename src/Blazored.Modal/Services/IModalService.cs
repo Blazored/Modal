@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Components;
 
 namespace Blazored.Modal.Services
 {
@@ -42,6 +43,8 @@ namespace Blazored.Modal.Services
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
         void Show(string title, Type componentType, ModalParameters parameters, ModalOptions options);
+
+        void Show<T>(string title, ModalParameters parameters = null, ModalOptions options = null) where T : ComponentBase;
 
         /// <summary>
         /// Cancels the modal and invokes the <see cref="OnClose"/> event.
