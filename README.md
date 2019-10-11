@@ -71,7 +71,7 @@ For example, say I have a component called `Movies` which I want to display in t
 
 Welcome to Blazored Modal.
 
-<button @onclick="@(() => Modal.Show("My Movies", typeof(Movies)))" class="btn btn-primary">View Movies</button>
+<button @onclick="@(() => Modal.Show<Movies>("My Movies"))" class="btn btn-primary">View Movies</button>
 ```
 
 ### Passing Parameters
@@ -102,7 +102,7 @@ If you need to pass values to the component you are displaying in the modal, the
         var parameters = new ModalParameters();
         parameters.Add("MovieId", movieId);
 
-        Modal.Show("Edit Movie", typeof(EditMovie), parameters);
+        Modal.Show<EditMovie>("Edit Movie", parameters);
     }
 
 }
@@ -179,7 +179,7 @@ If you need to know when the modal has closed, for example to trigger an update 
     void ShowModal()
     {
         Modal.OnClose += ModalClosed;
-        Modal.Show("My Movies", typeof(Movies));
+        Modal.Show<Movies>("My Movies");
     }
 
     void ModalClosed(ModalResult modalResult)
@@ -220,7 +220,7 @@ Or in the `Modal.Show()` method:
             HideCloseButton = false
         };
 
-        Modal.Show("My Movies", typeof(Movies), options);
+        Modal.Show<Movies>("My Movies", options);
     }
 }
 ```
@@ -242,7 +242,7 @@ Or in the `Modal.Show()` method:
             DisableBackgroundCancel = true
         };
 
-        Modal.Show("My Movies", typeof(Movies), options);
+        Modal.Show<Movies>("My Movies", options);
     }
 }
 ```
@@ -266,7 +266,7 @@ Or in the `Modal.Show()` method:
             Style = "blazored-modal-movies"
         };
 
-        Modal.Show("My Movies", typeof(Movies), options);
+        Modal.Show<Movies>("My Movies", options);
     }
 }
 ```
@@ -292,20 +292,7 @@ Or in the `Modal.Show()` method:
             Position = "blazored-modal-bottomleft"
         };
 
-        Modal.Show("My Movies", typeof(Movies), options);
-    }
-}
-```
-
-#### Alternative syntax
-
-The above examples can be called using an alternative generic syntax, e.g.:
-
-```csharp
-@code {
-    void ShowModal()
-    {
-        Modal.Show<Movies>("My Movies");
+        Modal.Show<Movies>("My Movies", options);
     }
 }
 ```
