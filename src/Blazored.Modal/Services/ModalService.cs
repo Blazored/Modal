@@ -84,5 +84,13 @@ namespace Blazored.Modal.Services
         {
             OnClose?.Invoke(modalResult);
         }
+
+        public void Show<T>(string title, ModalParameters parameters = null, ModalOptions options = null) where T : ComponentBase
+        {
+            Show(title, 
+                 typeof(T),
+                 parameters ?? new ModalParameters(),
+                 options ?? new ModalOptions());
+        }
     }
 }
