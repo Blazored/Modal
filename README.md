@@ -24,9 +24,11 @@ dotnet add package Blazored.Modal
 
 ### 1. Register Services
 
-You will need to add the following line to your applications `Startup.ConfigureServices` method.
+You will need to add the following using statement and add a call to register the Blazored Modal services in your applications `Startup.ConfigureServices` method.
 
 ```csharp
+using Blazored.Modal;
+
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddBlazoredModal();
