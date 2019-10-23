@@ -32,7 +32,7 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
-        void Show(string title, Type contentType, ModalParameters parameters);
+        void Show(string title, Type componentType, ModalParameters parameters);
 
         /// <summary>
         /// Shows the modal using the specified <paramref name="title"/> and <paramref name="componentType"/>, 
