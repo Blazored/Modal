@@ -85,6 +85,7 @@ namespace Blazored.Modal.Services
             OnClose?.Invoke(modalResult);
         }
 
+        /// <inheritdoc cref="IModalService.Show{T}(string, ModalParameters, ModalOptions)"/>
         public void Show<T>(string title, ModalParameters parameters = null, ModalOptions options = null) where T : ComponentBase
         {
             Show(title, 
