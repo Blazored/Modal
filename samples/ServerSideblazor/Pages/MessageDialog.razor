@@ -1,0 +1,61 @@
+﻿@inject IModalService ModalService
+
+
+    <div class="simple-form">
+        <div class="form-group">
+            @DialogParams.Message
+        </div>
+
+        @foreach (var button in DialogParams.Buttons)
+        {
+            <button @onclick="e=> Result(button)" class="btn btn-outline">@button</button>
+        }
+        
+    </div>
+
+
+@code {
+
+    [CascadingParameter] ModalParameters Parameters { get; set; }
+
+    DialogParameters DialogParams { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DialogParams = Parameters.Get<DialogParameters>("DialogParameters");
+        if (DialogParams == null)
+            throw new ArgumentException("DialogParameters");
+        if (DialogParams.Buttons == null)
+            DialogParams.Buttons = new  ButtonType[] { ButtonType.Ok,};
+    }
+
+    void Result(ButtonType  result)
+    {
+        if (result == ButtonType.Cancel)
+            ModalService.Close(ModalResult.Cancel());
+        else
+            ModalService.Close(ModalResult.Ok($"The user said '{result}'"));
+    }
+
+
+    void Cancel()
+    {
+        ModalService.Close(ModalResult.Cancel());
+    }
+
+    public class DialogParameters
+    {
+        public string Message { get; set; }
+        public ButtonType[] Buttons { get; set; }
+    }
+
+    public enum ButtonType: int
+    {
+        Ok,
+        Yes,
+        No,
+        Cancel,
+    }
+
+
+}

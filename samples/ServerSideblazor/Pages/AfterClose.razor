@@ -1,0 +1,40 @@
+﻿@page "/afterclose"
+@inject IModalService Modal
+
+<h1>Actions after close</h1>
+
+<hr class="mb-5" />
+
+<p>
+    Blazored.Modal shows modal and do some action after close.
+</p>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show modal desition</button>
+
+@code {
+
+    void ShowModal()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add("DialogParameters", new MessageDialog.DialogParameters()
+        {
+            Message = "Are you sure you want to dance? ",
+            Buttons = new MessageDialog.ButtonType[] { MessageDialog.ButtonType.Yes, MessageDialog.ButtonType.No, MessageDialog.ButtonType.Cancel }
+        });
+
+        Modal.Show<MessageDialog>("Dance", parameters, onClose: ShowResult);
+    }
+
+    void ShowResult(ModalResult result)
+    {
+        var parameters = new ModalParameters();
+        parameters.Add("DialogParameters", new MessageDialog.DialogParameters()
+        {
+            Message = result.Cancelled ? "User calcel process" : result.Data.ToString(),
+            Buttons = new MessageDialog.ButtonType[] { MessageDialog.ButtonType.Ok }
+        });
+
+        Modal.Show<MessageDialog>("Result", parameters);
+    }
+}
+

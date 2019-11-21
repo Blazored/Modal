@@ -52,7 +52,7 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
-        void Show<T>(string title, ModalParameters parameters = null, ModalOptions options = null) where T : ComponentBase;
+        void Show<T>(string title, ModalParameters parameters = null, ModalOptions options = null, Action<ModalResult> onClose = null) where T : ComponentBase;
 
         /// <summary>
         /// Cancels the modal and invokes the <see cref="OnClose"/> event.
