@@ -4,35 +4,46 @@ using System;
 
 namespace Blazored.Modal
 {
-    public class BlazoredModalBase : ComponentBase, IDisposable
+    public partial class BlazoredModal : IDisposable
     {
-        const string DefaultStyle = "blazored-modal";
-        const string DefaultPosition = "blazored-modal-center";
+        const string _defaultStyle = "blazored-modal";
+        const string _defaultPosition = "blazored-modal-center";
 
-        [Inject] protected IModalService ModalService { get; set; }
+        [Inject] private IModalService ModalService { get; set; }
 
+        [Parameter] public bool HideHeader { get; set; }
         [Parameter] public bool HideCloseButton { get; set; }
         [Parameter] public bool DisableBackgroundCancel { get; set; }
         [Parameter] public string Position { get; set; }
         [Parameter] public string Style { get; set; }
 
-        protected bool ComponentDisableBackgroundCancel { get; set; }
-        protected bool ComponentHideCloseButton { get; set; }
-        protected string ComponentPosition { get; set; }
-        protected string ComponentStyle { get; set; }
-        protected ModalOptions Options { get; set; }
-        protected bool IsVisible { get; set; }
-        protected string Title { get; set; }
-        protected RenderFragment Content { get; set; }
-        protected ModalParameters Parameters { get; set; }
+        private bool ComponentDisableBackgroundCancel { get; set; }
+        private bool ComponentHideHeader { get; set; }
+        private bool ComponentHideCloseButton { get; set; }
+        private string ComponentPosition { get; set; }
+        private string ComponentStyle { get; set; }
+        private bool IsVisible { get; set; }
+        private string Title { get; set; }
+        private RenderFragment Content { get; set; }
+        private ModalParameters Parameters { get; set; }
+
+        /// <summary>
+        /// Sets the title for the modal being displayed
+        /// </summary>
+        /// <param name="title">Text to display as the title of the modal</param>
+        public void SetTitle(string title)
+        {
+            Title = title;
+            StateHasChanged();
+        }
 
         protected override void OnInitialized()
         {
             ((ModalService)ModalService).OnShow += ShowModal;
-            ModalService.OnClose += CloseModal;
+            ((ModalService)ModalService).CloseModal += CloseModal;
         }
 
-        public void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
+        private void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
         {
             Title = title;
             Content = content;
@@ -44,7 +55,7 @@ namespace Blazored.Modal
             StateHasChanged();
         }
 
-        internal void CloseModal(ModalResult modalResult)
+        private void CloseModal()
         {
             IsVisible = false;
             Title = "";
@@ -54,21 +65,19 @@ namespace Blazored.Modal
             StateHasChanged();
         }
 
-        protected void HandleBackgroundClick()
+        private void HandleBackgroundClick()
         {
             if (ComponentDisableBackgroundCancel) return;
 
             ModalService.Cancel();
         }
 
-        public void Dispose()
-        {
-            ((ModalService)ModalService).OnShow -= ShowModal;
-            ModalService.OnClose -= CloseModal;
-        }
-
         private void SetModalOptions(ModalOptions options)
         {
+            ComponentHideHeader = HideHeader;
+            if (options.HideHeader.HasValue)
+                ComponentHideHeader = options.HideHeader.Value;
+            
             ComponentHideCloseButton = HideCloseButton;
             if (options.HideCloseButton.HasValue)
                 ComponentHideCloseButton = options.HideCloseButton.Value;
@@ -79,11 +88,26 @@ namespace Blazored.Modal
 
             ComponentPosition = string.IsNullOrWhiteSpace(options.Position) ? Position : options.Position;
             if (string.IsNullOrWhiteSpace(ComponentPosition))
-                ComponentPosition = DefaultPosition;
+                ComponentPosition = _defaultPosition;
 
             ComponentStyle = string.IsNullOrWhiteSpace(options.Style) ? Style : options.Style;
             if (string.IsNullOrWhiteSpace(ComponentStyle))
-                ComponentStyle = DefaultStyle;
+                ComponentStyle = _defaultStyle;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                ((ModalService)ModalService).OnShow -= ShowModal;
+                ((ModalService)ModalService).CloseModal -= CloseModal;
+            }
         }
     }
 }
