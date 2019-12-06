@@ -51,7 +51,7 @@ Add the `<BlazoredModal />` tag into your applications *MainLayout.razor*.
 
 ### 4. Add reference to style sheet
 
-Add the following line to the `head` tag of your `_Host.cshtml`.
+Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server) or `index.html` (Blazor WebAssembly).
 
 ```html
 <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
