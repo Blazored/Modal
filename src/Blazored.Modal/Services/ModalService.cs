@@ -11,59 +11,63 @@ namespace Blazored.Modal.Services
         public event Action<ModalResult> OnClose;
 
         /// <summary>
+        /// Internal event used to close the modal instance.
+        /// </summary>
+        internal event Action CloseModal;
+
+        /// <summary>
         /// Internal event used to trigger the modal component to show.
         /// </summary>
         internal event Action<string, RenderFragment, ModalParameters, ModalOptions> OnShow;
 
         /// <summary>
-        /// Shows the modal using the specified title and component type.
+        /// Shows the modal with the component type using the specified title.
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
-        public void Show(string title, Type componentType)
+        public void Show<T>(string title) where T : ComponentBase
         {
-            Show(title, componentType, new ModalParameters(), new ModalOptions());
+            Show<T>(title, new ModalParameters(), new ModalOptions());
         }
 
         /// <summary>
-        /// Shows the modal using the specified title and component type.
+        /// Shows the modal with the component type using the specified title.
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
         /// <param name="options">Options to configure the modal.</param>
-        public void Show(string title, Type componentType, ModalOptions options)
+        public void Show<T>(string title, ModalOptions options) where T : ComponentBase
         {
-            Show(title, componentType, new ModalParameters(), options);
+            Show<T>(title, new ModalParameters(), options);
         }
 
         /// <summary>
-        /// Shows the modal using the specified <paramref name="title"/> and <paramref name="componentType"/>, 
+        /// Shows the modal with the component type using the specified <paramref name="title"/>, 
         /// passing the specified <paramref name="parameters"/>. 
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="componentType">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
-        public void Show(string title, Type componentType, ModalParameters parameters)
+        public void Show<T>(string title, ModalParameters parameters) where T : ComponentBase
         {
-            Show(title, componentType, parameters, new ModalOptions());
+            Show<T>(title, parameters, new ModalOptions());
         }
 
         /// <summary>
-        /// Shows the modal using the specified <paramref name="title"/> and <paramref name="componentType"/>, 
+        /// Shows the modal with the component type using the specified <paramref name="title"/>, 
         /// passing the specified <paramref name="parameters"/> and setting a custom CSS style. 
         /// </summary>
         /// <param name="title">Modal title.</param>
-        /// <param name="componentType">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
-        public void Show(string title, Type componentType, ModalParameters parameters, ModalOptions options)
+        public void Show<T>(string title, ModalParameters parameters, ModalOptions options) where T : ComponentBase
         {
-            if (!typeof(ComponentBase).IsAssignableFrom(componentType))
+            if (!typeof(ComponentBase).IsAssignableFrom(typeof(T)))
             {
-                throw new ArgumentException($"{componentType.FullName} must be a Blazor Component");
+                throw new ArgumentException($"{typeof(T).FullName} must be a Blazor Component");
             }
 
-            var content = new RenderFragment(x => { x.OpenComponent(1, componentType); x.CloseComponent(); });
+            var content = new RenderFragment(x => { x.OpenComponent(1, typeof(T)); x.CloseComponent(); });
 
             OnShow?.Invoke(title, content, parameters, options);
         }
@@ -73,6 +77,7 @@ namespace Blazored.Modal.Services
         /// </summary>
         public void Cancel()
         {
+            CloseModal?.Invoke();
             OnClose?.Invoke(ModalResult.Cancel());
         }
 
@@ -82,16 +87,8 @@ namespace Blazored.Modal.Services
         /// <param name="modalResult"></param>
         public void Close(ModalResult modalResult)
         {
+            CloseModal?.Invoke();
             OnClose?.Invoke(modalResult);
-        }
-
-        /// <inheritdoc cref="IModalService.Show{T}(string, ModalParameters, ModalOptions)"/>
-        public void Show<T>(string title, ModalParameters parameters = null, ModalOptions options = null) where T : ComponentBase
-        {
-            Show(title, 
-                 typeof(T),
-                 parameters ?? new ModalParameters(),
-                 options ?? new ModalOptions());
         }
     }
 }

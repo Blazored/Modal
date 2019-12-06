@@ -24,7 +24,7 @@
         var parameters = new ModalParameters();
         parameters.Add("FormId", 11);
 
-        Modal.Show("Sign Up Form", typeof(SignUpForm), parameters);
+        Modal.Show<SignUpForm>("Sign Up Form", parameters);
     }
 
     void PositionCustom(string position)
@@ -33,7 +33,7 @@
         parameters.Add("FormId", 11);
         var options = new ModalOptions() { Position = position };
 
-        Modal.Show("Sign Up Form", typeof(SignUpForm), parameters, options);
+        Modal.Show<SignUpForm>("Sign Up Form", parameters, options);
     }
 }
 

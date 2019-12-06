@@ -20,7 +20,7 @@
         parameters.Add("FormId", 11);
 
         Modal.OnClose += ModalClosed;
-        Modal.Show("Sign Up Form", typeof(SignUpForm), parameters);
+        Modal.Show<SignUpForm>("Sign Up Form", parameters);
     }
 
     void ModalClosed(ModalResult modalResult)
