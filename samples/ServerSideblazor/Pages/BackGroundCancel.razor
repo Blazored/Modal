@@ -20,7 +20,7 @@
         parameters.Add("FormId", 11);
         var options = new ModalOptions() { DisableBackgroundCancel = false };
 
-        Modal.Show("Sign Up Form", typeof(SignUpForm), parameters, options);
+        Modal.Show<SignUpForm>("Sign Up Form", parameters, options);
     }
 
     void BackgroundCancelDisabled()
@@ -29,7 +29,7 @@
         parameters.Add("FormId", 11);
         var options = new ModalOptions() { DisableBackgroundCancel = true };
 
-        Modal.Show("Sign Up Form", typeof(SignUpForm), parameters, options);
+        Modal.Show<SignUpForm>("Sign Up Form", parameters, options);
     }
 }
 

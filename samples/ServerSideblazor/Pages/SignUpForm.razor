@@ -29,6 +29,7 @@ else
 @code {
 
     [CascadingParameter] ModalParameters Parameters { get; set; }
+    [CascadingParameter] BlazoredModal BlazoredModal { get; set; }
 
     bool ShowForm { get; set; } = true;
     string FirstName { get; set; }
@@ -38,6 +39,7 @@ else
     protected override void OnInitialized()
     {
         FormId = Parameters.Get<int>("FormId");
+        BlazoredModal.SetTitle("Sheep");
     }
 
     void SubmitForm()
