@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Web
 
-<div @onkeyup="@((args) =>Console.WriteLine(args.Key))" tabindex="1" class="blazored-modal-container @ComponentPosition @(IsVisible ? "blazored-modal-active" : string.Empty)">
+<div class="blazored-modal-container @ComponentPosition @(IsVisible ? "blazored-modal-active" : string.Empty)">
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 

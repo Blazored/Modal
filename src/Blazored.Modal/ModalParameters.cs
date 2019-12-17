@@ -25,5 +25,15 @@ namespace Blazored.Modal
 
             return (T)_parameters[parameterName];
         }
+
+        public T TryGet<T>(string parameterName)
+        {
+            if (_parameters.ContainsKey(parameterName))
+            {
+                return (T)_parameters[parameterName];
+            }
+
+            return default;
+        }
     }
 }

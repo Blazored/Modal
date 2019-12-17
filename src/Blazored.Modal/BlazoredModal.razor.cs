@@ -43,7 +43,7 @@ namespace Blazored.Modal
             ((ModalService)ModalService).CloseModal += CloseModal;
         }
 
-        private void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
+        private async void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
         {
             Title = title;
             Content = content;
@@ -52,17 +52,17 @@ namespace Blazored.Modal
             SetModalOptions(options);
 
             IsVisible = true;
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void CloseModal()
+        private async void CloseModal()
         {
             IsVisible = false;
             Title = "";
             Content = null;
             ComponentStyle = "";
 
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
         }
 
         private void HandleBackgroundClick()

@@ -21,6 +21,9 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration) src/Blazored.Modal/Blazored.Modal.csproj
   displayName: 'Building $(buildConfiguration)...'
 
+- script: dotnet test ./tests/src/Blazored.Modal.Tests/Blazored.Modal.Tests.csproj --configuration $(buildConfiguration)
+  displayName: 'Testing $(buildConfiguration)...'
+
 - task: DotNetCoreCLI@2
   displayName: 'Generating Nuget Package... '
   inputs:
