@@ -20,7 +20,7 @@ namespace Blazored.Modal.Services
         /// </summary>
         internal event Action<string, RenderFragment, ModalParameters, ModalOptions> OnShow;
 
-        private Type ModalType;
+        private Type _modalType;
 
         /// <summary>
         /// Shows the modal with the component type using the specified title.
@@ -70,7 +70,7 @@ namespace Blazored.Modal.Services
             }
 
             var content = new RenderFragment(x => { x.OpenComponent(1, typeof(T)); x.CloseComponent(); });
-            ModalType = typeof(T);
+            _modalType = typeof(T);
 
             OnShow?.Invoke(title, content, parameters, options);
         }
@@ -81,7 +81,7 @@ namespace Blazored.Modal.Services
         public void Cancel()
         {
             CloseModal?.Invoke();
-            OnClose?.Invoke(ModalResult.Cancel(ModalType));
+            OnClose?.Invoke(ModalResult.Cancel(_modalType));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Blazored.Modal.Services
         /// <param name="modalResult"></param>
         public void Close(ModalResult modalResult)
         {
-            modalResult.ModalType = ModalType;
+            modalResult.ModalType = _modalType;
             CloseModal?.Invoke();
             OnClose?.Invoke(modalResult);
         }
