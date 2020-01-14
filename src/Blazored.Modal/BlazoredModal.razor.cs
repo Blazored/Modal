@@ -1,5 +1,7 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using System;
 
 namespace Blazored.Modal
@@ -10,6 +12,7 @@ namespace Blazored.Modal
         const string _defaultPosition = "blazored-modal-center";
 
         [Inject] private IModalService ModalService { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
 
         [Parameter] public bool HideHeader { get; set; }
         [Parameter] public bool HideCloseButton { get; set; }
@@ -52,7 +55,15 @@ namespace Blazored.Modal
             SetModalOptions(options);
 
             IsVisible = true;
+
+            await JSRuntime.InvokeVoidAsync("blazoredModal.registerEscListener", DotNetObjectReference.Create(this));
             await InvokeAsync(StateHasChanged);
+        }
+
+        [JSInvokable]
+        public void JsInvokeCloseModal()
+        {
+            ModalService.Cancel();
         }
 
         private async void CloseModal()
@@ -62,6 +73,7 @@ namespace Blazored.Modal
             Content = null;
             ComponentStyle = "";
 
+            await JSRuntime.InvokeVoidAsync("blazoredModal.unRegisterEscListener");
             await InvokeAsync(StateHasChanged);
         }
 
