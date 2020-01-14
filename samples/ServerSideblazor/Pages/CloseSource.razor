@@ -1,0 +1,74 @@
+﻿@page "/closesource"
+@inject IModalService Modal
+
+<h1>Determine which modal was closed</h1>
+
+<hr class="mb-5" />
+
+<p>
+    This example shows how to determine which modal caused the ModalClosed event.
+</p>
+
+@if (_lastClosedModalType != null)
+{
+<p class="alert-success">Last closed modal was of type <strong>@_lastClosedModalType.FullName</strong> which means it was <strong>@_lastClosedModal</strong></p>
+}
+
+<button @onclick="ShowModal1" class="btn btn-primary">Show Modal 1</button>
+<button @onclick="ShowModal2" class="btn btn-primary">Show Modal 2</button>
+
+@code {
+    private string _lastClosedModal = "";
+    private Type _lastClosedModalType = null;
+
+    void ShowModal1()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add("FormId", 11);
+
+        Modal.OnClose += ModalClosed;
+        Modal.Show<SignUpForm>("Sign Up Form", parameters);
+    }
+
+    void ShowModal2()
+    {
+        var parameters = new ModalParameters();
+        var options = new ModalOptions() { Style = "blazored-prompt-modal" };
+
+        Modal.OnClose += ModalClosed;
+        Modal.Show<YesNoPrompt>("Delete record?", options);
+    }
+
+    void ModalClosed(ModalResult modalResult)
+    {
+        Console.WriteLine("Modal has closed");
+
+        if (modalResult.Cancelled)
+        {
+            Console.WriteLine("Modal was Cancelled");
+        }
+        else
+        {
+            Console.WriteLine(modalResult.Data.ToString());
+        }
+        _lastClosedModalType = modalResult.ModalType;
+        if (_lastClosedModalType == typeof(SignUpForm))
+        {
+            _lastClosedModal = "Modal 1";
+        }
+        else if(_lastClosedModalType == typeof(YesNoPrompt))
+        {
+            _lastClosedModal = "Modal 2";
+        }
+        else
+        {
+            _lastClosedModal = "Unknown";
+        }
+        StateHasChanged();
+
+
+        Modal.OnClose -= ModalClosed;
+    }
+
+}
+
