@@ -166,7 +166,7 @@ If you need to pass values to the component you are displaying in the modal, the
 
 ### Modal Closed Event
 
-If you need to know when the modal has closed, for example to trigger an update of data. The modal service exposes a `OnClose` event which returns a `ModalResult` type. This type is used to identify how the modal was closed. If the modal was cancelled you can return `ModalResult.Cancelled()`. If you want to return a object from your modal you can return `ModalResult.Ok(myResultObject)` which can be accessed via the `ModalResult.Data` property. There is also a `ModalResult.DataType` property which contains the type of the data property, if required.
+If you need to know when the modal has closed, for example to trigger an update of data. The modal service exposes a `OnClose` event which returns a `ModalResult` type. This type is used to identify how the modal was closed. If the modal was cancelled you can return `ModalResult.Cancelled()`. If you want to return a object from your modal you can return `ModalResult.Ok(myResultObject)` which can be accessed via the `ModalResult.Data` property. There is also a `ModalResult.DataType` property which contains the type of the data property, if required. The `ModalResult` also contains the `ModalResult.ModalType` property, which can be used to identify which modal caused the `OnClose` event to fire. This property will be equal to the type used in the `Modal.Show` call. In the example below, it would thus be equal to the type `Movies`.
 
 ```html
 @page "/"
@@ -194,7 +194,9 @@ If you need to know when the modal has closed, for example to trigger an update 
         {
             Console.WriteLine(modalResult.Data);
         }
-
+        Console.Write("Modal was closed by ");
+        Console.WriteLine(modalResult.ModalType);
+        
         Modal.OnClose -= ModalClosed;
     }
 
