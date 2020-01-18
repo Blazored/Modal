@@ -85,6 +85,11 @@ namespace Blazored.Modal.Services
         }
 
         /// <summary>
+        /// Closes the modal and invokes the <see cref="OnClose"/> event with a default <see cref="ModalResult.Ok{T}(T)"/>.
+        /// </summary>
+        public void Close() => Close(ModalResult.Ok<object>(null));
+
+        /// <summary>
         /// Closes the modal and invokes the <see cref="OnClose"/> event with the specified <paramref name="modalResult"/>.
         /// </summary>
         /// <param name="modalResult"></param>
