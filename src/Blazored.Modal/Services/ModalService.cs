@@ -21,10 +21,17 @@ namespace Blazored.Modal.Services
         internal event Action<string, RenderFragment, ModalParameters, ModalOptions> OnShow;
 
         /// <summary>
+        /// Shows the modal with the component type.
+        /// </summary>
+        public void Show<T>() where T : ComponentBase
+        {
+            Show<T>(string.Empty, new ModalParameters(), new ModalOptions());
+        }
+
+        /// <summary>
         /// Shows the modal with the component type using the specified title.
         /// </summary>
         /// <param name="title">Modal title.</param>
-        /// <param name="componentType">Type of component to display.</param>
         public void Show<T>(string title) where T : ComponentBase
         {
             Show<T>(title, new ModalParameters(), new ModalOptions());
@@ -34,7 +41,6 @@ namespace Blazored.Modal.Services
         /// Shows the modal with the component type using the specified title.
         /// </summary>
         /// <param name="title">Modal title.</param>
-        /// <param name="componentType">Type of component to display.</param>
         /// <param name="options">Options to configure the modal.</param>
         public void Show<T>(string title, ModalOptions options) where T : ComponentBase
         {
@@ -46,7 +52,6 @@ namespace Blazored.Modal.Services
         /// passing the specified <paramref name="parameters"/>. 
         /// </summary>
         /// <param name="title">Modal title.</param>
-        /// <param name="componentType">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         public void Show<T>(string title, ModalParameters parameters) where T : ComponentBase
         {
@@ -62,12 +67,66 @@ namespace Blazored.Modal.Services
         /// <param name="options">Options to configure the modal.</param>
         public void Show<T>(string title, ModalParameters parameters, ModalOptions options) where T : ComponentBase
         {
-            if (!typeof(ComponentBase).IsAssignableFrom(typeof(T)))
+            Show(typeof(T), title, parameters, options);
+        }
+
+        /// <summary>
+        /// Shows the modal with the specific component type.
+        /// </summary>
+        /// <param name="contentComponent">Type of component to display.</param>
+        public void Show(Type contentComponent)
+        {
+            Show(contentComponent, string.Empty, new ModalParameters(), new ModalOptions());
+        }
+
+        /// <summary>
+        /// Shows the modal with the component type using the specified title.
+        /// </summary>
+        /// <param name="contentComponent">Type of component to display.</param>
+        /// <param name="title">Modal title.</param>
+        public void Show(Type contentComponent, string title)
+        {
+            Show(contentComponent, title, new ModalParameters(), new ModalOptions());
+        }
+
+        /// <summary>
+        /// Shows the modal with the component type using the specified title.
+        /// </summary>
+        /// <param name="title">Modal title.</param>
+        /// <param name="contentComponent">Type of component to display.</param>
+        /// <param name="options">Options to configure the modal.</param>
+        public void Show(Type contentComponent, string title, ModalOptions options)
+        {
+            Show(contentComponent, title, new ModalParameters(), options);
+        }
+
+        /// <summary>
+        /// Shows the modal with the component type using the specified <paramref name="title"/>, 
+        /// passing the specified <paramref name="parameters"/>. 
+        /// </summary>
+        /// <param name="title">Modal title.</param>
+        /// <param name="contentComponent">Type of component to display.</param>
+        /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
+        public void Show(Type contentComponent, string title, ModalParameters parameters)
+        {
+            Show(contentComponent, title, parameters, new ModalOptions());
+        }
+
+        /// <summary>
+        /// Shows the modal with the component type using the specified <paramref name="title"/>, 
+        /// passing the specified <paramref name="parameters"/> and setting a custom CSS style. 
+        /// </summary>
+        /// <param name="title">Modal title.</param>
+        /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
+        /// <param name="options">Options to configure the modal.</param>
+        public void Show(Type contentComponent, string title, ModalParameters parameters, ModalOptions options)
+        {
+            if (!contentComponent.IsAssignableFrom(typeof(ComponentBase)))
             {
-                throw new ArgumentException($"{typeof(T).FullName} must be a Blazor Component");
+                throw new ArgumentException($"{contentComponent.FullName} must be a Blazor Component");
             }
 
-            var content = new RenderFragment(x => { x.OpenComponent(1, typeof(T)); x.CloseComponent(); });
+            var content = new RenderFragment(x => { x.OpenComponent(1, contentComponent); x.CloseComponent(); });
 
             OnShow?.Invoke(title, content, parameters, options);
         }
