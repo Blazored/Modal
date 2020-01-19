@@ -20,6 +20,8 @@ namespace Blazored.Modal.Services
         /// </summary>
         internal event Action<string, RenderFragment, ModalParameters, ModalOptions> OnShow;
 
+        private Type _modalType;
+
         /// <summary>
         /// Shows the modal with the component type.
         /// </summary>
@@ -121,12 +123,13 @@ namespace Blazored.Modal.Services
         /// <param name="options">Options to configure the modal.</param>
         public void Show(Type contentComponent, string title, ModalParameters parameters, ModalOptions options)
         {
-            if (!contentComponent.IsAssignableFrom(typeof(ComponentBase)))
+            if (!typeof(ComponentBase).IsAssignableFrom(contentComponent))
             {
                 throw new ArgumentException($"{contentComponent.FullName} must be a Blazor Component");
             }
 
             var content = new RenderFragment(x => { x.OpenComponent(1, contentComponent); x.CloseComponent(); });
+            _modalType = contentComponent;
 
             OnShow?.Invoke(title, content, parameters, options);
         }
@@ -137,8 +140,13 @@ namespace Blazored.Modal.Services
         public void Cancel()
         {
             CloseModal?.Invoke();
-            OnClose?.Invoke(ModalResult.Cancel());
+            OnClose?.Invoke(ModalResult.Cancel(_modalType));
         }
+
+        /// <summary>
+        /// Closes the modal and invokes the <see cref="OnClose"/> event with a default <see cref="ModalResult.Ok{T}(T)"/>.
+        /// </summary>
+        public void Close() => Close(ModalResult.Ok<object>(null));
 
         /// <summary>
         /// Closes the modal and invokes the <see cref="OnClose"/> event with the specified <paramref name="modalResult"/>.
@@ -146,6 +154,7 @@ namespace Blazored.Modal.Services
         /// <param name="modalResult"></param>
         public void Close(ModalResult modalResult)
         {
+            modalResult.ModalType = _modalType;
             CloseModal?.Invoke();
             OnClose?.Invoke(modalResult);
         }
