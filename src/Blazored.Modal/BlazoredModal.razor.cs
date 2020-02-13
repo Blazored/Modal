@@ -1,13 +1,12 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using System;
 
 namespace Blazored.Modal
 {
-    using System.Security.Cryptography;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Components.Web;
-    using Microsoft.JSInterop;
 
     public partial class BlazoredModal : IDisposable
     {
@@ -24,6 +23,7 @@ namespace Blazored.Modal
         [Parameter] public string Position { get; set; }
         [Parameter] public string Style { get; set; }
 
+        private bool FocusModal { get; set; }
         private bool ComponentDisableBackgroundCancel { get; set; }
         private bool ComponentHideHeader { get; set; }
         private bool ComponentHideCloseButton { get; set; }
@@ -52,6 +52,17 @@ namespace Blazored.Modal
             ((ModalService)ModalService).CloseModal += CloseModal;
         }
 
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+
+            if (!firstRender && this.FocusModal)
+            {
+                await this.JSInterop.InvokeVoidAsync("BlazoredModal.setFocus", this.ModalWrapper);
+                this.FocusModal = false;
+            }
+        }
+
         private async void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
         {
             Title = title;
@@ -62,8 +73,7 @@ namespace Blazored.Modal
 
             IsVisible = true;
             await InvokeAsync(StateHasChanged);
-            await Task.Delay(200);
-            await this.JSInterop.InvokeVoidAsync("BlazoredModal.setFocus", this.ModalWrapper);
+            this.FocusModal = true;
         }
 
         private async void CloseModal()
