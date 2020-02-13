@@ -4,7 +4,7 @@
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
-    <div class="blazored-modal-wrapper">
+    <div class="blazored-modal-wrapper" @onkeyup="@(e => ReactToControlCommands(e))" tabindex="0" @ref=ModalWrapper>
         <div class="@ComponentStyle">
             @if (!ComponentHideHeader)
             {

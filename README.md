@@ -57,6 +57,14 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server) 
 <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
 ```
 
+### 5. Add reference to javascript
+
+Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server) or `index.html` (Blazor WebAssembly).
+
+```html
+<script src="_content/Blazored.Modal/blazored-modal.js"></script>
+```
+
 ## Usage
 
 ### Displaying the modal

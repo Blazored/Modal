@@ -4,12 +4,19 @@ using System;
 
 namespace Blazored.Modal
 {
+    using System.Security.Cryptography;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Components.Web;
+    using Microsoft.JSInterop;
+
     public partial class BlazoredModal : IDisposable
     {
         const string _defaultStyle = "blazored-modal";
         const string _defaultPosition = "blazored-modal-center";
 
         [Inject] private IModalService ModalService { get; set; }
+
+        [Inject] private IJSRuntime JSInterop { get; set; }
 
         [Parameter] public bool HideHeader { get; set; }
         [Parameter] public bool HideCloseButton { get; set; }
@@ -26,6 +33,8 @@ namespace Blazored.Modal
         private string Title { get; set; }
         private RenderFragment Content { get; set; }
         private ModalParameters Parameters { get; set; }
+
+        private ElementReference ModalWrapper { get; set; }
 
         /// <summary>
         /// Sets the title for the modal being displayed
@@ -53,6 +62,8 @@ namespace Blazored.Modal
 
             IsVisible = true;
             await InvokeAsync(StateHasChanged);
+            await Task.Delay(200);
+            await this.JSInterop.InvokeVoidAsync("BlazoredModal.setFocus", this.ModalWrapper);
         }
 
         private async void CloseModal()
@@ -107,6 +118,14 @@ namespace Blazored.Modal
             {
                 ((ModalService)ModalService).OnShow -= ShowModal;
                 ((ModalService)ModalService).CloseModal -= CloseModal;
+            }
+        }
+
+        private void ReactToControlCommands(KeyboardEventArgs e)
+        {
+            if (e.Code == "Escape")
+            {
+                ModalService.Cancel();
             }
         }
     }
