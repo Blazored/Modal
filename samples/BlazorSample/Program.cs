@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Blazor.Hosting;
+﻿using Blazored.Modal;
+using Microsoft.AspNetCore.Blazor.Hosting;
+using System.Threading.Tasks;
 
 namespace BlazorSample
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.RootComponents.Add<App>("app");
+            builder.Services.AddBlazoredModal();
 
-        public static IWebAssemblyHostBuilder CreateHostBuilder(string[] args) =>
-            BlazorWebAssemblyHost.CreateDefaultBuilder()
-                .UseBlazorStartup<Startup>();
+            await builder.Build().RunAsync();
+        }
     }
 }
