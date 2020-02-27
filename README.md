@@ -180,28 +180,41 @@ If you need to know when the modal has closed, for example to trigger an update 
 
     void ShowModal()
     {
-        Modal.OnClose += ModalClosed;
-        Modal.Show<Movies>("My Movies");
-    }
-
-    void ModalClosed(ModalResult modalResult)
-    {
-        if (modalResult.Cancelled)
-        {
-            Console.WriteLine("Modal was cancelled");
-        }
-        else
-        {
-            Console.WriteLine(modalResult.Data);
-        }
-        Console.Write("Modal was closed by ");
-        Console.WriteLine(modalResult.ModalType);
-        
-        Modal.OnClose -= ModalClosed;
+        var modal = Modal.Show<Movies>("My Movies");
+		modal.Closed += (ModalResult modalResult)
+		{
+			if (modalResult.Cancelled)
+			{
+				Console.WriteLine("Modal was cancelled");
+			}
+			else
+			{
+				Console.WriteLine(modalResult.Data);
+			}
+			Console.Write("Modal was closed by ");
+			Console.WriteLine(modalResult.ModalType);
+		};
     }
 
 }
 ```
+
+### await Result - alternative to Closed Event
+```csharp
+var modal = Modal.Show<Movies>("My Movies");
+var modalResult = await modal.Result;
+if (modalResult.Cancelled)
+{
+    Console.WriteLine("Modal was cancelled");
+}
+else
+{
+    Console.WriteLine(modalResult.Data);
+}
+Console.Write("Modal was closed by ");
+Console.WriteLine(modalResult.ModalType);
+```
+
 
 ### Customizing the modal
 
