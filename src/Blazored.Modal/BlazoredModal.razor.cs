@@ -43,13 +43,17 @@ namespace Blazored.Modal
             ((ModalService)ModalService).CloseModal += CloseModal;
         }
 
-        private async void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
+        private async void ShowModal(ModalReference modalReference)
         {
-            Title = title;
-            Content = content;
-            Parameters = parameters;
+            Title = modalReference.Title;
+            Content = new RenderFragment(builder => {
+                builder.OpenComponent(1, modalReference.ComponentType);
+                builder.AddComponentReferenceCapture(1, inst => { modalReference.SetComponentInstance((ComponentBase)inst); });
+                builder.CloseComponent(); 
+            });
+            Parameters = modalReference.Parameters;
 
-            SetModalOptions(options);
+            SetModalOptions(modalReference.Options);
 
             IsVisible = true;
             await InvokeAsync(StateHasChanged);

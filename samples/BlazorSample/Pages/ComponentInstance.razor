@@ -1,0 +1,49 @@
+﻿@page "/componentinstance"
+@inject IModalService Modal
+
+<h1>Accessing Component Instance</h1>
+
+<hr class="mb-5" />
+
+<p>
+    This example shows how to access instance of the component shown as the content of Blazored.Modal.
+    It can be usefull for setting component's properties or listeting to custom events
+</p>
+
+<p>
+    Following values will be set directly to the component instance properties:
+</p>
+<div class="form-group">
+    <label for="first-name">First Name</label>
+    <input @bind="DefaultFirstName" type="text" class="form-control" id="first-name" placeholder="Enter First Name" />
+</div>
+
+<div class="form-group">
+    <label for="last-name">Last Name</label>
+    <input @bind="DefaultLastName" type="text" class="form-control" id="last-name" placeholder="Enter Last Name" />
+</div>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show SignUp Form</button>
+
+
+@code {
+
+    string DefaultFirstName { get; set; } = "John";
+    string DefaultLastName { get; set; } = "Smith";
+
+    void ShowModal()
+    {
+        var modal = Modal.Show<SignUpForm>("Sign Up Form");
+        modal.Showed += (instance) =>
+        {
+            var signUpForm = (SignUpForm)instance;
+            signUpForm.FirstName = DefaultFirstName;
+            signUpForm.LastName = DefaultLastName;
+            signUpForm.FormSubmitted += () =>
+            {
+                Console.WriteLine($"Form has been submitted");
+            };
+        };
+    }
+}
+

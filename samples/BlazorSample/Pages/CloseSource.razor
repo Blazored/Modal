@@ -11,7 +11,7 @@
 
 @if (_lastClosedModalType != null)
 {
-<p class="alert-success">Last closed modal was of type <strong>@_lastClosedModalType.FullName</strong> which means it was <strong>@_lastClosedModal</strong></p>
+    <p class="alert-success">Last closed modal was of type <strong>@_lastClosedModalType.FullName</strong> which means it was <strong>@_lastClosedModal</strong></p>
 }
 
 <button @onclick="ShowModal1" class="btn btn-primary">Show Modal 1</button>
@@ -26,8 +26,8 @@
         var parameters = new ModalParameters();
         parameters.Add("FormId", 11);
 
-        Modal.OnClose += ModalClosed;
-        Modal.Show<SignUpForm>("Sign Up Form", parameters);
+        var modal = Modal.Show<SignUpForm>("Sign Up Form", parameters);
+        modal.Closed += (result) => ModalClosed(modal, result);
     }
 
     void ShowModal2()
@@ -35,11 +35,11 @@
         var parameters = new ModalParameters();
         var options = new ModalOptions() { Style = "blazored-prompt-modal" };
 
-        Modal.OnClose += ModalClosed;
-        Modal.Show<YesNoPrompt>("Delete record?", options);
+        var modal = Modal.Show<YesNoPrompt>("Delete record?", options);
+        modal.Closed += (result) => ModalClosed(modal, result);
     }
 
-    void ModalClosed(ModalResult modalResult)
+    void ModalClosed(ModalReference modal, ModalResult modalResult)
     {
         Console.WriteLine("Modal has closed");
 
@@ -51,23 +51,9 @@
         {
             Console.WriteLine(modalResult.Data.ToString());
         }
-        _lastClosedModalType = modalResult.ModalType;
-        if (_lastClosedModalType == typeof(SignUpForm))
-        {
-            _lastClosedModal = "Modal 1";
-        }
-        else if(_lastClosedModalType == typeof(YesNoPrompt))
-        {
-            _lastClosedModal = "Modal 2";
-        }
-        else
-        {
-            _lastClosedModal = "Unknown";
-        }
+        _lastClosedModalType = modal.ComponentType;
+        _lastClosedModal = modal.Title;
         StateHasChanged();
-
-
-        Modal.OnClose -= ModalClosed;
     }
 
 }

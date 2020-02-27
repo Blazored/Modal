@@ -31,20 +31,25 @@ else
     [CascadingParameter] ModalParameters Parameters { get; set; }
     [CascadingParameter] BlazoredModal BlazoredModal { get; set; }
 
+    public event Action FormSubmitted;
+
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+
     bool ShowForm { get; set; } = true;
-    string FirstName { get; set; }
-    string LastName { get; set; }
     int FormId { get; set; }
 
     protected override void OnInitialized()
     {
-        FormId = Parameters.Get<int>("FormId");
+        FormId = Parameters.TryGet<int>("FormId");
         BlazoredModal.SetTitle("Sheep");
     }
+
 
     void SubmitForm()
     {
         ShowForm = false;
+        this.FormSubmitted?.Invoke();
     }
 
     void Done()
