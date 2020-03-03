@@ -39,7 +39,7 @@ public void ConfigureServices(IServiceCollection services)
 
 Add the following to your *_Imports.razor*
 
-```csharp
+```razor
 @using Blazored
 @using Blazored.Modal
 @using Blazored.Modal.Services
@@ -65,7 +65,7 @@ In order to show the modal, you have to inject the `IModalService` into the comp
 
 For example, say I have a component called `Movies` which I want to display in the modal and I want to call it from the `Index` component on a button click.
 
-```html
+```razor
 @page "/"
 @inject IModalService Modal
 
@@ -82,7 +82,7 @@ If you need to pass values to the component you are displaying in the modal, the
 
 #### Index Component
 
-```html
+```razor
 @page "/"
 @inject IModalService Modal
 
@@ -112,7 +112,7 @@ If you need to pass values to the component you are displaying in the modal, the
 
 #### EditMovie Component
 
-```html
+```razor
 @inject IMovieService MovieService
 @inject IModalService ModalService
 
@@ -168,7 +168,7 @@ If you need to pass values to the component you are displaying in the modal, the
 
 If you need to know when the modal has closed, for example to trigger an update of data. The modal service exposes a `OnClose` event which returns a `ModalResult` type. This type is used to identify how the modal was closed. If the modal was cancelled you can return `ModalResult.Cancelled()`. If you want to return a object from your modal you can return `ModalResult.Ok(myResultObject)` which can be accessed via the `ModalResult.Data` property. There is also a `ModalResult.DataType` property which contains the type of the data property, if required. The `ModalResult` also contains the `ModalResult.ModalType` property, which can be used to identify which modal caused the `OnClose` event to fire. This property will be equal to the type used in the `Modal.Show` call. In the example below, it would thus be equal to the type `Movies`.
 
-```html
+```razor
 @page "/"
 @inject IModalService Modal
 
@@ -215,7 +215,7 @@ A modal has a close button in the top right hand corner by default. The close bu
 
 Or in the `Modal.Show()` method:
 
-```csharp
+```razor
 @code {
     void ShowModal()
     {
@@ -237,7 +237,7 @@ You can disable cancelling the modal by clicking on the background using the `Di
 
 Or in the `Modal.Show()` method:
 
-```csharp
+```razor
 @code {
     void ShowModal()
     {
@@ -261,7 +261,7 @@ Use the `Style` parameter to set the custom styling globally:
 
 Or in the `Modal.Show()` method:
 
-```csharp
+```razor
 @code {
     void ShowModal()
     {
@@ -287,7 +287,7 @@ Use the `Style` parameter to set the custom styling globally:
 
 Or in the `Modal.Show()` method:
 
-```csharp
+```razor
 @code {
     void ShowModal()
     {
