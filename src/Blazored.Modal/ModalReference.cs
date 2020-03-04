@@ -1,22 +1,21 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Dynamic;
 using System.Threading.Tasks;
 
 namespace Blazored.Modal
 {
     public class ModalReference
     {
-        private TaskCompletionSource<ModalResult> _resultCompletion;
+        private TaskCompletionSource<ModalResult> _resultCompletion = new TaskCompletionSource<ModalResult>();
 
         private event Action<ModalResult> Closed;
 
-        public ModalReference(RenderFragment modalInstance)
+        public ModalReference(Guid modalInstanceId, RenderFragment modalInstance)
         {
-            _resultCompletion = new TaskCompletionSource<ModalResult>();
-            Closed += (result) => _resultCompletion.SetResult(result);
+            Id = modalInstanceId;
             ModalInstance = modalInstance;
+            Closed += (result) => _resultCompletion.SetResult(result);
         }
 
         internal Guid Id { get; set; }

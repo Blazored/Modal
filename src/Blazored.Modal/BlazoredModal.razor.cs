@@ -17,7 +17,7 @@ namespace Blazored.Modal
         [Parameter] public string Position { get; set; }
         [Parameter] public string Class { get; set; }
 
-        private Collection<ModalReference> Modals = new Collection<ModalReference>();
+        private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
 
         protected override void OnInitialized()
         {
@@ -26,11 +26,16 @@ namespace Blazored.Modal
 
         internal void CloseInstance(Guid Id)
         {
+            CloseInstance(Id, ModalResult.Ok<object>(null));
+        }
+
+        internal void CloseInstance(Guid Id, ModalResult result)
+        {
             var reference = Modals.SingleOrDefault(x => x.Id == Id);
 
             if (reference != null)
             {
-                reference.Dismiss(ModalResult.Ok<object>(null));
+                reference.Dismiss(result);
                 Modals.Remove(reference);
                 StateHasChanged();
             }

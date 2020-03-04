@@ -1,6 +1,7 @@
-﻿<CascadingValue Value="this">
+﻿@*<p>Current Modals: @Modals.Count</p>*@
+<CascadingValue Value="this">
     @foreach (var modalInstance in Modals)
     {
-        @modalInstance
+        @modalInstance.ModalInstance
     }
 </CascadingValue>

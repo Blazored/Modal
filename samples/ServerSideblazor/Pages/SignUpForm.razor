@@ -1,6 +1,4 @@
-﻿@inject IModalService ModalService
-
-@if (ShowForm)
+﻿@if (ShowForm)
 {
     <div class="simple-form">
 
@@ -29,7 +27,7 @@ else
 @code {
 
     [CascadingParameter] ModalParameters Parameters { get; set; }
-    [CascadingParameter] BlazoredModal BlazoredModal { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
     bool ShowForm { get; set; } = true;
     string FirstName { get; set; }
@@ -49,12 +47,12 @@ else
 
     void Done()
     {
-        ModalService.Close(ModalResult.Ok($"Form ID {FormId} was submitted successfully."));
+        BlazoredModal.Close(ModalResult.Ok($"Form ID {FormId} was submitted successfully."));
     }
 
     void Cancel()
     {
-        ModalService.Close(ModalResult.Cancel());
+        BlazoredModal.Close(ModalResult.Cancel());
     }
 
 }

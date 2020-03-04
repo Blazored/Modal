@@ -116,17 +116,18 @@ namespace Blazored.Modal.Services
             }
 
             var modalInstanceId = Guid.NewGuid();
+            var modalContent = new RenderFragment(x => { x.OpenComponent(1, contentComponent); x.CloseComponent(); });
             var modalInstance = new RenderFragment(builder =>
             {
                 builder.OpenComponent<BlazoredModalInstance>(1);
-                builder.AddAttribute(2, "ModalOptions", options);
-                builder.AddAttribute(2, "ModalParameters", parameters);
+                builder.AddAttribute(2, "Options", options);
+                builder.AddAttribute(2, "Parameters", parameters);
                 builder.AddAttribute(2, "Title", title);
-                builder.AddAttribute(2, "Content", contentComponent);
+                builder.AddAttribute(2, "Content", modalContent);
                 builder.AddAttribute(2, "Id", modalInstanceId);
                 builder.CloseComponent();
             });
-            var modalReference = new ModalReference(modalInstance);
+            var modalReference = new ModalReference(modalInstanceId, modalInstance);
 
             OnModalInstanceAdded?.Invoke(modalReference);
 

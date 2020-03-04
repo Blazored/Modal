@@ -15,16 +15,24 @@
 @code {
 
     [CascadingParameter] ModalParameters Parameters { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
     bool ShowForm { get; set; } = true;
 
-    void Yes()
+    async Task Yes()
     {
-        ModalService.Close(ModalResult.Ok($"The user said 'Yes'"));
+        var confirmationModal = ModalService.Show<ConfirmationPrompt>();
+        var result = await confirmationModal.Result;
+
+        if (result.Cancelled)
+            return;
+
+        BlazoredModal.Close(ModalResult.Ok($"The user said 'Yes'"));
     }
 
     void No()
     {
-        ModalService.Close(ModalResult.Cancel());
+        BlazoredModal.Close(ModalResult.Cancel());
     }
 
 }

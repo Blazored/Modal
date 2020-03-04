@@ -54,7 +54,7 @@
     /// <param name="modalResult"></param>
     public void Close(ModalResult modalResult)
     {
-        Parent.CloseInstance(Id);
+        Parent.CloseInstance(Id, modalResult);
     }
 
     private string GetPosition()
