@@ -21,22 +21,26 @@
     private string _lastClosedModal = "";
     private Type _lastClosedModalType = null;
 
-    void ShowModal1()
+    async Task ShowModal1()
     {
         var parameters = new ModalParameters();
         parameters.Add("FormId", 11);
 
-        Modal.OnClose += ModalClosed;
-        Modal.Show<SignUpForm>("Sign Up Form", parameters);
+        var signUpModal = Modal.Show<SignUpForm>("Sign Up Form", parameters);
+        var result = await signUpModal.Result;
+
+        ModalClosed(result);
     }
 
-    void ShowModal2()
+    async Task ShowModal2()
     {
         var parameters = new ModalParameters();
-        var options = new ModalOptions() { Style = "blazored-prompt-modal" };
+        var options = new ModalOptions() { Class = "blazored-prompt-modal" };
 
-        Modal.OnClose += ModalClosed;
-        Modal.Show<YesNoPrompt>("Delete record?", options);
+        var confirmationModal = Modal.Show<YesNoPrompt>("Delete record?", options);
+        var result = await confirmationModal.Result;
+
+        ModalClosed(result);
     }
 
     void ModalClosed(ModalResult modalResult)
@@ -64,10 +68,6 @@
         {
             _lastClosedModal = "Unknown";
         }
-        StateHasChanged();
-
-
-        Modal.OnClose -= ModalClosed;
     }
 
 }

@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Blazored.Modal.Tests.Assets
 {

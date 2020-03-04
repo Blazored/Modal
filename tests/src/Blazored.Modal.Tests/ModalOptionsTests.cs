@@ -20,13 +20,12 @@ namespace Blazored.Modal.Tests
         [Fact]
         public void ModalDisplaysCorrectPositionClass()
         {
-            var position = "blazored-modal-topleft";
-            var options = new ModalOptions() { Position = position };
+            var options = new ModalOptions() { Position = ModalPosition.TopLeft };
             var component = _host.AddComponent<BlazoredModal>();
 
             _modalService.Show<TestComponent>("", options);
 
-            var modalContainer = component.Find($".blazored-modal-container.{position}");
+            var modalContainer = component.Find($".blazored-modal-container.blazored-modal-topleft");
 
             Assert.NotNull(modalContainer);
         }
@@ -35,7 +34,7 @@ namespace Blazored.Modal.Tests
         public void ModalDisplaysCustomStyles()
         {
             var customStyle = "my-custom-style";
-            var options = new ModalOptions() { Style = customStyle };
+            var options = new ModalOptions() { Class = customStyle };
             var component = _host.AddComponent<BlazoredModal>();
 
             _modalService.Show<TestComponent>("", options);

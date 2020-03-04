@@ -1,5 +1,5 @@
-using Blazored.Modal.Services;
 using Blazored.Modal.Tests.Assets;
+using Microsoft.AspNetCore.Components.Testing;
 using Xunit;
 
 namespace Blazored.Modal.Tests
@@ -10,7 +10,7 @@ namespace Blazored.Modal.Tests
         public void ModalIsNotVisibleByDefault()
         {
             var component = _host.AddComponent<BlazoredModal>();
-            var modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            var modalContainer = component.Find(".blazored-modal-container");
 
             Assert.Null(modalContainer);
         }
@@ -21,7 +21,7 @@ namespace Blazored.Modal.Tests
             var component = _host.AddComponent<BlazoredModal>();
             _modalService.Show<TestComponent>("");
 
-            var modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            var modalContainer = component.Find(".blazored-modal-container");
 
             Assert.NotNull(modalContainer);
         }
@@ -31,12 +31,14 @@ namespace Blazored.Modal.Tests
         {
             var component = _host.AddComponent<BlazoredModal>();
             _modalService.Show<TestComponent>("");
-            var modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            var modalContainer = component.Find(".blazored-modal-container");
 
             Assert.NotNull(modalContainer);
 
-            _modalService.Close(ModalResult.Ok("Ok"));
-            modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            var closeButton = component.Find(".blazored-modal-close");
+            closeButton.Click();
+
+            modalContainer = component.Find(".blazored-modal-container");
 
             Assert.Null(modalContainer);
         }
@@ -46,12 +48,14 @@ namespace Blazored.Modal.Tests
         {
             var component = _host.AddComponent<BlazoredModal>();
             _modalService.Show<TestComponent>("");
-            var modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            var modalContainer = component.Find(".blazored-modal-container");
 
             Assert.NotNull(modalContainer);
 
-            _modalService.Cancel();
-            modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            var cancelButton = component.Find(".blazored-modal-close");
+            cancelButton.Click();
+
+            modalContainer = component.Find(".blazored-modal-container");
 
             Assert.Null(modalContainer);
         }

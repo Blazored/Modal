@@ -1,6 +1,4 @@
-﻿@inject IModalService ModalService
-
-@if (ShowForm)
+﻿@if (ShowForm)
 {
     <div class="simple-form">
 
@@ -22,13 +20,14 @@ else
 {
     <div class="alert alert-success" role="alert">
         Thanks @FirstName @LastName, form (Id: @FormId) submitted successfully.<br />
-        <button class="btn btn-primary" @onclick="@Done">Done</button>
+        <button class="btn btn-primary" @onclick="Done">Done</button>
     </div>
 }
 
 @code {
 
     [CascadingParameter] ModalParameters Parameters { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
     bool ShowForm { get; set; } = true;
     string FirstName { get; set; }
@@ -38,6 +37,7 @@ else
     protected override void OnInitialized()
     {
         FormId = Parameters.Get<int>("FormId");
+        BlazoredModal.SetTitle("Sheep");
     }
 
     void SubmitForm()
@@ -47,12 +47,12 @@ else
 
     void Done()
     {
-        ModalService.Close(ModalResult.Ok($"Form ID {FormId} was submitted successfully."));
+        BlazoredModal.Close(ModalResult.Ok($"Form ID {FormId} was submitted successfully."));
     }
 
     void Cancel()
     {
-        ModalService.Close(ModalResult.Cancel());
+        BlazoredModal.Close(ModalResult.Cancel());
     }
 
 }
