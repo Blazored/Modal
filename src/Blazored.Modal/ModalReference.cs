@@ -15,7 +15,12 @@ namespace Blazored.Modal
         {
             Id = modalInstanceId;
             ModalInstance = modalInstance;
-            Closed += (result) => _resultCompletion.SetResult(result);
+            Closed += HandleClosed;
+        }
+
+        private void HandleClosed(ModalResult obj)
+        {
+            _ = _resultCompletion.TrySetResult(obj);
         }
 
         internal Guid Id { get; set; }
@@ -23,7 +28,7 @@ namespace Blazored.Modal
 
         public Task<ModalResult> Result => _resultCompletion.Task;
 
-        internal virtual void Dismiss(ModalResult result)
+        internal void Dismiss(ModalResult result)
         {
             Closed.Invoke(result);
         }

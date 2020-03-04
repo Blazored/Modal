@@ -1,5 +1,6 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Blazored.Modal
     public partial class BlazoredModal
     {
         [Inject] private IModalService ModalService { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
 
         [Parameter] public bool HideHeader { get; set; }
         [Parameter] public bool HideCloseButton { get; set; }
@@ -21,6 +23,18 @@ namespace Blazored.Modal
         protected override void OnInitialized()
         {
             ((ModalService)ModalService).OnModalInstanceAdded += Update;
+            NavigationManager.LocationChanged += CancelModals;
+        }
+
+        private async void CancelModals(object sender, LocationChangedEventArgs e)
+        {
+            foreach (var modalReference in Modals)
+            {
+                modalReference.Dismiss(ModalResult.Cancel());
+            }
+
+            Modals.Clear();
+            await InvokeAsync(StateHasChanged);
         }
 
         internal void CloseInstance(Guid Id)

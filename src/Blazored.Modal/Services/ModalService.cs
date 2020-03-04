@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Blazored.Modal.Services
 {
