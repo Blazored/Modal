@@ -1,0 +1,86 @@
+﻿<div class="blazored-modal-container @ComponentPosition">
+
+    <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
+
+    <div class="blazored-modal-wrapper">
+        <div class="@Options.Class">
+            @if (!Options.HideHeader)
+            {
+                <div class="blazored-modal-header">
+                    <h3 class="blazored-modal-title">@Title</h3>
+                    @if (!Options.HideCloseButton)
+                    {
+                        <button type="button" class="blazored-modal-close" @onclick="(() => Parent.CancelInstance(Id))">
+                            <span>&times;</span>
+                        </button>
+                    }
+                </div>
+            }
+            <div class="blazored-modal-content">
+                <CascadingValue Value="this">
+                    <CascadingValue Value="@Parameters">
+                        @Content
+                    </CascadingValue>
+                </CascadingValue>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] private BlazoredModal Parent { get; set; }
+
+    [Parameter] public ModalOptions Options { get; set; }
+    [Parameter] public ModalParameters Parameters { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public RenderFragment Content { get; set; }
+    [Parameter] public Guid Id { get; set; }
+
+    private string ComponentPosition => GetPosition();
+
+    /// <summary>
+    /// Sets the title for the modal being displayed
+    /// </summary>
+    /// <param name="title">Text to display as the title of the modal</param>
+    public void SetTitle(string title)
+    {
+        Title = title;
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Closes the modal with the specified <paramref name="modalResult"/>.
+    /// </summary>
+    /// <param name="modalResult"></param>
+    public void Close(ModalResult modalResult)
+    {
+        Parent.CloseInstance(Id);
+    }
+
+    private string GetPosition()
+    {
+        switch (Options.Position)
+        {
+            case ModalPosition.Center:
+                return "blazored-modal-center";
+            case ModalPosition.TopLeft:
+                return "blazored-modal-topleft";
+            case ModalPosition.TopRight:
+                return "blazored-modal-topright";
+            case ModalPosition.BottomLeft:
+                return "blazored-modal-bottomleft";
+            case ModalPosition.BottomRight:
+                return "blazored-modal-bottomright";
+            default:
+                return "blazored-modal-center";
+        }
+    }
+
+    private void HandleBackgroundClick()
+    {
+        if (Options.DisableBackgroundCancel) return;
+
+        Parent.CancelInstance(Id);
+    }
+
+}

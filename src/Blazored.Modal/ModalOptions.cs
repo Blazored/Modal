@@ -2,10 +2,10 @@
 {
     public class ModalOptions
     {
-        public string Position { get; set; }
-        public string Style { get; set; }
-        public bool? DisableBackgroundCancel { get; set; }
-        public bool? HideHeader { get; set; }
-        public bool? HideCloseButton { get; set; }
+        public ModalPosition Position { get; set; } = ModalPosition.Center;
+        public string Class { get; set; } = "blazored-modal";
+        public bool DisableBackgroundCancel { get; set; } = false;
+        public bool HideHeader { get; set; } = false;
+        public bool HideCloseButton { get; set; } = false;
     }
 }

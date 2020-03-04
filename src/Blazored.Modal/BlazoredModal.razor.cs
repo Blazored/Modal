@@ -1,113 +1,57 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blazored.Modal
 {
-    public partial class BlazoredModal : IDisposable
+    public partial class BlazoredModal
     {
-        const string _defaultStyle = "blazored-modal";
-        const string _defaultPosition = "blazored-modal-center";
-
         [Inject] private IModalService ModalService { get; set; }
 
         [Parameter] public bool HideHeader { get; set; }
         [Parameter] public bool HideCloseButton { get; set; }
         [Parameter] public bool DisableBackgroundCancel { get; set; }
         [Parameter] public string Position { get; set; }
-        [Parameter] public string Style { get; set; }
+        [Parameter] public string Class { get; set; }
 
-        private bool ComponentDisableBackgroundCancel { get; set; }
-        private bool ComponentHideHeader { get; set; }
-        private bool ComponentHideCloseButton { get; set; }
-        private string ComponentPosition { get; set; }
-        private string ComponentStyle { get; set; }
-        private bool IsVisible { get; set; }
-        private string Title { get; set; }
-        private RenderFragment Content { get; set; }
-        private ModalParameters Parameters { get; set; }
-
-        /// <summary>
-        /// Sets the title for the modal being displayed
-        /// </summary>
-        /// <param name="title">Text to display as the title of the modal</param>
-        public void SetTitle(string title)
-        {
-            Title = title;
-            StateHasChanged();
-        }
+        private Collection<ModalReference> Modals = new Collection<ModalReference>();
 
         protected override void OnInitialized()
         {
-            ((ModalService)ModalService).OnShow += ShowModal;
-            ((ModalService)ModalService).CloseModal += CloseModal;
+            ((ModalService)ModalService).OnModalInstanceAdded += Update;
         }
 
-        private async void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
+        internal void CloseInstance(Guid Id)
         {
-            Title = title;
-            Content = content;
-            Parameters = parameters;
+            var reference = Modals.SingleOrDefault(x => x.Id == Id);
 
-            SetModalOptions(options);
-
-            IsVisible = true;
-            await InvokeAsync(StateHasChanged);
-        }
-
-        private async void CloseModal()
-        {
-            IsVisible = false;
-            Title = "";
-            Content = null;
-            ComponentStyle = "";
-
-            await InvokeAsync(StateHasChanged);
-        }
-
-        private void HandleBackgroundClick()
-        {
-            if (ComponentDisableBackgroundCancel) return;
-
-            ModalService.Cancel();
-        }
-
-        private void SetModalOptions(ModalOptions options)
-        {
-            ComponentHideHeader = HideHeader;
-            if (options.HideHeader.HasValue)
-                ComponentHideHeader = options.HideHeader.Value;
-            
-            ComponentHideCloseButton = HideCloseButton;
-            if (options.HideCloseButton.HasValue)
-                ComponentHideCloseButton = options.HideCloseButton.Value;
-
-            ComponentDisableBackgroundCancel = DisableBackgroundCancel;
-            if (options.DisableBackgroundCancel.HasValue)
-                ComponentDisableBackgroundCancel = options.DisableBackgroundCancel.Value;
-
-            ComponentPosition = string.IsNullOrWhiteSpace(options.Position) ? Position : options.Position;
-            if (string.IsNullOrWhiteSpace(ComponentPosition))
-                ComponentPosition = _defaultPosition;
-
-            ComponentStyle = string.IsNullOrWhiteSpace(options.Style) ? Style : options.Style;
-            if (string.IsNullOrWhiteSpace(ComponentStyle))
-                ComponentStyle = _defaultStyle;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (reference != null)
             {
-                ((ModalService)ModalService).OnShow -= ShowModal;
-                ((ModalService)ModalService).CloseModal -= CloseModal;
+                reference.Dismiss(ModalResult.Ok<object>(null));
+                Modals.Remove(reference);
+                StateHasChanged();
             }
+        }
+
+        internal void CancelInstance(Guid Id)
+        {
+            var reference = Modals.SingleOrDefault(x => x.Id == Id);
+
+            if (reference != null)
+            {
+                reference.Dismiss(ModalResult.Cancel());
+                Modals.Remove(reference);
+                StateHasChanged();
+            }
+        }
+
+        private async void Update(ModalReference modalReference)
+        {
+            Modals.Add(modalReference);
+            await InvokeAsync(StateHasChanged);
         }
     }
 }
