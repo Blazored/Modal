@@ -1,0 +1,23 @@
+﻿<div class="simple-form">
+
+    <div class="form-group">
+        <label for="message">Message</label>
+        <input @bind="Message" type="text" class="form-control" id="message" placeholder="Enter a message" />
+    </div>
+
+    <button @onclick="SubmitForm" class="btn btn-primary">Submit</button>
+    <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+</div>
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    string Message { get; set; }
+
+    protected override void OnInitialized() => BlazoredModal.SetTitle("Enter a Message");
+    
+    void SubmitForm() => BlazoredModal.Close(ModalResult.Ok(Message));
+    void Cancel() => BlazoredModal.Close();
+
+}

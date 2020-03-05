@@ -1,0 +1,45 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Blazor Wasm</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+            <NavLink class="nav-link" href="/custom" Match="NavLinkMatch.All">
+                <span class="oi oi-eye" aria-hidden="true"></span> Styling
+            </NavLink>
+            <NavLink class="nav-link" href="/closebutton" Match="NavLinkMatch.All">
+                <span class="oi oi-x" aria-hidden="true"></span> Close button
+            </NavLink>
+            <NavLink class="nav-link" href="/backgroundcancel" Match="NavLinkMatch.All">
+                <span class="oi oi-browser" aria-hidden="true"></span> Background click
+            </NavLink>
+            <NavLink class="nav-link" href="/position" Match="NavLinkMatch.All">
+                <span class="oi oi-grid-three-up" aria-hidden="true"></span> Position
+            </NavLink>
+            <NavLink class="nav-link" href="/multiplemodals" Match="NavLinkMatch.All">
+                <span class="oi oi-layers" aria-hidden="true"></span> Multiple Modals
+            </NavLink>
+            <NavLink class="nav-link" href="/returningdata" Match="NavLinkMatch.All">
+                <span class="oi oi-loop-square" aria-hidden="true"></span> Returning Data
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    bool collapseNavMenu = true;
+
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.28531.58
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazored.Modal", "src\Blazored.Modal\Blazored.Modal.csproj", "{997CB0B4-2B3F-4625-9259-A560CD82AC8C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{AC842EAA-F630-4597-A0FC-6758FE9F6268}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{AC842EAA-F630-4597-A0FC-6758FE9F6268}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorSample", "samples\BlazorSample\BlazorSample.csproj", "{4ECB8E84-B0FF-4DC0-9929-D0BE5922E97D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorWebAssembly", "samples\BlazorWebAssembly\BlazorWebAssembly.csproj", "{4ECB8E84-B0FF-4DC0-9929-D0BE5922E97D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerSideblazor", "samples\ServerSideblazor\ServerSideblazor.csproj", "{6290EEF7-69B6-43D0-8FA9-999045336637}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorServer", "samples\BlazorServer\BlazorServer.csproj", "{6290EEF7-69B6-43D0-8FA9-999045336637}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E8AD9151-AB7E-4531-A1DF-8952B1D5580D}"
 	ProjectSection(SolutionItems) = preProject

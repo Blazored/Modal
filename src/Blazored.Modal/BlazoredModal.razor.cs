@@ -12,18 +12,25 @@ namespace Blazored.Modal
         [Inject] private IModalService ModalService { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
 
-        [Parameter] public bool HideHeader { get; set; }
-        [Parameter] public bool HideCloseButton { get; set; }
-        [Parameter] public bool DisableBackgroundCancel { get; set; }
-        [Parameter] public string Position { get; set; }
+        [Parameter] public bool? HideHeader { get; set; }
+        [Parameter] public bool? HideCloseButton { get; set; }
+        [Parameter] public bool? DisableBackgroundCancel { get; set; }
+        [Parameter] public ModalPosition? Position { get; set; }
         [Parameter] public string Class { get; set; }
 
         private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
+        private readonly ModalOptions GlobalModalOptions = new ModalOptions();
 
         protected override void OnInitialized()
         {
             ((ModalService)ModalService).OnModalInstanceAdded += Update;
             NavigationManager.LocationChanged += CancelModals;
+
+            GlobalModalOptions.Class = Class;
+            GlobalModalOptions.DisableBackgroundCancel = DisableBackgroundCancel;
+            GlobalModalOptions.HideCloseButton = HideCloseButton;
+            GlobalModalOptions.HideHeader = HideHeader;
+            GlobalModalOptions.Position = Position;
         }
 
         private async void CancelModals(object sender, LocationChangedEventArgs e)

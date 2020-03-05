@@ -1,6 +1,8 @@
 ﻿<CascadingValue Value="this">
-    @foreach (var modalInstance in Modals)
-    {
-        @modalInstance.ModalInstance
-    }
+    <CascadingValue Value="GlobalModalOptions">
+        @foreach (var modalInstance in Modals)
+        {
+            @modalInstance.ModalInstance
+        }
+    </CascadingValue>
 </CascadingValue>

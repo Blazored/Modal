@@ -1,14 +1,14 @@
-﻿<div class="blazored-modal-container @ComponentPosition">
+﻿<div class="blazored-modal-container @Position">
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
     <div class="blazored-modal-wrapper">
-        <div class="@Options.Class">
-            @if (!Options.HideHeader)
+        <div class="@Class">
+            @if (!HideHeader)
             {
                 <div class="blazored-modal-header">
                     <h3 class="blazored-modal-title">@Title</h3>
-                    @if (!Options.HideCloseButton)
+                    @if (!HideCloseButton)
                     {
                         <button type="button" class="blazored-modal-close" @onclick="(() => Parent.CancelInstance(Id))">
                             <span>&times;</span>
@@ -29,6 +29,7 @@
 
 @code {
     [CascadingParameter] private BlazoredModal Parent { get; set; }
+    [CascadingParameter] private ModalOptions GlobalModalOptions { get; set; }
 
     [Parameter] public ModalOptions Options { get; set; }
     [Parameter] public ModalParameters Parameters { get; set; }
@@ -36,7 +37,16 @@
     [Parameter] public RenderFragment Content { get; set; }
     [Parameter] public Guid Id { get; set; }
 
-    private string ComponentPosition => GetPosition();
+    private string Position { get; set; }
+    private string Class { get; set; }
+    private bool HideHeader { get; set; }
+    private bool HideCloseButton { get; set; }
+    private bool DisableBackgroundCancel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ConfigureInstance();
+    }
 
     /// <summary>
     /// Sets the title for the modal being displayed
@@ -49,6 +59,14 @@
     }
 
     /// <summary>
+    /// Closes the modal with a default Ok result />.
+    /// </summary>
+    public void Close()
+    {
+        Close(ModalResult.Ok<object>(null));
+    }
+
+    /// <summary>
     /// Closes the modal with the specified <paramref name="modalResult"/>.
     /// </summary>
     /// <param name="modalResult"></param>
@@ -57,9 +75,41 @@
         Parent.CloseInstance(Id, modalResult);
     }
 
-    private string GetPosition()
+    /// <summary>
+    /// Closes the modal and returns a cancelled ModalResult.
+    /// </summary>
+    /// <param name="modalResult"></param>
+    public void Cancel()
     {
-        switch (Options.Position)
+        Parent.CloseInstance(Id, ModalResult.Cancel());
+    }
+
+    private void ConfigureInstance()
+    {
+        Position = SetPosition();
+        Class = SetClass();
+        HideHeader = SetHideHeader();
+        HideCloseButton = SetHideCloseButton();
+        DisableBackgroundCancel = SetDisableBackgroundCancel();
+    }
+
+    private string SetPosition()
+    {
+        ModalPosition position;
+        if (Options.Position.HasValue)
+        {
+            position = Options.Position.Value;
+        }
+        else if (GlobalModalOptions.Position.HasValue)
+        {
+            position = GlobalModalOptions.Position.Value;
+        }
+        else
+        {
+            position = ModalPosition.Center;
+        }
+
+        switch (position)
         {
             case ModalPosition.Center:
                 return "blazored-modal-center";
@@ -76,9 +126,53 @@
         }
     }
 
+    private string SetClass()
+    {
+        if (!string.IsNullOrWhiteSpace(Options.Class))
+            return Options.Class;
+
+        if (!string.IsNullOrWhiteSpace(GlobalModalOptions.Class))
+            return GlobalModalOptions.Class;
+
+        return "blazored-modal";
+    }
+
+    private bool SetHideHeader()
+    {
+        if (Options.HideHeader.HasValue)
+            return Options.HideHeader.Value;
+
+        if (GlobalModalOptions.HideHeader.HasValue)
+            return GlobalModalOptions.HideHeader.Value;
+
+        return false;
+    }
+
+    private bool SetHideCloseButton()
+    {
+        if (Options.HideCloseButton.HasValue)
+            return Options.HideCloseButton.Value;
+
+        if (GlobalModalOptions.HideCloseButton.HasValue)
+            return GlobalModalOptions.HideCloseButton.Value;
+
+        return false;
+    }
+
+    private bool SetDisableBackgroundCancel()
+    {
+        if (Options.DisableBackgroundCancel.HasValue)
+            return Options.DisableBackgroundCancel.Value;
+
+        if (GlobalModalOptions.DisableBackgroundCancel.HasValue)
+            return GlobalModalOptions.DisableBackgroundCancel.Value;
+
+        return false;
+    }
+
     private void HandleBackgroundClick()
     {
-        if (Options.DisableBackgroundCancel) return;
+        if (DisableBackgroundCancel) return;
 
         Parent.CancelInstance(Id);
     }

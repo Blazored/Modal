@@ -1,0 +1,57 @@
+﻿@page "/position"
+@inject IModalService Modal
+
+<h1>Positioning the modal</h1>
+
+<hr class="mb-5" />
+
+<p>
+    By default, the modal is shown in the center of the viewport. The modal can be shown
+    in a number of different positions by setting the <code>Position</code> option.
+</p>
+
+<p class="card">
+        <h5 class="card-header">Setting on a per modal basis</h5>
+    <div class="card-body">
+<p class="card-text">
+    <code>
+        @("var options = new ModalOptions() { Position = ModalPosition.TopLeft };")
+        <br />
+        @("Modal.Show<Confirm>(\"Position: TopLeft\", options);")
+    </code>
+</p>
+    </div>
+</p>
+
+<p class="card">
+        <h5 class="card-header">Setting globally for all modals</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("<BlazoredModal Position=\"ModalPosition.TopLeft\" />")
+            </code>
+        </p>
+    </div>
+</p>
+
+<button @onclick="@(() => PositionCustom(ModalPosition.TopLeft))" class="btn btn-secondary">Top left</button>
+<button @onclick="@(() => PositionCustom(ModalPosition.TopRight))" class="btn btn-secondary">Top right</button>
+<button @onclick="PositionCenter" class="btn btn-primary">Center</button>
+<button @onclick="@(() => PositionCustom(ModalPosition.BottomLeft))" class="btn btn-secondary">Bottom left</button>
+<button @onclick="@(() => PositionCustom(ModalPosition.BottomRight))" class="btn btn-secondary">Bottom right</button>
+
+@code {
+
+    void PositionCenter()
+    {
+        Modal.Show<Confirm>("Centered Modal (Default)");
+    }
+
+    void PositionCustom(ModalPosition position)
+    {
+        var options = new ModalOptions() { Position = position };
+
+        Modal.Show<Confirm>($"Position: {position}", options);
+    }
+}
+
