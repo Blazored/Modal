@@ -1,0 +1,50 @@
+﻿@page "/passingdata"
+@inject IModalService Modal
+
+<h1>Passing Data to a Modal</h1>
+
+<hr class="mb-5" />
+
+<p>
+    Data can be passed to a modal by using the <code>ModalParameters</code> object. The items you add to this collection are must match the parameters 
+    defined on the component being displayed in the modal. In the example below, you can type a message and see it displayed in the modal.
+</p>
+
+<p class="card">
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("var messageForm = Modal.Show<MessageForm>();")<br />
+                @("var result = await messageForm.Result;")<br />
+                <br />
+                @("if (!result.Cancelled)")<br />
+                @("    _message = result.Data.ToString();")
+            </code>
+        </p>
+    </div>
+</p>
+
+<div class="form-group">
+    <label>Enter a message</label>
+    <input class="form-control" type="text" @bind="_message" />
+</div>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
+
+@code {
+
+    string _message;
+
+    async Task ShowModal()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add("Message", _message);
+
+        var messageForm = Modal.Show<DisplayMessage>("Passing Data", parameters);
+        var result = await messageForm.Result;
+
+        _message = "";
+    }
+
+}
+

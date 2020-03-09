@@ -119,10 +119,10 @@ namespace Blazored.Modal.Services
             {
                 builder.OpenComponent<BlazoredModalInstance>(1);
                 builder.AddAttribute(2, "Options", options);
-                builder.AddAttribute(2, "Parameters", parameters);
-                builder.AddAttribute(2, "Title", title);
-                builder.AddAttribute(2, "Content", modalContent);
-                builder.AddAttribute(2, "Id", modalInstanceId);
+                builder.AddAttribute(3, "Parameters", parameters);
+                builder.AddAttribute(4, "Title", title);
+                builder.AddAttribute(5, "Content", modalContent);
+                builder.AddAttribute(6, "Id", modalInstanceId);
                 builder.CloseComponent();
             });
             var modalReference = new ModalReference(modalInstanceId, modalInstance);
