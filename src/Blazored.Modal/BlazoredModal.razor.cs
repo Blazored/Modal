@@ -33,23 +33,17 @@ namespace Blazored.Modal
             GlobalModalOptions.Position = Position;
         }
 
-        private async void CancelModals(object sender, LocationChangedEventArgs e)
-        {
-            foreach (var modalReference in Modals)
-            {
-                modalReference.Dismiss(ModalResult.Cancel());
-            }
-
-            Modals.Clear();
-            await InvokeAsync(StateHasChanged);
-        }
-
         internal void CloseInstance(Guid Id)
         {
-            CloseInstance(Id, ModalResult.Ok<object>(null));
+            DismissInstance(Id, ModalResult.Ok<object>(null));
         }
 
-        internal void CloseInstance(Guid Id, ModalResult result)
+        internal void CancelInstance(Guid Id)
+        {
+            DismissInstance(Id, ModalResult.Cancel());
+        }
+
+        internal void DismissInstance(Guid Id, ModalResult result)
         {
             var reference = Modals.SingleOrDefault(x => x.Id == Id);
 
@@ -61,16 +55,15 @@ namespace Blazored.Modal
             }
         }
 
-        internal void CancelInstance(Guid Id)
+        private async void CancelModals(object sender, LocationChangedEventArgs e)
         {
-            var reference = Modals.SingleOrDefault(x => x.Id == Id);
-
-            if (reference != null)
+            foreach (var modalReference in Modals)
             {
-                reference.Dismiss(ModalResult.Cancel());
-                Modals.Remove(reference);
-                StateHasChanged();
+                modalReference.Dismiss(ModalResult.Cancel());
             }
+
+            Modals.Clear();
+            await InvokeAsync(StateHasChanged);
         }
 
         private async void Update(ModalReference modalReference)

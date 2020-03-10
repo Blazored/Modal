@@ -72,7 +72,7 @@
     /// <param name="modalResult"></param>
     public void Close(ModalResult modalResult)
     {
-        Parent.CloseInstance(Id, modalResult);
+        Parent.DismissInstance(Id, modalResult);
     }
 
     /// <summary>
@@ -81,7 +81,7 @@
     /// <param name="modalResult"></param>
     public void Cancel()
     {
-        Parent.CloseInstance(Id, ModalResult.Cancel());
+        Parent.DismissInstance(Id, ModalResult.Cancel());
     }
 
     private void ConfigureInstance()

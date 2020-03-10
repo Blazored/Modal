@@ -114,7 +114,11 @@ namespace Blazored.Modal.Services
             }
 
             var modalInstanceId = Guid.NewGuid();
-            var modalContent = new RenderFragment(x => { x.OpenComponent(1, contentComponent); x.CloseComponent(); });
+            var modalContent = new RenderFragment(builder => 
+            { 
+                builder.OpenComponent(1, contentComponent);
+                builder.CloseComponent(); 
+            });
             var modalInstance = new RenderFragment(builder =>
             {
                 builder.OpenComponent<BlazoredModalInstance>(1);
