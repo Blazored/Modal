@@ -95,7 +95,7 @@ Welcome to Blazored Modal.
 
 ### Passing Parameters
 
-If you need to pass values to the component you are displaying in the modal, then you can use the `ModalParameters` object. Any component which is displayed in the modal has access to this object as a `[CascadingParameter]`.
+If you want to pass values to the component you're displaying in the modal, then you can use the `ModalParameters` object. The name you provide must match the name of a parameter defined on the component being displayed.
 
 #### Index Component
 
@@ -119,7 +119,7 @@ If you need to pass values to the component you are displaying in the modal, the
     void ShowEditMovie(int movieId)
     {
         var parameters = new ModalParameters();
-        parameters.Add("MovieId", movieId);
+        parameters.Add(nameof(EditMovie.MovieId), movieId);
 
         Modal.Show<EditMovie>("Edit Movie", parameters);
     }
@@ -145,37 +145,27 @@ If you need to pass values to the component you are displaying in the modal, the
         <input @bind="@Movie.Year" type="text" class="form-control" id="year" />
     </div>
 
-    <button @onclick="@SaveMovie" class="btn btn-primary">Submit</button>
-    <button @onclick="@Cancel" class="btn btn-secondary">Cancel</button>
+    <button @onclick="SaveMovie" class="btn btn-primary">Submit</button>
+    <button @onclick="BlazoredModal.Cancel" class="btn btn-secondary">Cancel</button>
 </div>
 
 @code {
 
-    [CascadingParameter] ModalParameters Parameters { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
-    int MovieId { get; set; }
+    [Parameter] int MovieId { get; set; }
+
     Movie Movie { get; set; }
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
-        MovieId = Parameters.Get<int>("MovieId");
-        LoadMovie(MovieId);
-    }
-
-    void LoadMovie(int movieId)
-    {
-        MovieService.Load(movieId);
+        Movie = MovieService.Load(MovieId);
     }
 
     void SaveMovie()
     {
         MovieService.Save(Movie);
-        ModalService.Close(ModalResult.Ok<Movie>(Movie));
-    }
-
-    void Cancel()
-    {
-        ModalService.Cancel();
+        BlazoredModal.Close(ModalResult.Ok<Movie>(Movie));
     }
 
 }

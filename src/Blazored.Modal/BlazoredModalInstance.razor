@@ -18,9 +18,7 @@
             }
             <div class="blazored-modal-content">
                 <CascadingValue Value="this">
-                    <CascadingValue Value="@Parameters">
-                        @Content
-                    </CascadingValue>
+                    @Content
                 </CascadingValue>
             </div>
         </div>
@@ -32,7 +30,6 @@
     [CascadingParameter] private ModalOptions GlobalModalOptions { get; set; }
 
     [Parameter] public ModalOptions Options { get; set; }
-    [Parameter] public ModalParameters Parameters { get; set; }
     [Parameter] public string Title { get; set; }
     [Parameter] public RenderFragment Content { get; set; }
     [Parameter] public Guid Id { get; set; }

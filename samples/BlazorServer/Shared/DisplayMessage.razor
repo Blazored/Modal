@@ -1,6 +1,6 @@
 ﻿<div>
 
-    <p>@_message</p>
+    <p>@Message</p>
 
     <button @onclick="SubmitForm" class="btn btn-primary">Submit</button>
     <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
@@ -8,15 +8,9 @@
 
 @code {
 
-    private string _message;
-
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
-    [CascadingParameter] public ModalParameters Parameters { get; set; }
 
-    protected override void OnInitialized()
-    {
-        _message = Parameters.Get<string>("Message");
-    }
+    [Parameter] public string Message { get; set; }
 
     void SubmitForm() => BlazoredModal.Close();
     void Cancel() => BlazoredModal.Close();

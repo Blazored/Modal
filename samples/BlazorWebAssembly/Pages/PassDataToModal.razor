@@ -38,7 +38,7 @@
     async Task ShowModal()
     {
         var parameters = new ModalParameters();
-        parameters.Add("Message", _message);
+        parameters.Add(nameof(DisplayMessage.Message), _message);
 
         var messageForm = Modal.Show<DisplayMessage>("Passing Data", parameters);
         var result = await messageForm.Result;

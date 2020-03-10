@@ -4,7 +4,7 @@ namespace Blazored.Modal
 {
     public class ModalParameters
     {
-        private Dictionary<string, object> _parameters;
+        internal Dictionary<string, object> _parameters;
 
         public ModalParameters()
         {
