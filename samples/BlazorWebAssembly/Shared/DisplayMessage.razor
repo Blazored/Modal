@@ -1,0 +1,18 @@
+﻿<div>
+
+    <p>@Message</p>
+
+    <button @onclick="SubmitForm" class="btn btn-primary">Submit</button>
+    <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+</div>
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    
+    [Parameter] public string Message { get; set; }
+
+    void SubmitForm() => BlazoredModal.Close();
+    void Cancel() => BlazoredModal.Close();
+
+}

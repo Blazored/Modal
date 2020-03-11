@@ -1,113 +1,75 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Routing;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Blazored.Modal
 {
-    public partial class BlazoredModal : IDisposable
+    public partial class BlazoredModal
     {
-        const string _defaultStyle = "blazored-modal";
-        const string _defaultPosition = "blazored-modal-center";
-
         [Inject] private IModalService ModalService { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
 
-        [Parameter] public bool HideHeader { get; set; }
-        [Parameter] public bool HideCloseButton { get; set; }
-        [Parameter] public bool DisableBackgroundCancel { get; set; }
-        [Parameter] public string Position { get; set; }
-        [Parameter] public string Style { get; set; }
+        [Parameter] public bool? HideHeader { get; set; }
+        [Parameter] public bool? HideCloseButton { get; set; }
+        [Parameter] public bool? DisableBackgroundCancel { get; set; }
+        [Parameter] public ModalPosition? Position { get; set; }
+        [Parameter] public string Class { get; set; }
 
-        private bool ComponentDisableBackgroundCancel { get; set; }
-        private bool ComponentHideHeader { get; set; }
-        private bool ComponentHideCloseButton { get; set; }
-        private string ComponentPosition { get; set; }
-        private string ComponentStyle { get; set; }
-        private bool IsVisible { get; set; }
-        private string Title { get; set; }
-        private RenderFragment Content { get; set; }
-        private ModalParameters Parameters { get; set; }
-
-        /// <summary>
-        /// Sets the title for the modal being displayed
-        /// </summary>
-        /// <param name="title">Text to display as the title of the modal</param>
-        public void SetTitle(string title)
-        {
-            Title = title;
-            StateHasChanged();
-        }
+        private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
+        private readonly ModalOptions GlobalModalOptions = new ModalOptions();
 
         protected override void OnInitialized()
         {
-            ((ModalService)ModalService).OnShow += ShowModal;
-            ((ModalService)ModalService).CloseModal += CloseModal;
+            ((ModalService)ModalService).OnModalInstanceAdded += Update;
+            NavigationManager.LocationChanged += CancelModals;
+
+            GlobalModalOptions.Class = Class;
+            GlobalModalOptions.DisableBackgroundCancel = DisableBackgroundCancel;
+            GlobalModalOptions.HideCloseButton = HideCloseButton;
+            GlobalModalOptions.HideHeader = HideHeader;
+            GlobalModalOptions.Position = Position;
         }
 
-        private async void ShowModal(string title, RenderFragment content, ModalParameters parameters, ModalOptions options)
+        internal void CloseInstance(Guid Id)
         {
-            Title = title;
-            Content = content;
-            Parameters = parameters;
-
-            SetModalOptions(options);
-
-            IsVisible = true;
-            await InvokeAsync(StateHasChanged);
+            DismissInstance(Id, ModalResult.Ok<object>(null));
         }
 
-        private async void CloseModal()
+        internal void CancelInstance(Guid Id)
         {
-            IsVisible = false;
-            Title = "";
-            Content = null;
-            ComponentStyle = "";
-
-            await InvokeAsync(StateHasChanged);
+            DismissInstance(Id, ModalResult.Cancel());
         }
 
-        private void HandleBackgroundClick()
+        internal void DismissInstance(Guid Id, ModalResult result)
         {
-            if (ComponentDisableBackgroundCancel) return;
+            var reference = Modals.SingleOrDefault(x => x.Id == Id);
 
-            ModalService.Cancel();
-        }
-
-        private void SetModalOptions(ModalOptions options)
-        {
-            ComponentHideHeader = HideHeader;
-            if (options.HideHeader.HasValue)
-                ComponentHideHeader = options.HideHeader.Value;
-            
-            ComponentHideCloseButton = HideCloseButton;
-            if (options.HideCloseButton.HasValue)
-                ComponentHideCloseButton = options.HideCloseButton.Value;
-
-            ComponentDisableBackgroundCancel = DisableBackgroundCancel;
-            if (options.DisableBackgroundCancel.HasValue)
-                ComponentDisableBackgroundCancel = options.DisableBackgroundCancel.Value;
-
-            ComponentPosition = string.IsNullOrWhiteSpace(options.Position) ? Position : options.Position;
-            if (string.IsNullOrWhiteSpace(ComponentPosition))
-                ComponentPosition = _defaultPosition;
-
-            ComponentStyle = string.IsNullOrWhiteSpace(options.Style) ? Style : options.Style;
-            if (string.IsNullOrWhiteSpace(ComponentStyle))
-                ComponentStyle = _defaultStyle;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (reference != null)
             {
-                ((ModalService)ModalService).OnShow -= ShowModal;
-                ((ModalService)ModalService).CloseModal -= CloseModal;
+                reference.Dismiss(result);
+                Modals.Remove(reference);
+                StateHasChanged();
             }
+        }
+
+        private async void CancelModals(object sender, LocationChangedEventArgs e)
+        {
+            foreach (var modalReference in Modals)
+            {
+                modalReference.Dismiss(ModalResult.Cancel());
+            }
+
+            Modals.Clear();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async void Update(ModalReference modalReference)
+        {
+            Modals.Add(modalReference);
+            await InvokeAsync(StateHasChanged);
         }
     }
 }

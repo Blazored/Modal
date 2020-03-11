@@ -1,127 +1,158 @@
+﻿using Blazored.Modal.Services;
 using Blazored.Modal.Tests.Assets;
+using Bunit;
+using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
 namespace Blazored.Modal.Tests
 {
-    public class ModalOptionsTests : TestBase
+    public class ModalOptionsTests : ComponentTestFixture
     {
+        public ModalOptionsTests()
+        {
+            Services.AddScoped<NavigationManager, MockNavigationManager>();
+            Services.AddBlazoredModal();
+        }
+
         [Fact]
         public void ModalDisplaysSpecifiedTitle()
         {
+            // Arrange
             var testTitle = "Title";
-            var component = _host.AddComponent<BlazoredModal>();
-            _modalService.Show<TestComponent>(testTitle);
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            var title = component.Find(".blazored-modal-title");
+            // Act
+            modalService.Show<TestComponent>(testTitle);
 
-            Assert.Equal(testTitle, title.InnerText);
+            // Assert
+            Assert.Equal(testTitle, cut.Find(".blazored-modal-title").InnerHtml);
         }
 
         [Fact]
         public void ModalDisplaysCorrectPositionClass()
         {
-            var position = "blazored-modal-topleft";
-            var options = new ModalOptions() { Position = position };
-            var component = _host.AddComponent<BlazoredModal>();
+            // Arrange
+            var options = new ModalOptions() { Position = ModalPosition.TopLeft };
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            _modalService.Show<TestComponent>("", options);
+            // Act
+            modalService.Show<TestComponent>("", options);
 
-            var modalContainer = component.Find($".blazored-modal-container.{position}");
-
-            Assert.NotNull(modalContainer);
+            // Assert
+            Assert.NotNull(cut.Find($".blazored-modal-container.blazored-modal-topleft"));
         }
 
         [Fact]
         public void ModalDisplaysCustomStyles()
         {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
             var customStyle = "my-custom-style";
-            var options = new ModalOptions() { Style = customStyle };
-            var component = _host.AddComponent<BlazoredModal>();
+            var options = new ModalOptions() { Class = customStyle };
+            var cut = RenderComponent<BlazoredModal>();
 
-            _modalService.Show<TestComponent>("", options);
+            // Act
+            modalService.Show<TestComponent>("", options);
 
-            var styleDiv = component.Find($"div.{customStyle}");
-
-            Assert.NotNull(styleDiv);
+            // Assert
+            Assert.NotNull(cut.Find($"div.{customStyle}"));
         }
 
         [Fact]
         public void ModalDisplaysCloseButtonByDefault()
         {
-            var component = _host.AddComponent<BlazoredModal>();
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            _modalService.Show<TestComponent>("");
+            // Act
+            modalService.Show<TestComponent>();
 
-            var header = component.Find(".blazored-modal-close");
-
-            Assert.NotNull(header);
+            // Assert
+            Assert.NotNull(cut.Find(".blazored-modal-close"));
         }
 
         [Fact]
         public void ModalDoesNotDisplayCloseButtonWhenSetToFalseInOptions()
         {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
             var options = new ModalOptions() { HideCloseButton = true };
-            var component = _host.AddComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            _modalService.Show<TestComponent>("", options);
+            // Act
+            modalService.Show<TestComponent>("", options);
 
-            var header = component.Find(".blazored-modal-close");
-
-            Assert.Null(header);
+            // Assert
+            Assert.Equal(0, cut.FindAll(".blazored-modal-close").Count);
         }
 
         [Fact]
         public void ModalDisplaysHeaderByDefault()
         {
-            var component = _host.AddComponent<BlazoredModal>();
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            _modalService.Show<TestComponent>("");
+            // Act
+            modalService.Show<TestComponent>();
 
-            var header = component.Find(".blazored-modal-header");
-
-            Assert.NotNull(header);
+            // Assert
+            Assert.NotNull(cut.Find(".blazored-modal-header"));
         }
 
         [Fact]
         public void ModalDoesNotDisplayHeaderWhenSetToFalseInOptions()
         {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
             var options = new ModalOptions() { HideHeader = true };
-            var component = _host.AddComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            _modalService.Show<TestComponent>("", options);
+            // Act
+            modalService.Show<TestComponent>("", options);
 
-            var header = component.Find(".blazored-modal-header");
-
-            Assert.Null(header);
+            // Assert
+            Assert.Equal(0, cut.FindAll(".blazored-modal-header").Count);
         }
 
         [Fact]
         public void ModalDisplaysCorrectContent()
         {
-            var component = _host.AddComponent<BlazoredModal>();
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            _modalService.Show<TestComponent>("");
+            // Act
+            modalService.Show<TestComponent>("");
 
-            var content = component.Find("h1");
-
-            Assert.Equal(content.InnerText, TestComponent.TitleText);
+            // Assert
+            Assert.Equal(TestComponent.DefaultTitle, cut.Find(".test-component h1").InnerHtml);
         }
 
         [Fact]
         public void ModalDisplaysCorrectContentWhenUsingModalParameters()
         {
             var testTitle = "Testing Components";
+
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            
             var parameters = new ModalParameters();
             parameters.Add("Title", testTitle);
+            var cut = RenderComponent<BlazoredModal>();
 
-            var component = _host.AddComponent<BlazoredModal>();
+            // Act
+            modalService.Show<TestComponent>("", parameters);
 
-            _modalService.Show<TestComponent>("", parameters);
-
-            var content = component.Find("h1");
-
-            Assert.Equal(content.InnerText, testTitle);
+            // Assert
+            Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
         }
-
     }
 }

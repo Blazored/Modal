@@ -1,0 +1,54 @@
+﻿@page "/backgroundcancel"
+@inject IModalService Modal
+
+<h1>Background Click</h1>
+
+<hr class="mb-5" />
+
+<p>
+    By default, a modal is cancelled if the user clicks anywhere outside the modal. This behavior can
+    be disabled by setting <code>DisableBackgroundCancel</code> to <code>true</code>.
+</p>
+
+<p class="card">
+        <h5 class="card-header">Setting on a per modal basis</h5>
+    <div class="card-body">
+<p class="card-text">
+    <code>
+        @("var options = new ModalOptions() { DisableBackgroundCancel = true };")
+        <br />
+        @("Modal.Show<Confirm>(\"Background Cancel Disabled\", options);")
+    </code>
+</p>
+    </div>
+</p>
+
+<p class="card">
+        <h5 class="card-header">Setting globally for all modals</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("<BlazoredModal DisableBackgroundCancel=\"true\" />")
+            </code>
+        </p>
+    </div>
+</p>
+
+<button @onclick="BackgroundCancelEnabled" class="btn btn-primary">Cancellation enabled</button>
+<button @onclick="BackgroundCancelDisabled" class="btn btn-secondary">Cancellation disabled</button>
+
+@code {
+
+    void BackgroundCancelEnabled()
+    {
+        Modal.Show<Confirm>("Background Cancel Enabled (Default)");
+    }
+
+    void BackgroundCancelDisabled()
+    {
+        var options = new ModalOptions() { DisableBackgroundCancel = true };
+
+        Modal.Show<Confirm>("Background Cancel Disabled", options);
+    }
+}
+

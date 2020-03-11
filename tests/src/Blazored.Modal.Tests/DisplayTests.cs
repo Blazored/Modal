@@ -1,59 +1,93 @@
-using Blazored.Modal.Services;
-using Blazored.Modal.Tests.Assets;
 using Xunit;
+using Bunit;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Components;
+using Blazored.Modal.Tests.Assets;
+using Blazored.Modal.Services;
 
 namespace Blazored.Modal.Tests
 {
-    public class DisplayTests : TestBase
+    public class DisplayTests : ComponentTestFixture
     {
+        public DisplayTests()
+        {
+            Services.AddScoped<NavigationManager, MockNavigationManager>();
+            Services.AddBlazoredModal();
+        }
+
         [Fact]
         public void ModalIsNotVisibleByDefault()
         {
-            var component = _host.AddComponent<BlazoredModal>();
-            var modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            // Arrange / Act
+            var cut = RenderComponent<BlazoredModal>();
 
-            Assert.Null(modalContainer);
+            // Assert
+            Assert.Equal(0, cut.FindAll(".blazored-modal-container").Count);
         }
 
         [Fact]
         public void ModalIsVisibleWhenShowCalled()
         {
-            var component = _host.AddComponent<BlazoredModal>();
-            _modalService.Show<TestComponent>("");
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            var modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            // Act
+            modalService.Show<TestComponent>();
 
-            Assert.NotNull(modalContainer);
+            // Assert
+            Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
+        }
+
+        [Fact]
+        public void MultipleModalsAreVisibleWhenShowCalledMultipleTimes()
+        {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
+
+            // Act
+            modalService.Show<TestComponent>();
+            modalService.Show<TestComponent>();
+
+            // Assert
+            Assert.Equal(2, cut.FindAll(".blazored-modal-container").Count);
         }
 
         [Fact]
         public void ModalHidesWhenCloseCalled()
         {
-            var component = _host.AddComponent<BlazoredModal>();
-            _modalService.Show<TestComponent>("");
-            var modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            Assert.NotNull(modalContainer);
+            // Act
+            modalService.Show<TestComponent>();
+            Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
 
-            _modalService.Close(ModalResult.Ok("Ok"));
-            modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            var closeButton = cut.Find(".test-component__close-button");
+            closeButton.Click();
 
-            Assert.Null(modalContainer);
+            // Assert
+            Assert.Equal(0, cut.FindAll(".blazored-modal-container").Count);
         }
 
         [Fact]
         public void ModalHidesWhenCancelCalled()
         {
-            var component = _host.AddComponent<BlazoredModal>();
-            _modalService.Show<TestComponent>("");
-            var modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
 
-            Assert.NotNull(modalContainer);
+            // Act
+            modalService.Show<TestComponent>();
+            Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
 
-            _modalService.Cancel();
-            modalContainer = component.Find(".blazored-modal-container.blazored-modal-active");
+            var closeButton = cut.Find(".blazored-modal-close");
+            closeButton.Click();
 
-            Assert.Null(modalContainer);
+            // Assert
+            Assert.Equal(0, cut.FindAll(".blazored-modal-container").Count);
         }
     }
 }

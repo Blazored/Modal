@@ -24,7 +24,7 @@ dotnet add package Blazored.Modal
 
 ### 1. Register Services
 
-You will need to add the following using statement and add a call to register the Blazored Modal services in your applications `Startup.ConfigureServices` method.
+**For Blazor Server**: You will need to add the following using statement and add a call to register the Blazored Modal services in your applications `Startup.ConfigureServices` method.
 
 ```csharp
 using Blazored.Modal;
@@ -32,6 +32,22 @@ using Blazored.Modal;
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddBlazoredModal();
+}
+```
+
+**For Blazor WebAssembly**: You will need to add the following using statement and add a call to register the Blazored Modal services in your applications `Program.Main` method.
+
+```csharp
+using Blazored.Modal;
+
+public static async Task Main(string[] args)
+{
+    var builder = WebAssemblyHostBuilder.CreateDefault(args);
+    builder.RootComponents.Add<App>("app");
+
+    builder.Services.AddBlazoredModal();
+
+    await builder.Build().RunAsync();
 }
 ```
 
@@ -58,12 +74,13 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server) 
 ```
 
 ## Usage
+Please checkout the [sample projects](https://github.com/Blazored/Modal/tree/master/samples) in this repo to see working examples of the features in the modal. 
 
 ### Displaying the modal
 
-In order to show the modal, you have to inject the `IModalService` into the component or service you want to invoke the modal. You can then call the `Show` method passing in the title for the modal and the type of the component you want the modal to display.
+In order to show a modal, you need to inject the `IModalService` into the component or service you want to invoke the modal. You can then call the `Show` method passing in the title for the modal and the type of the component you want the modal to display.
 
-For example, say I have a component called `Movies` which I want to display in the modal and I want to call it from the `Index` component on a button click.
+For example, if I have a component called `Movies` which I want to display in the modal and I want to call it from the `Index` component on a button click.
 
 ```razor
 @page "/"
@@ -78,7 +95,7 @@ Welcome to Blazored Modal.
 
 ### Passing Parameters
 
-If you need to pass values to the component you are displaying in the modal, then you can use the `ModalParameters` object. Any component which is displayed in the modal has access to this object as a `[CascadingParameter]`.
+If you want to pass values to the component you're displaying in the modal, then you can use the `ModalParameters` object. The name you provide must match the name of a parameter defined on the component being displayed.
 
 #### Index Component
 
@@ -102,7 +119,7 @@ If you need to pass values to the component you are displaying in the modal, the
     void ShowEditMovie(int movieId)
     {
         var parameters = new ModalParameters();
-        parameters.Add("MovieId", movieId);
+        parameters.Add(nameof(EditMovie.MovieId), movieId);
 
         Modal.Show<EditMovie>("Edit Movie", parameters);
     }
@@ -128,45 +145,35 @@ If you need to pass values to the component you are displaying in the modal, the
         <input @bind="@Movie.Year" type="text" class="form-control" id="year" />
     </div>
 
-    <button @onclick="@SaveMovie" class="btn btn-primary">Submit</button>
-    <button @onclick="@Cancel" class="btn btn-secondary">Cancel</button>
+    <button @onclick="SaveMovie" class="btn btn-primary">Submit</button>
+    <button @onclick="BlazoredModal.Cancel" class="btn btn-secondary">Cancel</button>
 </div>
 
 @code {
 
-    [CascadingParameter] ModalParameters Parameters { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
-    int MovieId { get; set; }
+    [Parameter] int MovieId { get; set; }
+
     Movie Movie { get; set; }
 
-    protected override void OnInit()
+    protected override void OnInitialized()
     {
-        MovieId = Parameters.Get<int>("MovieId");
-        LoadMovie(MovieId);
-    }
-
-    void LoadMovie(int movieId)
-    {
-        MovieService.Load(movieId);
+        Movie = MovieService.Load(MovieId);
     }
 
     void SaveMovie()
     {
         MovieService.Save(Movie);
-        ModalService.Close(ModalResult.Ok<Movie>(Movie));
-    }
-
-    void Cancel()
-    {
-        ModalService.Cancel();
+        BlazoredModal.Close(ModalResult.Ok<Movie>(Movie));
     }
 
 }
 ```
 
-### Modal Closed Event
+### Modal Reference
 
-If you need to know when the modal has closed, for example to trigger an update of data. The modal service exposes a `OnClose` event which returns a `ModalResult` type. This type is used to identify how the modal was closed. If the modal was cancelled you can return `ModalResult.Cancelled()`. If you want to return a object from your modal you can return `ModalResult.Ok(myResultObject)` which can be accessed via the `ModalResult.Data` property. There is also a `ModalResult.DataType` property which contains the type of the data property, if required. The `ModalResult` also contains the `ModalResult.ModalType` property, which can be used to identify which modal caused the `OnClose` event to fire. This property will be equal to the type used in the `Modal.Show` call. In the example below, it would thus be equal to the type `Movies`.
+When you open a modal you can capture a reference to it and await the result of that modal. This is useful when you want to perform an action when a modal is closed or cancelled.
 
 ```razor
 @page "/"
@@ -174,19 +181,86 @@ If you need to know when the modal has closed, for example to trigger an update 
 
 <h1>My Movies</h1>
 
-<button @onclick="@ShowModal" class="btn btn-primary">View Movies</button>
+<button @onclick="ShowModal" class="btn btn-primary">View Movies</button>
+
+@code {
+    async Task ShowModal()
+    {
+        var moviesModal = Modal.Show<Movies>("My Movies");
+        var result = await moviesModal.Result;
+
+        if (result.Cancelled)
+        {
+            Console.WriteLine("Modal was cancelled");
+        }
+        else
+        {
+            Console.WriteLine("Modal was closed");
+        }
+    }
+}
+```
+
+### Returning objects back to the calling code
+
+It is common to want to return messages or objects back from a modal to the calling code. This is achieved using the `ModalResult` class.
+
+In the example below, when the form is submitted a `ModalResult.Ok` containing the string "Form was submitted successfully." will be returned back to the calling code. If it is cancelled a `ModalResult.Cancelled` will be returned.
+
+```razor
+<div class="simple-form">
+
+    <div class="form-group">
+        <label for="first-name">First Name</label>
+        <input @bind="FirstName" type="text" class="form-control" id="first-name" placeholder="Enter First Name" />
+    </div>
+
+    <div class="form-group">
+        <label for="last-name">Last Name</label>
+        <input @bind="LastName" type="text" class="form-control" id="last-name" placeholder="Enter Last Name" />
+    </div>
+
+    <button @onclick="SubmitForm" class="btn btn-primary">Submit</button>
+    <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+</div>
 
 @code {
 
-    void ShowModal()
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    bool ShowForm { get; set; } = true;
+    string FirstName { get; set; }
+    string LastName { get; set; }
+    int FormId { get; set; }
+
+    void SubmitForm()
     {
-        Modal.OnClose += ModalClosed;
-        Modal.Show<Movies>("My Movies");
+        BlazoredModal.Close(ModalResult.Ok($"Form was submitted successfully."));
     }
 
-    void ModalClosed(ModalResult modalResult)
+    void Cancel()
     {
-        if (modalResult.Cancelled)
+        BlazoredModal.Cancel();
+    }
+
+}
+```
+
+Below is the caller for the component above. When the result is returned the string set in the `Ok` method can be access via the `Data` property on the `ModalResult`.
+
+```razor
+@page "/"
+@inject IModalService Modal
+
+<button @onclick="ShowModal" class="btn btn-primary">View Form</button>
+
+@code {
+    async Task ShowModal()
+    {
+        var formModal = Modal.Show<SignUpForm>("Please SignUp");
+        var result = await formModal.Result;
+
+        if (result.Cancelled)
         {
             Console.WriteLine("Modal was cancelled");
         }
@@ -194,18 +268,15 @@ If you need to know when the modal has closed, for example to trigger an update 
         {
             Console.WriteLine(modalResult.Data);
         }
-        Console.Write("Modal was closed by ");
-        Console.WriteLine(modalResult.ModalType);
-        
-        Modal.OnClose -= ModalClosed;
     }
-
 }
 ```
 
+The example above is only using a string value but you can also pass complex objects back as well. 
+
 ### Customizing the modal
 
-The modals can be customized to fit a wide variety of uses. These options can be set globally or changed programatically.
+The modals can be customized to fit a wide variety of uses. These options can be set globally or changed programatically on a per modal basis.
 
 #### Hiding the close button
 
@@ -298,5 +369,46 @@ Or in the `Modal.Show()` method:
 
         Modal.Show<Movies>("My Movies", options);
     }
+}
+```
+
+### Multiple Modals
+
+It's possible to have multiple active modal instances at a time. You can find a working example of this in the sample projects but here is some sample code.
+
+Below is a component which being displayed inside a Blazored Modal instance. When a user clicks on the _Delete_ button the `Yes` method is invoked and creates a new modal instance.  
+
+```razor
+@inject IModalService ModalService
+
+<div class="simple-form">
+    <div class="form-group">
+        Are you sure you want to delete the record?
+    </div>
+
+    <button @onclick="Yes" class="btn btn-outline-danger">Delete</button>
+    <button @onclick="No" class="btn btn-primary">Cancel</button>
+</div>
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    async Task Yes()
+    {
+        var confirmationModal = ModalService.Show<ConfirmationPrompt>();
+        var result = await confirmationModal.Result;
+
+        if (result.Cancelled)
+            return;
+
+        BlazoredModal.Close(ModalResult.Ok($"The user said 'Yes'"));
+    }
+
+    void No()
+    {
+        BlazoredModal.Close(ModalResult.Cancel());
+    }
+
 }
 ```
