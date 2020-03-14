@@ -1,4 +1,8 @@
 - name: Home
   href: ../index.md
 - name: Getting Started
-  href: getting-started.md
+  items:
+    - name: Installation
+      href: installation.md
+    - name: Basic Usage
+      href: basic-usage.md

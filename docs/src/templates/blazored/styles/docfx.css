@@ -200,8 +200,12 @@ header .navbar {
   border-bottom: 1px solid #ccc;
 }
 
-article h1, article h2, article h3, article h4{
+article h3, article h4{
   margin-top: 25px;
+}
+
+article h1 {
+  margin-top: 0;
 }
 
 article h2 {
@@ -436,11 +440,20 @@ article section {
 .sidetoc {
   position: fixed;
   width: 260px;
-  top: 150px;
+  top: 162px;
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 1;
+}
+
+.sidetoc h5 {
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: #A0AEC0;
+  margin: 24px 0 12px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .sidetoc.shiftup {
@@ -477,57 +490,54 @@ body .toc{
   position: absolute;
   left: -10px;
 }
-.toc .nav > li > a.sidetoc-expand {
+.toc .menu > li {
+  margin-left: -10px;
+  padding: 6px 0 6px 10px;
+  border-radius: 4px;
+}
+
+.toc .menu > li > a.sidetoc-expand {
   position: absolute;
   top: 0;
   left: 0;
 }
-.toc .nav > li > a {
-  margin-left: 5px;
+.toc .menu > li > a {
+  color: #4a5568;
   display: block;
   padding: 0;
 }
-.toc .nav > li > a:hover,
-.toc .nav > li > a:focus {
+.toc .menu > li > a:hover,
+.toc .menu > li > a:focus {
+  color: #ff6600;
   background: none;
   text-decoration: inherit;
 }
-.toc .nav > li.active > a {
+.toc .level2 > li.active {
+  background-color: #fff6f0;
+}
+
+.toc .menu > li.active > a {
   color: #ff6600;
 }
-.toc .nav > li.active > a:hover,
-.toc .nav > li.active > a:focus {
+.toc .menu > li.active > a:hover,
+.toc .menu > li.active > a:focus {
   color: #ff6600;
 }
 
-.toc .nav > li> .expand-stub {
+.toc .menu > li> .expand-stub {
   cursor: pointer;
 }
 
-.toc .nav > li.active > .expand-stub::before,
-.toc .nav > li.in > .expand-stub::before,
-.toc .nav > li.in.active > .expand-stub::before,
-.toc .nav > li.filtered > .expand-stub::before {
-    content: "-";
-}
-
-.toc .nav > li > .expand-stub::before,
-.toc .nav > li.active > .expand-stub::before {
-    content: "+";
-}
-
-.toc .nav > li.filtered > ul,
-.toc .nav > li.in > ul {
+.toc .menu > li.filtered > ul,
+.toc .menu > li.in > ul {
   display: block;
-}
-
-.toc .nav > li > ul {
-  display: none;
 }
 
 .toc ul{
   font-size: 12px;
-  margin: 0 0 0 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .toc .level1 > li {
@@ -538,7 +548,6 @@ body .toc{
 }
 .toc .level2 {
   font-weight: normal;
-  margin: 5px 0 0 15px;
   font-size: 14px;
 }
 .toc-toggle {
@@ -547,7 +556,7 @@ body .toc{
 }
 .sidefilter {
   position: fixed;
-  top: 90px;
+  top: 102px;
   width: 260px;
   padding: 15px;
   z-index: 1;
@@ -580,7 +589,7 @@ body .toc{
   right: 5px;
 }
 .article {
-  margin-top: 120px;
+  margin-top: 115px;
   margin-bottom: 115px;
 }
 
@@ -600,7 +609,7 @@ body .toc{
   max-width: 100%;
 }
 .sideaffix {
-  margin-top: 50px;
+  margin-top: 62px;
   font-size: 12px;
   max-height: 100%;
   overflow: hidden;
@@ -619,11 +628,13 @@ body .toc{
   margin-bottom: 20px;
 }
 .sideaffix > div.contribution > ul > li > a.contribution-link {
+  color: #A0AEC0;
   padding: 6px 10px;
   font-weight: bold;
   font-size: 14px;
 }
 .sideaffix > div.contribution > ul > li > a.contribution-link:hover {
+  color: #ff6600;
   background-color: #ffffff;
 }
 .sideaffix ul.nav > li > a:focus {
@@ -780,7 +791,7 @@ footer {
     padding-bottom: 0px;
     border: none;
   }
-  .toc .nav > li, .toc .nav > li >a {
+  .toc .menu > li, .toc .menu > li >a {
     display: inline-block;
   }
   .toc li:after {
