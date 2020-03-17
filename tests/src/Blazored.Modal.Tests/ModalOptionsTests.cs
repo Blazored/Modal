@@ -87,7 +87,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.Equal(0, cut.FindAll(".blazored-modal-close").Count);
+            Assert.Empty(cut.FindAll(".blazored-modal-close"));
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.Equal(0, cut.FindAll(".blazored-modal-header").Count);
+            Assert.Empty(cut.FindAll(".blazored-modal-header"));
         }
 
         [Fact]
