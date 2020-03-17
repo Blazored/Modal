@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: blazored/modal
-        ref: master
+        ref: docs-v2
         fetch-depth: 1
       
     - name: Checkout live docs repo
