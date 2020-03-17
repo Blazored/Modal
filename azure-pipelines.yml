@@ -39,7 +39,7 @@ steps:
 
 - powershell: |
     choco install docfx -y
-    docfx docfx.json
+    docfx docs/src/docfx.json
     if ($lastexitcode -ne 0){
       throw ("Error generating document")
     }
