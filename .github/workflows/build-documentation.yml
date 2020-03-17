@@ -42,15 +42,11 @@ jobs:
         unzip -d .docfx docfx.zip
 
     # Build and push
-    - name: Path
-      run: pwd
-    - name: Dir
-      run: ls docs/src
     - name: Build docs
       run:  mono .docfx/docfx.exe docs/src/docfx.json
     - name: Commit and push
       run: |
-        cd live
+        cd docs/src/_site
         git config --global user.email "noreply@blazored.com"
         git config --global user.name "Automated System"
         git add .
