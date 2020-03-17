@@ -1,0 +1,54 @@
+name: Build Documentation
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+    # Checkout repos
+    - name: Checkout repo
+      uses: actions/checkout@v1
+      with:
+        path: modal
+        fetch-depth: 1
+      
+    - name: Checkout live docs repo
+      uses: actions/checkout@v1
+      with:
+        repository: blazored/modal-docs
+        ref: master
+        fetch-depth: 1
+        path: modal/docs/src/_site
+    - name: Clear live docs repo
+      run: rm -rf _site/*
+    
+    # Setup build tools
+    - name: Get mono
+      run: |
+        apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+        echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+        sudo apt-get update
+        sudo apt-get install mono-complete --yes
+    - name: Get docfx
+      run: |
+        curl -L https://github.com/dotnet/docfx/releases/latest/download/docfx.zip -o docfx.zip
+        unzip -d .docfx docfx.zip
+
+    # Build and push
+    - name: Build docs
+      run:  mono .docfx/docfx.exe      
+    - name: Commit and push
+      run: |
+        cd live
+        git config --global user.email "noreply@npgsql.org"
+        git config --global user.name "Automated System"
+        git add .
+        git commit -m "Automated update" --author $GITHUB_ACTOR
+        header=$(echo -n "ad-m:$" | base64)
+        git -c http.extraheader="AUTHORIZATION: basic $header" push origin HEAD:master
