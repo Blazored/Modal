@@ -24,14 +24,14 @@ namespace Blazored.Modal.Services
         ModalReference Show<TComponent>(string title, ModalOptions options) where TComponent : ComponentBase;
 
         /// <summary>
-        /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/> and <paramref name="parameters"/>. 
+        /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/> and <paramref name="parameters"/>.
         /// </summary>
         /// <param name="title">Modal title</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed</param>
         ModalReference Show<TComponent>(string title, ModalParameters parameters) where TComponent : ComponentBase;
 
         /// <summary>
-        /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/>, 
+        /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/>,
         /// <paramref name="parameters"/> and <paramref name="options"/>.
         /// </summary>
         /// <param name="title">Modal title.</param>
@@ -69,7 +69,7 @@ namespace Blazored.Modal.Services
         ModalReference Show(Type component, string title, ModalParameters parameters);
 
         /// <summary>
-        /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/>, <paramref name="parameters"/> 
+        /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/>, <paramref name="parameters"/>
         /// and <paramref name="options"/>.
         /// </summary>
         /// <param name="title">Modal title.</param>
