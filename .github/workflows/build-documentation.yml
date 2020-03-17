@@ -15,6 +15,8 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v1
       with:
+        repository: blazored/modal
+        ref: master
         path: modal
         fetch-depth: 1
       
