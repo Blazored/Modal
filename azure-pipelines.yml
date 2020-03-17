@@ -36,3 +36,16 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publishing Build Artifacts...'
+
+- powershell: |
+  choco install docfx -y
+  docfx docfx.json
+  if ($lastexitcode -ne 0){
+    throw ("Error generating document")
+  }
+displayName: "docfx build"
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: docs/src/_site
+    artifactName: docs
