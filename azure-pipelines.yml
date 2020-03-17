@@ -43,7 +43,7 @@ steps:
     if ($lastexitcode -ne 0){
       throw ("Error generating document")
     }
-displayName: "docfx build"
+  displayName: "docfx build"
 
 - task: PublishBuildArtifacts@1
   inputs:
