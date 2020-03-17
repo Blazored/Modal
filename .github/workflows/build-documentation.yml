@@ -47,7 +47,7 @@ jobs:
     - name: Dir
       run: ls
     - name: Build docs
-      run:  mono .docfx/docfx.exe /docs/src/docfx.json
+      run:  mono .docfx/docfx.exe docs/src/docfx.json
     - name: Commit and push
       run: |
         cd live
