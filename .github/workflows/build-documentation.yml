@@ -17,7 +17,6 @@ jobs:
       with:
         repository: blazored/modal
         ref: master
-        path: modal
         fetch-depth: 1
       
     - name: Checkout live docs repo
@@ -26,7 +25,7 @@ jobs:
         repository: blazored/modal-docs
         ref: master
         fetch-depth: 1
-        path: modal/docs/src/_site
+        path: docs/src/_site
     - name: Clear live docs repo
       run: rm -rf _site/*
     
@@ -46,7 +45,7 @@ jobs:
     - name: Path
       run: pwd
     - name: Build docs
-      run:  mono .docfx/docfx.exe Modal/modal/docs/src/docfx.json
+      run:  mono .docfx/docfx.exe docs/src/docfx.json
     - name: Commit and push
       run: |
         cd live
