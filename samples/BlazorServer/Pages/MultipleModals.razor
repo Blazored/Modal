@@ -7,7 +7,7 @@
 
 <p>
     It is possible to show multiple modals at the same time. Each new modal needs to be shown from the currently active modal.
-    In this example an inital confirmation modal is shown, if you select <em>Yes</em> then a second confirmation modal is shown.
+    In this example an initial confirmation modal is shown, if you select <em>Yes</em> then a second confirmation modal is shown.
     When you <em>Close</em> the second modal both modals will be closed. If you <em>Cancel</em> the second modal, only the second
     modal will be closed.
 </p>
@@ -19,4 +19,3 @@
     void ShowModal() => Modal.Show<YesNoPrompt>("First Modal");
 
 }
-
