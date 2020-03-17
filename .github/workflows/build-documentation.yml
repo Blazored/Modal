@@ -45,7 +45,7 @@ jobs:
     - name: Path
       run: pwd
     - name: Dir
-      run: ls
+      run: ls docs/src
     - name: Build docs
       run:  mono .docfx/docfx.exe docs/src/docfx.json
     - name: Commit and push
