@@ -13,7 +13,7 @@ jobs:
     steps:
     # Checkout repos
     - name: Checkout repo
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
         repository: blazored/modal
         ref: master
@@ -21,7 +21,7 @@ jobs:
         fetch-depth: 1
       
     - name: Checkout live docs repo
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
         repository: blazored/modal-docs
         ref: master
@@ -48,7 +48,7 @@ jobs:
     - name: Commit and push
       run: |
         cd live
-        git config --global user.email "noreply@npgsql.org"
+        git config --global user.email "noreply@blazored.com"
         git config --global user.name "Automated System"
         git add .
         git commit -m "Automated update" --author $GITHUB_ACTOR
