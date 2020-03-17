@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Blazored.Modal</RootNamespace>
-
     <Authors>Chris Sainty</Authors>
     <Company></Company>
     <Copyright>Copyright 2018 (c) Chris Sainty. All rights reserved.</Copyright>
