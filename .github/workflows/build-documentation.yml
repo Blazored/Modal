@@ -44,7 +44,7 @@ jobs:
 
     # Build and push
     - name: Build docs
-      run:  mono .docfx/docfx.exe      
+      run:  mono .docfx/docfx.exe docs/src/docfx.json
     - name: Commit and push
       run: |
         cd live
