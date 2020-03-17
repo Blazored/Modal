@@ -287,6 +287,49 @@ article section {
 #autocollapse .navbar-brand {
   margin-left: 0;
 }
+
+#autocollapse .navbar-toggle {
+  margin-top: 15px;
+}
+
+#autocollapse .navbar-toggle .icon-bar {
+  background-color: #ff6600;
+}
+
+#autocollapse .socials {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+#autocollapse .socials a {
+  margin-left: 20px;
+  color: #718096;
+}
+
+#autocollapse .socials a:hover {
+  color: #ff6600;
+}
+
+svg {
+  fill: currentColor!important;
+}
+
+svg:hover {
+  fill: currentColor!important;
+}
+
+#autocollapse .socials svg {
+  height: 30px;
+  fill: currentColor!important;
+}
+
+.socials-icon {
+  height: 30px;
+  fill: currentColor!important;
+}
+
 .collapse.in,
 .collapsing {
   text-align: center;
@@ -792,6 +835,7 @@ footer {
     width: auto;
     float: none;
     border: none;
+    padding: 15px;
   }
   .sidetoc {
     position: static;
@@ -799,15 +843,14 @@ footer {
     float: none;
     padding-bottom: 0px;
     border: none;
+    border-bottom: 2px solid #EDF2F7;
+    text-align: left;
   }
-  .toc .menu > li, .toc .menu > li >a {
-    display: inline-block;
+  .toc {
+    padding: 0 20px;
   }
-  .toc li:after {
-    margin-left: -3px;
-    margin-right: 5px;
-    content: ", ";
-    color: #666666;
+  .toc .menu > li >a {
+    padding: 8px;
   }
   .toc .level1 > li {
     display: block;
