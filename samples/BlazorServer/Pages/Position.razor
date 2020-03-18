@@ -10,21 +10,21 @@
     in a number of different positions by setting the <code>Position</code> option.
 </p>
 
-<p class="card">
-        <h5 class="card-header">Setting on a per modal basis</h5>
+<div class="card mb-4">
+    <h5 class="card-header">Setting on a per modal basis</h5>
     <div class="card-body">
-<p class="card-text">
-    <code>
-        @("var options = new ModalOptions() { Position = ModalPosition.TopLeft };")
-        <br />
-        @("Modal.Show<Confirm>(\"Position: TopLeft\", options);")
-    </code>
-</p>
+        <p class="card-text">
+            <code>
+                @("var options = new ModalOptions() { Position = ModalPosition.TopLeft };")
+                <br />
+                @("Modal.Show<Confirm>(\"Position: TopLeft\", options);")
+            </code>
+        </p>
     </div>
-</p>
+</div>
 
-<p class="card">
-        <h5 class="card-header">Setting globally for all modals</h5>
+<div class="card mb-4">
+    <h5 class="card-header">Setting globally for all modals</h5>
     <div class="card-body">
         <p class="card-text">
             <code>
@@ -32,7 +32,7 @@
             </code>
         </p>
     </div>
-</p>
+</div>
 
 <button @onclick="@(() => PositionCustom(ModalPosition.TopLeft))" class="btn btn-secondary">Top left</button>
 <button @onclick="@(() => PositionCustom(ModalPosition.TopRight))" class="btn btn-secondary">Top right</button>
