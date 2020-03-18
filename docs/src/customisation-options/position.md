@@ -19,11 +19,10 @@ To set a global default position for all modals in your application, you can set
 
 ## Setting Position Per Modal
 
-To set the position of a specfic modal instance you can pass in a `ModalOptions` object when calling `Show`.
+To set the position of a specific modal instance you can pass in a `ModalOptions` object when calling `Show`.
 
 ```csharp
 var options = new ModalOptions { Position = ModalPosition.TopRight };
 
 _ = Modal.Show<Confirm>("My Modal", options);
 ```
-
