@@ -207,6 +207,8 @@ article h3, article h4{
 
 article h1 {
   margin-top: 0;
+  font-weight: 500;
+  margin-bottom: -15px;
 }
 
 article h2 {
