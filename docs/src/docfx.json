@@ -21,7 +21,12 @@
       }
     ],
     "dest": "_site",
-    "globalMetadataFiles": [],
+    "globalMetadata": {
+      "_gitContribute": {
+          "repo": "https://github.com/blazored/modal.git",
+          "branch": "master"
+      }
+    },
     "fileMetadataFiles": [],
     "template": [
       "default",
