@@ -10,21 +10,21 @@
     be disabled by setting <code>DisableBackgroundCancel</code> to <code>true</code>.
 </p>
 
-<p class="card">
-        <h5 class="card-header">Setting on a per modal basis</h5>
+<div class="card mb-4">
+    <h5 class="card-header">Setting on a per modal basis</h5>
     <div class="card-body">
-<p class="card-text">
-    <code>
-        @("var options = new ModalOptions() { DisableBackgroundCancel = true };")
-        <br />
-        @("Modal.Show<Confirm>(\"Background Cancel Disabled\", options);")
-    </code>
-</p>
+        <p class="card-text">
+            <code>
+                @("var options = new ModalOptions() { DisableBackgroundCancel = true };")
+                <br />
+                @("Modal.Show<Confirm>(\"Background Cancel Disabled\", options);")
+            </code>
+        </p>
     </div>
-</p>
+</div>
 
-<p class="card">
-        <h5 class="card-header">Setting globally for all modals</h5>
+<div class="card mb-4">
+    <h5 class="card-header">Setting globally for all modals</h5>
     <div class="card-body">
         <p class="card-text">
             <code>
@@ -32,7 +32,7 @@
             </code>
         </p>
     </div>
-</p>
+</div>
 
 <button @onclick="BackgroundCancelEnabled" class="btn btn-primary">Cancellation enabled</button>
 <button @onclick="BackgroundCancelDisabled" class="btn btn-secondary">Cancellation disabled</button>

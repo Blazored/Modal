@@ -1,4 +1,10 @@
-﻿@page "/"
+# Basic Usage
+Simple example of creating a modal
+
+---
+
+```html
+@page "/"
 @inject IModalService Modal
 
 <h1>Blazored Modal Sample</h1>
@@ -9,16 +15,6 @@
     This is an example of using Blazored Modal in its most simplistic form.
 </p>
 
-<div class="card mb-4">
-    <div class="card-body">
-        <p class="card-text">
-            <code>
-                @("Modal.Show<Confirm>(\"Welcome to Blazored Modal\", options);")
-            </code>
-        </p>
-    </div>
-</div>
-
 <button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
 
 @code {
@@ -26,4 +22,4 @@
     void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
 
 }
-
+```

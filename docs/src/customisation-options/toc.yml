@@ -1,0 +1,28 @@
+- name: Home
+  href: ../index.md
+- name: Getting Started
+  items:
+    - name: Installation
+      href: ../getting-started/installation.md
+    - name: Basic Usage
+      href: ../getting-started/basic-usage.md
+- name: Usage Scenarios
+  items:
+    - name: Passing Data To Modals
+      href: ../usage/passing-data-to-modals.md
+    - name: Returning Data From Modals
+      href: ../usage/returning-data-from-modals.md
+    - name: Multiple Modals
+      href: ../usage/multiple-modals.md
+- name: Customisation Options
+  items:
+    - name: Position
+      href: position.md
+    - name: Class
+      href: class.md
+    - name: Disable Background Cancel
+      href: disable-background-cancel.md
+    - name: Hide Header
+      href: hide-header.md
+    - name: Hide Close Button
+      href: hide-close-button.md
