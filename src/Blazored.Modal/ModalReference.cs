@@ -9,13 +9,13 @@ namespace Blazored.Modal
     {
         private TaskCompletionSource<ModalResult> _resultCompletion = new TaskCompletionSource<ModalResult>();
 
-        private event Action<ModalResult> Closed;
+        private Action<ModalResult> Closed;
 
         public ModalReference(Guid modalInstanceId, RenderFragment modalInstance)
         {
             Id = modalInstanceId;
             ModalInstance = modalInstance;
-            Closed += HandleClosed;
+            Closed = HandleClosed;
         }
 
         private void HandleClosed(ModalResult obj)
