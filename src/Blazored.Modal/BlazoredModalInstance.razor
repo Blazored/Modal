@@ -6,35 +6,35 @@
         <div class="@Class">
             @if (!HideHeader)
             {
-                <div class="blazored-modal-header">
-                    <h3 class="blazored-modal-title">
-                        @switch (ModalType)
-                        {
-                            case ModalType.Info:
-                                <span class="@Parent.InfoIconClass"></span>
-                                break;
-                            case ModalType.Warning:
-                                <span class="@Parent.WarningIconClass"></span>
-                                break;
-                            case ModalType.Error:
-                                <span class="@Parent.ErrorIconClass"></span>
-                                break;
-                            case ModalType.Success:
-                                <span class="@Parent.SuccessIconClass"></span>
-                                break;
-                            case ModalType.Question:
-                                <span class="@Parent.QuestionIconClass"></span>
-                                break;
-                        }
-                        @Title
-                    </h3>
-                    @if (!HideCloseButton)
+            <div class="blazored-modal-header">
+                <h3 class="mr-2">
+                @switch (ModalType)
                     {
-                        <button type="button" class="blazored-modal-close" @onclick="(() => Parent.CancelInstance(Id))">
-                            <span>&times;</span>
-                        </button>
-                    }
-                </div>
+                    case ModalType.Info:
+                        <span class="@Parent.InfoIconClass"></span>
+                        break;
+                    case ModalType.Warning:
+                        <span class="@Parent.WarningIconClass"></span>
+                        break;
+                    case ModalType.Error:
+                        <span class="@Parent.ErrorIconClass"></span>
+                        break;
+                    case ModalType.Success:
+                        <span class="@Parent.SuccessIconClass"></span>
+                        break;
+                    case ModalType.Question:
+                        <span class="@Parent.QuestionIconClass"></span>
+                        break;
+                }
+                </h3>
+                <h3 class="blazored-modal-title">@Title</h3>
+                @if (!HideCloseButton)
+                {
+                    <button type="button" class="blazored-modal-close" @onclick="(() => Parent.CancelInstance(Id))">
+                        <span>&times;</span>
+                    </button>
+                }
+            </div>
             }
             <div class="blazored-modal-content">
                 <CascadingValue Value="this">
