@@ -22,7 +22,7 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>();
 
             // Assert
-            Assert.Equal(0, cut.FindAll(".blazored-modal-container").Count);
+            Assert.Empty(cut.FindAll(".blazored-modal-container"));
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace Blazored.Modal.Tests
             closeButton.Click();
 
             // Assert
-            Assert.Equal(0, cut.FindAll(".blazored-modal-container").Count);
+            Assert.Empty(cut.FindAll(".blazored-modal-container"));
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace Blazored.Modal.Tests
             closeButton.Click();
 
             // Assert
-            Assert.Equal(0, cut.FindAll(".blazored-modal-container").Count);
+            Assert.Empty(cut.FindAll(".blazored-modal-container"));
         }
     }
 }

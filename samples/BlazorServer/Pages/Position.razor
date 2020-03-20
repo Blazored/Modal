@@ -49,9 +49,8 @@
 
     void PositionCustom(ModalPosition position)
     {
-        var options = new ModalOptions() { Position = position };
+        var options = new ModalOptions { Position = position };
 
         Modal.Show<Confirm>($"Position: {position}", options);
     }
 }
-

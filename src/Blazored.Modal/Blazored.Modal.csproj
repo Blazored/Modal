@@ -2,15 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RazorLangVersion>3.0</RazorLangVersion>
-    <RootNamespace>Blazored.Modal</RootNamespace>
-    
     <Authors>Chris Sainty</Authors>
     <Company></Company>
     <Copyright>Copyright 2018 (c) Chris Sainty. All rights reserved.</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Blazored/Modal</PackageProjectUrl>
-    <PackageIconUrl>https://avatars1.githubusercontent.com/u/39194025</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Blazored/Modal</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>Blazored Blazor Razor Components Modal Dialogue</PackageTags>
@@ -25,4 +22,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 </Project>

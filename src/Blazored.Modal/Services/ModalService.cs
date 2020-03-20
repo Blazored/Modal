@@ -35,8 +35,8 @@ namespace Blazored.Modal.Services
         }
 
         /// <summary>
-        /// Shows the modal with the component type using the specified <paramref name="title"/>, 
-        /// passing the specified <paramref name="parameters"/>. 
+        /// Shows the modal with the component type using the specified <paramref name="title"/>,
+        /// passing the specified <paramref name="parameters"/>.
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
@@ -46,8 +46,8 @@ namespace Blazored.Modal.Services
         }
 
         /// <summary>
-        /// Shows the modal with the component type using the specified <paramref name="title"/>, 
-        /// passing the specified <paramref name="parameters"/> and setting a custom CSS style. 
+        /// Shows the modal with the component type using the specified <paramref name="title"/>,
+        /// passing the specified <paramref name="parameters"/> and setting a custom CSS style.
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
@@ -88,8 +88,8 @@ namespace Blazored.Modal.Services
         }
 
         /// <summary>
-        /// Shows the modal with the component type using the specified <paramref name="title"/>, 
-        /// passing the specified <paramref name="parameters"/>. 
+        /// Shows the modal with the component type using the specified <paramref name="title"/>,
+        /// passing the specified <paramref name="parameters"/>.
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="contentComponent">Type of component to display.</param>
@@ -100,8 +100,8 @@ namespace Blazored.Modal.Services
         }
 
         /// <summary>
-        /// Shows the modal with the component type using the specified <paramref name="title"/>, 
-        /// passing the specified <paramref name="parameters"/> and setting a custom CSS style. 
+        /// Shows the modal with the component type using the specified <paramref name="title"/>,
+        /// passing the specified <paramref name="parameters"/> and setting a custom CSS style.
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
@@ -114,7 +114,7 @@ namespace Blazored.Modal.Services
             }
 
             var modalInstanceId = Guid.NewGuid();
-            var modalContent = new RenderFragment(builder => 
+            var modalContent = new RenderFragment(builder =>
             {
                 var i = 0;
                 builder.OpenComponent(i++, contentComponent);
@@ -122,7 +122,7 @@ namespace Blazored.Modal.Services
                 {
                     builder.AddAttribute(i++, parameter.Key, parameter.Value);
                 }
-                builder.CloseComponent(); 
+                builder.CloseComponent();
             });
             var modalInstance = new RenderFragment(builder =>
             {

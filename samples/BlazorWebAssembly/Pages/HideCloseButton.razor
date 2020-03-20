@@ -45,8 +45,7 @@
 
     void CloseButtonHidden()
     {
-        var options = new ModalOptions() { HideCloseButton = true };
+        var options = new ModalOptions { HideCloseButton = true };
         Modal.Show<Confirm>("Hiding Close Button", options);
     }
 }
-
