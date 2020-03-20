@@ -7,6 +7,21 @@ namespace Blazored.Modal.Services
     {
         internal event Action<ModalReference> OnModalInstanceAdded;
 
+
+
+        /// <summary>
+        /// Shows the modal generic with the specific component type.
+        /// </summary>
+        /// <param name="contentComponent">Type of component to display.</param>
+        public ModalReference ShowGeneric(string title, string message, ModalButton modalButton, ModalType modalType, string captionYesButton = null,
+            string captionNoButton = null, string captionOkButton = null, string captionCancelButton = null)
+        {
+            return Show(typeof(ModalGeneric), title, new ModalParameters(), new ModalOptions(), message: message, modalButton: modalButton,
+                modalType: modalType, captionYesButton: captionYesButton, captionNoButton: captionNoButton, captionOkButton: captionOkButton, captionCancelButton: captionCancelButton);
+        }
+
+
+
         /// <summary>
         /// Shows the modal with the component type.
         /// </summary>
@@ -106,7 +121,9 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
-        public ModalReference Show(Type contentComponent, string title, ModalParameters parameters, ModalOptions options)
+        public ModalReference Show(Type contentComponent, string title, ModalParameters parameters, ModalOptions options,
+            string message = null, ModalButton modalButton = 0, ModalType modalType = 0, string captionYesButton = null,
+            string captionNoButton = null, string captionOkButton = null, string captionCancelButton = null)
         {
             if (!typeof(ComponentBase).IsAssignableFrom(contentComponent))
             {
@@ -131,6 +148,13 @@ namespace Blazored.Modal.Services
                 builder.AddAttribute(2, "Title", title);
                 builder.AddAttribute(3, "Content", modalContent);
                 builder.AddAttribute(4, "Id", modalInstanceId);
+                builder.AddAttribute(5, "Message", message);
+                builder.AddAttribute(6, "ModalButton", modalButton);
+                builder.AddAttribute(7, "ModalType", modalType);
+                builder.AddAttribute(8, "CaptionYesButton", captionYesButton);
+                builder.AddAttribute(9, "CaptionNoButton", captionNoButton);
+                builder.AddAttribute(10, "CaptionOkButton", captionOkButton);
+                builder.AddAttribute(11, "CaptionCancelButton", captionCancelButton);
                 builder.CloseComponent();
             });
             var modalReference = new ModalReference(modalInstanceId, modalInstance);

@@ -5,6 +5,15 @@ namespace Blazored.Modal.Services
 {
     public interface IModalService
     {
+
+        /// <summary>
+        /// Shows a modal generic containing a <paramref name="component"/>.
+        /// </summary>
+        /// <param name="component">Type of component to display.</param>
+        ModalReference ShowGeneric(string title, string message, ModalButton modalButton, ModalType modalType, string captionYesButton = null, string captionNoButton = null, string captionOkButton = null, string captionCancelButton = null);
+
+
+
         /// <summary>
         /// Shows a modal containing the specified <typeparamref name="TComponent"/>.
         /// </summary>
@@ -75,6 +84,6 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
-        ModalReference Show(Type component, string title, ModalParameters parameters, ModalOptions options);
+        ModalReference Show(Type component, string title, ModalParameters parameters, ModalOptions options, string message = null, ModalButton modalButton = 0, ModalType modalType = 0, string captionYesButton = null, string captionNoButton = null, string captionOkButton = null, string captionCancelButton = null);
     }
 }

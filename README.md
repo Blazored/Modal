@@ -412,3 +412,36 @@ Below is a component which being displayed inside a Blazored Modal instance. Whe
 
 }
 ```
+### Generic Modal
+
+possibility to open a generic modal, passing as parameter, the title, the message, the type (if it is an error show the error icon next to the title and so on ...),
+
+the button you want to see, and the possible button translations (the latter are optional parameters)
+
+```razor
+@page "/"
+@inject IModalService Modal
+
+<button @onclick="ShowModal" class="btn btn-primary">View Generic Modal</button>
+
+@code {
+    async Task ShowModal()
+    {
+        var messageResult = Modal.ShowGeneric("Welcome to Blazored Generic Modal", "Generic Message Custom", ModalButton.YesNo, ModalType.Question, captionYesButton: "Si");
+        var result = await messageResult.Result;
+        Console.WriteLine(result);
+    }
+}
+```
+
+Setting the icon class also requires  for example:
+
+```html
+
+<BlazoredModal                              
+               QuestionIconClass="fa fa-question-circle"
+               WarningIconClass="fa fa-exclamation-triangle"
+               InfoIconClass="fa fa-info-circle"
+               SuccessIconClass="fa fa-thumbs-up"
+               ErrorIconClass="fa fa-bug"  />
+```

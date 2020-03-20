@@ -1,0 +1,20 @@
+﻿<div>
+    <p>
+        @BlazoredModal.Message
+    </p>
+    @switch (BlazoredModal.ModalButton)
+    {
+        case ModalButton.YesNo:
+            <button class="btn btn-primary float-right ml-2" @onclick="() => Close(true)">@(!string.IsNullOrEmpty(BlazoredModal.CaptionYesButton) ? BlazoredModal.CaptionYesButton : "Yes")</button>
+            <button class="btn btn-secondary float-right" @onclick="() => Close(false)">@(!string.IsNullOrEmpty(BlazoredModal.CaptionNoButton) ? BlazoredModal.CaptionNoButton : "No")</button>
+            break;
+        case ModalButton.Cancel:
+            <button class="btn btn-secondary float-right" @onclick="() => Cancel()">@(!string.IsNullOrEmpty(BlazoredModal.CaptionCancelButton) ? BlazoredModal.CaptionCancelButton : "Cancel")</button>
+            break;
+        default:
+            <button class="btn btn-primary float-right" @onclick="() => Close(true)">@(!string.IsNullOrEmpty(BlazoredModal.CaptionOkButton) ? BlazoredModal.CaptionOkButton : "Ok")</button>
+            break;
+    }
+
+</div>
+

@@ -18,6 +18,13 @@ namespace Blazored.Modal
         [Parameter] public ModalPosition? Position { get; set; }
         [Parameter] public string Class { get; set; }
 
+        [Parameter] public string SuccessIconClass { get; set; }
+        [Parameter] public string InfoIconClass { get; set; }
+        [Parameter] public string QuestionIconClass { get; set; }
+        [Parameter] public string WarningIconClass { get; set; }
+        [Parameter] public string ErrorIconClass { get; set; }
+
+
         private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
         private readonly ModalOptions GlobalModalOptions = new ModalOptions();
 

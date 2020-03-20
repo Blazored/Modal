@@ -1,0 +1,34 @@
+﻿@page "/genericmodal"
+@inject IModalService Modal
+
+<h1>Blazored Generic Modal Sample</h1>
+
+<hr class="mb-5" />
+
+<p>
+    This is an example of using Blazored Generic Modal in its most simplistic form.
+</p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("Modal.Show<Confirm>(\"Welcome to Blazored Modal\", \"Message Body\",ModalButton,ModalType,captionYesButton:optional,captionNoButton:optional,captionOkButton:optional,captionCancelButton:optional);")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show Generic Modal</button>
+
+@code {
+
+    async Task ShowModal()
+    {
+        var messageResult = Modal.ShowGeneric("Welcome to Blazored Generic Modal", "Generic Message Custom", ModalButton.YesNo, ModalType.Question, captionYesButton: "Si");
+        var result = await messageResult.Result;
+        Console.WriteLine(result);
+    }
+
+}
+

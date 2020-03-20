@@ -7,7 +7,27 @@
             @if (!HideHeader)
             {
                 <div class="blazored-modal-header">
-                    <h3 class="blazored-modal-title">@Title</h3>
+                    <h3 class="blazored-modal-title">
+                        @switch (ModalType)
+                        {
+                            case ModalType.Info:
+                                <span class="@Parent.InfoIconClass"></span>
+                                break;
+                            case ModalType.Warning:
+                                <span class="@Parent.WarningIconClass"></span>
+                                break;
+                            case ModalType.Error:
+                                <span class="@Parent.ErrorIconClass"></span>
+                                break;
+                            case ModalType.Success:
+                                <span class="@Parent.SuccessIconClass"></span>
+                                break;
+                            case ModalType.Question:
+                                <span class="@Parent.QuestionIconClass"></span>
+                                break;
+                        }
+                        @Title
+                    </h3>
                     @if (!HideCloseButton)
                     {
                         <button type="button" class="blazored-modal-close" @onclick="(() => Parent.CancelInstance(Id))">
@@ -28,6 +48,16 @@
 @code {
     [CascadingParameter] private BlazoredModal Parent { get; set; }
     [CascadingParameter] private ModalOptions GlobalModalOptions { get; set; }
+
+
+    [Parameter] public string Message { get; set; }
+    [Parameter] public string CaptionYesButton { get; set; }
+    [Parameter] public string CaptionNoButton { get; set; }
+    [Parameter] public string CaptionCancelButton { get; set; }
+    [Parameter] public string CaptionOkButton { get; set; }
+    [Parameter] public ModalType ModalType { get; set; }
+    [Parameter] public ModalButton ModalButton { get; set; }
+
 
     [Parameter] public ModalOptions Options { get; set; }
     [Parameter] public string Title { get; set; }
