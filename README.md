@@ -266,7 +266,7 @@ Below is the caller for the component above. When the result is returned the str
         }
         else
         {
-            Console.WriteLine(modalResult.Data);
+            Console.WriteLine(result.Data);
         }
     }
 }
