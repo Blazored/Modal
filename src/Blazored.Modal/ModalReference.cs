@@ -11,11 +11,24 @@ namespace Blazored.Modal
 
         private Action<ModalResult> Closed;
 
-        public ModalReference(Guid modalInstanceId, RenderFragment modalInstance)
+        private IModalService ModalService { get; }
+
+        public ModalReference(Guid modalInstanceId, RenderFragment modalInstance, IModalService modalService)
         {
             Id = modalInstanceId;
             ModalInstance = modalInstance;
             Closed = HandleClosed;
+            ModalService = modalService;
+        }
+
+        public void Close()
+        {
+            ModalService.Close(this);
+        }
+
+        public void Close(ModalResult result)
+        {
+            ModalService.Close(this, result);
         }
 
         private void HandleClosed(ModalResult obj)
