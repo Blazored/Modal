@@ -7,9 +7,9 @@ namespace Blazored.Modal
 {
     public class ModalReference
     {
-        private TaskCompletionSource<ModalResult> _resultCompletion = new TaskCompletionSource<ModalResult>();
+        private readonly TaskCompletionSource<ModalResult> _resultCompletion = new TaskCompletionSource<ModalResult>();
 
-        private Action<ModalResult> Closed;
+        private readonly Action<ModalResult> _closed;
 
         private readonly ModalService _modalService;
 
@@ -17,7 +17,7 @@ namespace Blazored.Modal
         {
             Id = modalInstanceId;
             ModalInstance = modalInstance;
-            Closed = HandleClosed;
+            _closed = HandleClosed;
             _modalService = modalService;
         }
 
@@ -36,14 +36,14 @@ namespace Blazored.Modal
             _ = _resultCompletion.TrySetResult(obj);
         }
 
-        internal Guid Id { get; set; }
-        internal RenderFragment ModalInstance { get; set; }
+        internal Guid Id { get; }
+        internal RenderFragment ModalInstance { get; }
 
         public Task<ModalResult> Result => _resultCompletion.Task;
 
         internal void Dismiss(ModalResult result)
         {
-            Closed.Invoke(result);
+            _closed.Invoke(result);
         }
     }
 }
