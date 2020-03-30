@@ -141,12 +141,12 @@ namespace Blazored.Modal.Services
             return modalReference;
         }
 
-        public void Close(ModalReference modal)
+        internal void Close(ModalReference modal)
         {
             Close(modal, ModalResult.Ok<object>(null));
         }
 
-        public void Close(ModalReference modal, ModalResult result)
+        internal void Close(ModalReference modal, ModalResult result)
         {
             OnModalCloseRequested?.Invoke(modal, result);
         }
