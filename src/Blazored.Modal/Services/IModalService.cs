@@ -76,18 +76,5 @@ namespace Blazored.Modal.Services
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
         ModalReference Show(Type component, string title, ModalParameters parameters, ModalOptions options);
-
-        /// <summary>
-        /// Closes the <paramref name="modal"/>
-        /// </summary>
-        /// <param name="modal">The <paramref name="modal"/> of the modal to close.</param>
-        void Close(ModalReference modal);
-
-        /// <summary>
-        /// Closes the <paramref name="modal"/>
-        /// </summary>
-        /// <param name="modal">The <paramref name="modal"/> of the modal to close.</param>
-        /// <param name="result">The result of the modal</param>
-        void Close(ModalReference modal, ModalResult result);
     }
 }
