@@ -14,6 +14,8 @@
       href: returning-data-from-modals.md
     - name: Multiple Modals
       href: multiple-modals.md
+    - name: Long-running Tasks
+      href: long-running-task.md
 - name: Customisation Options
   items:
     - name: Position
