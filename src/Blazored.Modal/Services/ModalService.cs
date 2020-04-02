@@ -6,6 +6,7 @@ namespace Blazored.Modal.Services
     public class ModalService : IModalService
     {
         internal event Action<ModalReference> OnModalInstanceAdded;
+        internal event Action<ModalReference, ModalResult> OnModalCloseRequested;
 
         /// <summary>
         /// Shows the modal with the component type.
@@ -133,11 +134,21 @@ namespace Blazored.Modal.Services
                 builder.AddAttribute(4, "Id", modalInstanceId);
                 builder.CloseComponent();
             });
-            var modalReference = new ModalReference(modalInstanceId, modalInstance);
+            var modalReference = new ModalReference(modalInstanceId, modalInstance, this);
 
             OnModalInstanceAdded?.Invoke(modalReference);
 
             return modalReference;
+        }
+
+        internal void Close(ModalReference modal)
+        {
+            Close(modal, ModalResult.Ok<object>(null));
+        }
+
+        internal void Close(ModalReference modal, ModalResult result)
+        {
+            OnModalCloseRequested?.Invoke(modal, result);
         }
     }
 }

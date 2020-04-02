@@ -24,6 +24,7 @@ namespace Blazored.Modal
         protected override void OnInitialized()
         {
             ((ModalService)ModalService).OnModalInstanceAdded += Update;
+            ((ModalService) ModalService).OnModalCloseRequested += CloseInstance;
             NavigationManager.LocationChanged += CancelModals;
 
             GlobalModalOptions.Class = Class;
@@ -31,6 +32,11 @@ namespace Blazored.Modal
             GlobalModalOptions.HideCloseButton = HideCloseButton;
             GlobalModalOptions.HideHeader = HideHeader;
             GlobalModalOptions.Position = Position;
+        }
+
+        internal void CloseInstance(ModalReference modal, ModalResult result)
+        {
+            DismissInstance(modal.Id, result);
         }
 
         internal void CloseInstance(Guid Id)
