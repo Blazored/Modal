@@ -18,19 +18,19 @@ namespace Blazored.Modal
 
         public T Get<T>(string parameterName)
         {
-            if (!_parameters.ContainsKey(parameterName))
+            if (_parameters.TryGetValue(parameterName, out var value))
             {
-                throw new KeyNotFoundException($"{parameterName} does not exist in modal parameters");
+                return (T)value;
             }
-
-            return (T)_parameters[parameterName];
+            
+            throw new KeyNotFoundException($"{parameterName} does not exist in modal parameters");
         }
 
         public T TryGet<T>(string parameterName)
         {
-            if (_parameters.ContainsKey(parameterName))
+            if (_parameters.TryGetValue(parameterName, out var value))
             {
-                return (T)_parameters[parameterName];
+                return (T)value;
             }
 
             return default;

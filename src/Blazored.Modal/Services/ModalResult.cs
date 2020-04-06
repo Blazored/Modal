@@ -17,7 +17,7 @@ namespace Blazored.Modal.Services
 
         public static ModalResult Ok<T>(T result) => Ok(result, default);
 
-        public static ModalResult Ok<T>(T result, Type modalType) => new ModalResult(result, typeof(T), false);
+        public static ModalResult Ok<T>(T result, Type modalType) => new ModalResult(result, modalType, false);
 
         public static ModalResult Cancel() => new ModalResult(default, typeof(object), true);
     }
