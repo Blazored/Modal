@@ -326,9 +326,9 @@ Or in the `Modal.Show()` method:
 
 You can set an alternative CSS style for the modal if you want to customize the look and feel. This is useful when your web application requires different kinds of modals, like a warning, confirmation or an input form.
 
-Use the `Style` parameter to set the custom styling globally:
+Use the `Class` parameter to set the custom styling globally:
 
-`<BlazoredModal Style="custom-modal" />`
+`<BlazoredModal Class="custom-modal" />`
 
 Or in the `Modal.Show()` method:
 
@@ -338,7 +338,7 @@ Or in the `Modal.Show()` method:
     {
         var options = new ModalOptions()
         {
-            Style = "blazored-modal-movies"
+            Class = "blazored-modal-movies"
         };
 
         Modal.Show<Movies>("My Movies", options);
