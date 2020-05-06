@@ -153,7 +153,7 @@ If you want to pass values to the component you're displaying in the modal, then
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
-    [Parameter] int MovieId { get; set; }
+    [Parameter] public int MovieId { get; set; }
 
     Movie Movie { get; set; }
 
