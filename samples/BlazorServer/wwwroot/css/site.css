@@ -177,3 +177,9 @@ app {
 .blazored-prompt-modal .blazored-modal-header {
     display: none;
 }
+
+.my-custom-position {
+    position: absolute;
+    top: 0px;
+    left: 100px;
+}

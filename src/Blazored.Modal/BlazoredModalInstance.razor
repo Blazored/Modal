@@ -1,8 +1,8 @@
-﻿<div class="blazored-modal-container @Position">
+﻿<div class="blazored-modal-container @ContainerPosition">
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
-    <div class="blazored-modal-wrapper">
+    <div class="blazored-modal-wrapper @WrapperPosition">
         <div class="@Class">
             @if (!HideHeader)
             {
@@ -34,7 +34,8 @@
     [Parameter] public RenderFragment Content { get; set; }
     [Parameter] public Guid Id { get; set; }
 
-    private string Position { get; set; }
+    private string ContainerPosition { get; set; }
+    private string WrapperPosition { get; set; }
     private string Class { get; set; }
     private bool HideHeader { get; set; }
     private bool HideCloseButton { get; set; }
@@ -82,14 +83,17 @@
 
     private void ConfigureInstance()
     {
-        Position = SetPosition();
+        var position = SetPosition();
+        ContainerPosition = position.ContainerPosition;
+        WrapperPosition = position.WrapperPosition;
+
         Class = SetClass();
         HideHeader = SetHideHeader();
         HideCloseButton = SetHideCloseButton();
         DisableBackgroundCancel = SetDisableBackgroundCancel();
     }
 
-    private string SetPosition()
+    private (string ContainerPosition, string WrapperPosition) SetPosition()
     {
         ModalPosition position;
         if (Options.Position.HasValue)
@@ -108,17 +112,21 @@
         switch (position)
         {
             case ModalPosition.Center:
-                return "blazored-modal-center";
+                return ("blazored-modal-center", "");
             case ModalPosition.TopLeft:
-                return "blazored-modal-topleft";
+                return ("", "blazored-modal-topleft");
             case ModalPosition.TopRight:
-                return "blazored-modal-topright";
+                return ("", "blazored-modal-topright");
             case ModalPosition.BottomLeft:
-                return "blazored-modal-bottomleft";
+                return ("", "blazored-modal-bottomleft");
             case ModalPosition.BottomRight:
-                return "blazored-modal-bottomright";
+                return ("", "blazored-modal-bottomright");
+            case ModalPosition.Custom:
+                if (string.IsNullOrWhiteSpace(Options.PositionCustomClass))
+                    throw new ArgumentNullException("Position set to Custom without a PositionCustomClass set.");
+                return ("", Options.PositionCustomClass);
             default:
-                return "blazored-modal-center";
+                return ("blazored-modal-center", "");
         }
     }
 

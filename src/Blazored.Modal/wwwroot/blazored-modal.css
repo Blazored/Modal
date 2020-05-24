@@ -56,25 +56,25 @@
     justify-content: center;
 }
 
-.blazored-modal-topleft .blazored-modal-wrapper {
+.blazored-modal-topleft {
     position: absolute;
     top: 32px;
     left: 32px;
 }
 
-.blazored-modal-topright .blazored-modal-wrapper {
+.blazored-modal-topright {
     position: absolute;
     top: 32px;
     right: 32px;
 }
 
-.blazored-modal-bottomleft .blazored-modal-wrapper {
+.blazored-modal-bottomleft {
     position: absolute;
     bottom: 32px;
     left: 32px;
 }
 
-.blazored-modal-bottomright .blazored-modal-wrapper {
+.blazored-modal-bottomright {
     position: absolute;
     bottom: 32px;
     right: 32px;

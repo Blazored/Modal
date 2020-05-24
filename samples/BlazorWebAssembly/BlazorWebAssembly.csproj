@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="$(BlazorVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="$(BlazorVersion)" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="$(BlazorVersion)" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="$(BlazorVersion)" />
+    <PackageReference Include="System.Net.Http.Json" Version="$(BlazorVersion)" />
   </ItemGroup>
 
   <ItemGroup>

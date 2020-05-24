@@ -31,7 +31,22 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
-        public void ModalDisplaysCorrectPositionClass()
+        public void ModalDisplaysCorrectPositionClassWhenIsCentered()
+        {
+            // Arrange
+            var options = new ModalOptions { Position = ModalPosition.Center };
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
+
+            // Act
+            modalService.Show<TestComponent>("", options);
+
+            // Assert
+            Assert.NotNull(cut.Find(".blazored-modal-container.blazored-modal-center"));
+        }
+
+        [Fact]
+        public void ModalDisplaysCorrectPositionClassWhenIsNotCentered()
         {
             // Arrange
             var options = new ModalOptions { Position = ModalPosition.TopLeft };
@@ -42,7 +57,27 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".blazored-modal-container.blazored-modal-topleft"));
+            Assert.NotNull(cut.Find(".blazored-modal-wrapper.blazored-modal-topleft"));
+        }
+
+        [Fact]
+        public void ModalDisplaysCorrectPositionClassWhenUsingCustomPositiopn()
+        {
+            // Arrange
+            var options = new ModalOptions
+            {
+                Position = ModalPosition.Custom,
+                PositionCustomClass = "my-custom-class"
+            };
+
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>();
+
+            // Act
+            modalService.Show<TestComponent>("", options);
+
+            // Assert
+            Assert.NotNull(cut.Find(".blazored-modal-wrapper.my-custom-class"));
         }
 
         [Fact]
