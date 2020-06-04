@@ -1,0 +1,54 @@
+﻿@page "/animation"
+@inject IModalService Modal
+
+<h1>Animating the modal</h1>
+
+<hr class="mb-5" />
+
+<p>
+    By default, the modal is shown without animation. The modal can be set to no animation, Fade in, Fade out or both.
+</p>
+
+<div class="card mb-4">
+    <h5 class="card-header">Setting on a per modal basis</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("var options = new ModalOptions() { Animation = ModalAnimation.FadeIn };")
+                <br />
+                @("Modal.Show<Confirm>(\"Animation: Fade-In\", options);")
+            </code>
+        </p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <h5 class="card-header">Setting globally for all modals</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("<BlazoredModal Animation=\"ModalAnimation.FadeIn\" />")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeIn))" class="btn btn-secondary">Fade-In</button>
+<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeOut))" class="btn btn-secondary">Fade-Out</button>
+<button @onclick="AnimationDefault" class="btn btn-primary">Globally set value (default no animation)</button>
+<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeInOut))" class="btn btn-secondary">Fade-in Fade-Out</button>
+
+@code {
+
+    void AnimationDefault()
+    {
+        Modal.Show<Confirm>("Default Animation");
+    }
+
+    void AnimationCustom(ModalAnimation animation)
+    {
+        var options = new ModalOptions { Animation = animation };
+
+        Modal.Show<Confirm>($"Animation: {animation}", options);
+    }
+}
