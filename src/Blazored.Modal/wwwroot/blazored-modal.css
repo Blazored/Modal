@@ -29,6 +29,33 @@
     box-shadow: 0 2px 2px rgba(0,0,0,.25);
 }
 
+.blazored-modal-fade-in {
+    animation: 1s ease-out 0s ModalFadeIn;
+}
+
+.blazored-modal-fade-out {
+    animation: 1s ease-out 0s ModalFadeOut;
+    opacity: 0;
+}
+
+@keyframes ModalFadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes ModalFadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
 .blazored-modal-header {
     display: flex;
     align-items: flex-start;

@@ -4,7 +4,7 @@
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
-    <div class="@Class" @onkeyup="HandleWrapperKeyUp">
+    <div class="@Class @AnimationClass" @onkeyup="HandleWrapperKeyUp">
         @if (!HideHeader)
         {
             <div class="blazored-modal-header">
@@ -36,6 +36,7 @@
 
     private string Position { get; set; }
     private string Class { get; set; }
+    private string AnimationClass { get; set; }
     private bool HideHeader { get; set; }
     private bool HideCloseButton { get; set; }
     private bool DisableBackgroundCancel { get; set; }
@@ -79,6 +80,14 @@
     /// <param name="modalResult"></param>
     public async Task Close(ModalResult modalResult)
     {
+        // Fade out the modal, and after that actually remove it
+        if(Options.Animation == ModalAnimation.FadeOut || Options.Animation == ModalAnimation.FadeInOut)
+        {
+            AnimationClass = "blazored-modal-fade-out";
+            StateHasChanged();
+            await Task.Delay(1100); // Needs to be a bit more than the animation time because of delays in the animation being applied, I think.
+        }
+
         await Parent.DismissInstance(Id, modalResult);
     }
 
@@ -87,13 +96,14 @@
     /// </summary>
     public async Task Cancel()
     {
-        await Parent.DismissInstance(Id, ModalResult.Cancel());
+        await Close(ModalResult.Cancel());
     }
 
     private void ConfigureInstance()
     {
         Position = SetPosition();
         Class = SetClass();
+        AnimationClass = SetAnimationClass();
         HideHeader = SetHideHeader();
         HideCloseButton = SetHideCloseButton();
         DisableBackgroundCancel = SetDisableBackgroundCancel();
@@ -151,6 +161,25 @@
         return "blazored-modal";
     }
 
+    private string SetAnimationClass()
+    {
+        switch (Options.Animation)
+        {
+            case ModalAnimation.None:
+                return string.Empty;
+            case ModalAnimation.FadeIn:
+            case ModalAnimation.FadeInOut:
+                return "blazored-modal-fade-in";
+            case ModalAnimation.FadeOut:
+                //return "blazored-modal-fade-out";
+                return string.Empty;
+                //return "blazored-modal-fade-in-out";
+                return string.Empty;
+            default:
+                return string.Empty;
+        }
+    }
+
     private bool SetHideHeader()
     {
         if (Options.HideHeader.HasValue)
@@ -188,7 +217,7 @@
     {
         if (DisableBackgroundCancel) return;
 
-        await Parent.CancelInstance(Id);
+        await Cancel();
     }
 
 }
