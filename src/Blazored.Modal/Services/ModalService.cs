@@ -121,7 +121,16 @@ namespace Blazored.Modal.Services
                 builder.OpenComponent(i++, contentComponent);
                 foreach (var parameter in parameters._parameters)
                 {
-                    builder.AddAttribute(i++, parameter.Key, parameter.Value);
+                    var componentProperty = contentComponent.GetProperty(parameter.Key);
+                    if (componentProperty is null) throw new ArgumentException($"{contentComponent.FullName} The IModalService Open Method is configured with a Modal Parameter named {parameter.Key}, but the component does not implement a Parameter Property of that name!");
+                    else
+                    {
+                        var customAtrributes = componentProperty.GetCustomAttributes(true);
+                        var hasParameterAttrubute = false;
+                        foreach (var p in customAtrributes) hasParameterAttrubute = p is ParameterAttribute ? true : hasParameterAttrubute;
+                        if (hasParameterAttrubute) builder.AddAttribute(i++, parameter.Key, parameter.Value);
+                        else throw new ArgumentException($"{contentComponent.FullName} The component property {parameter.Key} is not decorated with the [Parameter] Attribute.");
+                    }
                 }
                 builder.CloseComponent();
             });
