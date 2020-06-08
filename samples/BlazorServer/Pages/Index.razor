@@ -6,7 +6,7 @@
 <hr class="mb-5" />
 
 <p>
-    This is an example of using Blazored Modal in its most simplistic form.
+    These are examples of using Blazored Modal in its most simplistic form.
 </p>
 
 <div class="card mb-4">
@@ -21,8 +21,30 @@
 
 <button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
 
+<div class="card mb-4 mt-4">
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("var parameters = new ModalParameters();")<br />
+                @("parameters.Add(\"Message\", string.Concat(\"Welcome to Blazored at \", DateTime.Now.ToShortTimeString()));")<br />
+                @("Modal.Show<MessageConfirm>(\"Welcome to Blazored Modal\", options, parameters);")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="ShowModalWithParameters" class="btn btn-primary">Show Modal with Parameters</button>
+
 @code {
 
     void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
+
+    void ShowModalWithParameters()
+    {
+        var parameters = new ModalParameters();
+        parameters.Add("Message", string.Concat("Welcome to Blazored at ", DateTime.Now.ToShortTimeString()));
+
+        Modal.Show<MessageConfirm>("Welcome to Blazored Modal", parameters);
+    }
 
 }
