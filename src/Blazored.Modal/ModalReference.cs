@@ -5,12 +5,10 @@ using System.Threading.Tasks;
 
 namespace Blazored.Modal
 {
-    public class ModalReference
+    public class ModalReference : IModalReference
     {
         private readonly TaskCompletionSource<ModalResult> _resultCompletion = new TaskCompletionSource<ModalResult>();
-
         private readonly Action<ModalResult> _closed;
-
         private readonly ModalService _modalService;
 
         public ModalReference(Guid modalInstanceId, RenderFragment modalInstance, ModalService modalService)

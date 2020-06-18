@@ -11,7 +11,7 @@ namespace Blazored.Modal.Services
         /// <summary>
         /// Shows the modal with the component type.
         /// </summary>
-        public ModalReference Show<T>() where T : ComponentBase
+        public IModalReference Show<T>() where T : ComponentBase
         {
             return Show<T>(string.Empty, new ModalParameters(), new ModalOptions());
         }
@@ -20,7 +20,7 @@ namespace Blazored.Modal.Services
         /// Shows the modal with the component type using the specified title.
         /// </summary>
         /// <param name="title">Modal title.</param>
-        public ModalReference Show<T>(string title) where T : ComponentBase
+        public IModalReference Show<T>(string title) where T : ComponentBase
         {
             return Show<T>(title, new ModalParameters(), new ModalOptions());
         }
@@ -30,7 +30,7 @@ namespace Blazored.Modal.Services
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="options">Options to configure the modal.</param>
-        public ModalReference Show<T>(string title, ModalOptions options) where T : ComponentBase
+        public IModalReference Show<T>(string title, ModalOptions options) where T : ComponentBase
         {
             return Show<T>(title, new ModalParameters(), options);
         }
@@ -41,7 +41,7 @@ namespace Blazored.Modal.Services
         /// </summary>
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
-        public ModalReference Show<T>(string title, ModalParameters parameters) where T : ComponentBase
+        public IModalReference Show<T>(string title, ModalParameters parameters) where T : ComponentBase
         {
             return Show<T>(title, parameters, new ModalOptions());
         }
@@ -53,7 +53,7 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
-        public ModalReference Show<T>(string title, ModalParameters parameters, ModalOptions options) where T : ComponentBase
+        public IModalReference Show<T>(string title, ModalParameters parameters, ModalOptions options) where T : ComponentBase
         {
             return Show(typeof(T), title, parameters, options);
         }
@@ -62,7 +62,7 @@ namespace Blazored.Modal.Services
         /// Shows the modal with the specific component type.
         /// </summary>
         /// <param name="contentComponent">Type of component to display.</param>
-        public ModalReference Show(Type contentComponent)
+        public IModalReference Show(Type contentComponent)
         {
             return Show(contentComponent, string.Empty, new ModalParameters(), new ModalOptions());
         }
@@ -72,7 +72,7 @@ namespace Blazored.Modal.Services
         /// </summary>
         /// <param name="contentComponent">Type of component to display.</param>
         /// <param name="title">Modal title.</param>
-        public ModalReference Show(Type contentComponent, string title)
+        public IModalReference Show(Type contentComponent, string title)
         {
             return Show(contentComponent, title, new ModalParameters(), new ModalOptions());
         }
@@ -83,7 +83,7 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="contentComponent">Type of component to display.</param>
         /// <param name="options">Options to configure the modal.</param>
-        public ModalReference Show(Type contentComponent, string title, ModalOptions options)
+        public IModalReference Show(Type contentComponent, string title, ModalOptions options)
         {
             return Show(contentComponent, title, new ModalParameters(), options);
         }
@@ -95,7 +95,7 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="contentComponent">Type of component to display.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
-        public ModalReference Show(Type contentComponent, string title, ModalParameters parameters)
+        public IModalReference Show(Type contentComponent, string title, ModalParameters parameters)
         {
             return Show(contentComponent, title, parameters, new ModalOptions());
         }
@@ -107,7 +107,7 @@ namespace Blazored.Modal.Services
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
-        public ModalReference Show(Type contentComponent, string title, ModalParameters parameters, ModalOptions options)
+        public IModalReference Show(Type contentComponent, string title, ModalParameters parameters, ModalOptions options)
         {
             if (!typeof(ComponentBase).IsAssignableFrom(contentComponent))
             {
