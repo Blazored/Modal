@@ -1,17 +1,15 @@
-name: .NET Core
+name: Build & Test PR
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 env:
-    NETCORE_VERSION: '3.1.101'
+    NETCORE_VERSION: '3.1.301'
 
 jobs:
   build:
-
+    name: Build and test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
