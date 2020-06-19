@@ -1,9 +1,9 @@
 ﻿<style>
-    .blazored-modal-fade-in {
+    #_@(Id.ToString("N")).blazored-modal-fade-in {
         animation: @(Options?.Animation?.Duration)s ease-out 0s ModalFadeIn;
     }
 
-    .blazored-modal-fade-out {
+    #_@(Id.ToString("N")).blazored-modal-fade-out {
         animation: @(Options?.Animation?.Duration)s ease-out 0s ModalFadeOut;
         opacity: 0;
     }
@@ -33,7 +33,7 @@
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
-    <div class="@Class @AnimationClass" @onkeyup="HandleWrapperKeyUp">
+    <div id="_@Id.ToString("N")"class="@Class @AnimationClass" @onkeyup="HandleWrapperKeyUp">
         @if (!HideHeader)
         {
             <div class="blazored-modal-header">

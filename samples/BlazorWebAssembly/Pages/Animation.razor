@@ -14,7 +14,7 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("var options = new ModalOptions() { Animation = ModalAnimation.FadeIn };")
+                @("var options = new ModalOptions() { Animation = new ModalAnimation(ModalAnimationType.FadeIn, 2) };")
                 <br />
                 @("Modal.Show<Confirm>(\"Animation: Fade-In\", options);")
             </code>
@@ -27,7 +27,7 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("<BlazoredModal Animation=\"ModalAnimation.FadeIn\" />")
+                @("<BlazoredModal Animation = new ModalAnimation(ModalAnimationType.FadeIn, 2)  />")
             </code>
         </p>
     </div>
@@ -40,21 +40,34 @@
 <button @onclick="AnimationDefault" class="btn btn-primary">Globally set value (default no animation)</button>
 <button @onclick="@(() => AnimationCustom(new ModalAnimation(ModalAnimationType.FadeInOut, duration)))" class="btn btn-secondary">Fade-in Fade-Out</button>
 
+<p>
+    It is also possible to have multiple modals (like in the Multiple Modals example) with different animations. With the below modal, the first modal will only fade-in with a duration of 2 seconds. The second modal will fade-in and fade-out in 5.0 seconds.
+</p>
+
+<button @onclick="@MultipleModals" class="btn btn-primary">Multiple Modals</button>
+
 @code {
     private double duration = 1.0;
 
     void AnimationDefault()
     {
-        Modal.Show<Confirm>
-            ("Default Animation");
+        Modal.Show<Confirm>("Default Animation");
     }
 
     void AnimationCustom(ModalAnimation animation)
     {
-
         var options = new ModalOptions { Animation = animation };
 
-        Modal.Show<Confirm>
-            ($"Animation: {animation.Type}", options);
+        Modal.Show<Confirm>($"Animation: {animation.Type}", options);
+    }
+
+    void MultipleModals()
+    {
+        var options = new ModalOptions
+        {
+            Animation = new ModalAnimation(ModalAnimationType.FadeIn, 2)
+        };
+
+        Modal.Show<YesNoPromptAnimation>("Multiple Modals", options);
     }
 }
