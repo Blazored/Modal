@@ -6,6 +6,12 @@ namespace Blazored.Modal
 {
     public class ModalAnimation
     {
+        public ModalAnimation(ModalAnimationType type, double duration)
+        {
+            Type = type;
+            Duration = duration;
+        }
+
         public ModalAnimationType Type { get; set; }
 
         public double? Duration { get; set; }

@@ -35,29 +35,26 @@
 
 <input type="number" @bind-value="@duration" />
 
-<button @onclick="@(() => AnimationCustom(ModalAnimationType.FadeIn))" class="btn btn-secondary">Fade-In</button>
-<button @onclick="@(() => AnimationCustom(ModalAnimationType.FadeOut))" class="btn btn-secondary">Fade-Out</button>
+<button @onclick="@(() => AnimationCustom(new ModalAnimation(ModalAnimationType.FadeIn, duration)))" class="btn btn-secondary">Fade-In</button>
+<button @onclick="@(() => AnimationCustom(new ModalAnimation(ModalAnimationType.FadeOut, duration)))" class="btn btn-secondary">Fade-Out</button>
 <button @onclick="AnimationDefault" class="btn btn-primary">Globally set value (default no animation)</button>
-<button @onclick="@(() => AnimationCustom(ModalAnimationType.FadeInOut))" class="btn btn-secondary">Fade-in Fade-Out</button>
+<button @onclick="@(() => AnimationCustom(new ModalAnimation(ModalAnimationType.FadeInOut, duration)))" class="btn btn-secondary">Fade-in Fade-Out</button>
 
 @code {
     private double duration = 1.0;
 
     void AnimationDefault()
     {
-        Modal.Show<Confirm>("Default Animation");
+        Modal.Show<Confirm>
+            ("Default Animation");
     }
 
-    void AnimationCustom(ModalAnimationType type)
+    void AnimationCustom(ModalAnimation animation)
     {
-        var animation = new ModalAnimation
-        {
-            Type = type,
-            Duration = duration
-        };
 
         var options = new ModalOptions { Animation = animation };
 
-        Modal.Show<Confirm>($"Animation: {animation}", options);
+        Modal.Show<Confirm>
+            ($"Animation: {animation.Type}", options);
     }
 }

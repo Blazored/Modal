@@ -69,7 +69,10 @@ namespace Blazored.Modal
             {
                 AnimationClass = "blazored-modal-fade-out";
                 StateHasChanged();
-                await Task.Delay((int)(Options?.Animation?.Duration * 1000) + 100); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
+                if (Options?.Animation?.Duration > 0)
+                {
+                    await Task.Delay((int)(Options?.Animation?.Duration * 1000) + 100); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
+                }
             }
 
             await Parent.DismissInstance(Id, modalResult);
@@ -147,21 +150,12 @@ namespace Blazored.Modal
 
         private string SetAnimationClass()
         {
-            switch (Options.Animation?.Type)
+            if (Options.Animation?.Type == ModalAnimationType.FadeIn || Options.Animation?.Type == ModalAnimationType.FadeInOut)
             {
-                case ModalAnimationType.None:
-                    return string.Empty;
-                case ModalAnimationType.FadeIn:
-                case ModalAnimationType.FadeInOut:
-                    return "blazored-modal-fade-in";
-                case ModalAnimationType.FadeOut:
-                    //return "blazored-modal-fade-out";
-                    return string.Empty;
-                    //return "blazored-modal-fade-in-out";
-                    return string.Empty;
-                default:
-                    return string.Empty;
+                return "blazored-modal-fade-in";
             }
+
+            return string.Empty;
         }
 
         private bool SetHideHeader()
