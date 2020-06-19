@@ -20,6 +20,7 @@ namespace Blazored.Modal
         [Parameter] public bool? DisableBackgroundCancel { get; set; }
         [Parameter] public ModalPosition? Position { get; set; }
         [Parameter] public string Class { get; set; }
+        [Parameter] public ModalAnimation Animation { get; set; }
 
         private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
         private readonly ModalOptions GlobalModalOptions = new ModalOptions();
@@ -35,6 +36,7 @@ namespace Blazored.Modal
             GlobalModalOptions.HideCloseButton = HideCloseButton;
             GlobalModalOptions.HideHeader = HideHeader;
             GlobalModalOptions.Position = Position;
+            GlobalModalOptions.Animation = Animation;
         }
 
         internal async void CloseInstance(ModalReference modal, ModalResult result)

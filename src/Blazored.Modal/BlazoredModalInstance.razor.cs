@@ -150,7 +150,11 @@ namespace Blazored.Modal
 
         private string SetAnimationClass()
         {
-            if (Options.Animation?.Type == ModalAnimationType.FadeIn || Options.Animation?.Type == ModalAnimationType.FadeInOut)
+            ModalAnimation animation;
+            animation = Options?.Animation ??
+                        GlobalModalOptions?.Animation ?? new ModalAnimation(ModalAnimationType.None, 0);
+
+            if (animation.Type == ModalAnimationType.FadeIn || animation.Type == ModalAnimationType.FadeInOut)
             {
                 return "blazored-modal-fade-in";
             }

@@ -1,10 +1,10 @@
 ﻿<style>
     #_@(Id.ToString("N")).blazored-modal-fade-in {
-        animation: @(Options?.Animation?.Duration)s ease-out 0s ModalFadeIn;
+        animation: @((Options?.Animation?.Duration ?? GlobalModalOptions?.Animation.Duration ?? 0) * 1000)ms ease-out 0s ModalFadeIn;
     }
 
     #_@(Id.ToString("N")).blazored-modal-fade-out {
-        animation: @(Options?.Animation?.Duration)s ease-out 0s ModalFadeOut;
+        animation: @((Options?.Animation?.Duration ?? GlobalModalOptions?.Animation.Duration ?? 0) * 1000)ms ease-out 0s ModalFadeOut;
         opacity: 0;
     }
 
