@@ -13,6 +13,8 @@
     height: 100%;
     z-index: 101;
     background-color: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
 }
 
 .blazored-modal {
