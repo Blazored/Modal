@@ -18,6 +18,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.NETCORE_VERSION }}
+        source-url: https://nuget.pkg.github.com/Blazored/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Restoring packages...
       run: dotnet restore
@@ -32,4 +35,4 @@ jobs:
       run: dotnet pack src/Blazored.Modal/ -c Release -o ${GITHUB_WORKSPACE}/packages
 
     - name: Push package to GitHub Package Registry
-      run: dotnet nuget push ${GITHUB_WORKSPACE}/packages/'*.nupkg' -k ${{ secrets.GITHUB_TOKEN }} -s  https://nuget.pkg.github.com/blazored/index.json --skip-duplicate
+      run: dotnet nuget push ${GITHUB_WORKSPACE}/packages/'*.nupkg' --skip-duplicate --no-symbols true
