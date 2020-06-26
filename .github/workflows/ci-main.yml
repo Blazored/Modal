@@ -1,0 +1,35 @@
+name: Build & Test Main
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+    NETCORE_VERSION: '3.1.301'
+
+jobs:
+  build:
+    name: Build, test and pack
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setting up .NET Core SDK ${{ env.NETCORE_VERSION }}...
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.NETCORE_VERSION }}
+
+    - name: Restoring packages...
+      run: dotnet restore
+
+    - name: Building project...
+      run: dotnet build --configuration Release --no-restore src/Blazored.Modal/Blazored.Modal.csproj
+
+    - name: Testing...
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Packing NuGet package...
+      run: dotnet pack src/Blazored.Modal/ -c Release -o ${GITHUB_WORKSPACE}/packages
+
+    - name: Push package to GitHub Package Registry
+      run: dotnet nuget push ${GITHUB_WORKSPACE}/packages/'*.nupkg' -k ${{ secrets.BLAZORED_PACKAGE_FEED }} -s  https://nuget.pkg.github.com/blazored/index.json --skip-duplicate
