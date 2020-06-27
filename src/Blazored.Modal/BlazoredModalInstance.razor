@@ -1,4 +1,6 @@
-﻿<div class="blazored-modal-container @Position">
+﻿@inject IJSRuntime JSRuntime
+
+<div class="blazored-modal-container @Position" @ref="_modalReference">
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
@@ -39,10 +41,17 @@
     private bool HideHeader { get; set; }
     private bool HideCloseButton { get; set; }
     private bool DisableBackgroundCancel { get; set; }
+    
+    private ElementReference _modalReference;
 
     protected override void OnInitialized()
     {
         ConfigureInstance();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("BlazoredModal.setFocusTrap", _modalReference);
     }
 
     /// <summary>
