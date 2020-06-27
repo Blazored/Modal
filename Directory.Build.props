@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <AspNetCoreVersion>3.1.2</AspNetCoreVersion>
-    <BlazorVersion>3.2.0-preview3.20168.3</BlazorVersion>
+    <AspNetCoreVersion>3.1.5</AspNetCoreVersion>
+    <BlazorVersion>3.2.0</BlazorVersion>
   </PropertyGroup>
 </Project>

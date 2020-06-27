@@ -15,7 +15,9 @@
     <PackageTags>Blazored Blazor Razor Components Modal Dialogue</PackageTags>
     <Description>A JavaScript free modal library for Blazor and Razor Components applications.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>4.1.0</Version>
+    <Version>5.0.0-preview.1</Version>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
