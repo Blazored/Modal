@@ -13,7 +13,6 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "tabbable": "4.0.0",
-    "xtend": "4.0.2"
+    "tabbable": "4.0.0"
   }
 }
