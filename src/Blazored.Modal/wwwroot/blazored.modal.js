@@ -95,335 +95,371 @@
 
 "use strict";
 
-exports.__esModule = true;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlazoredModal = void 0;
-var FocusTrap_1 = __webpack_require__(/*! ./FocusTrap */ "./FocusTrap.ts");
-var BlazoredModal = /** @class */ (function () {
-    function BlazoredModal() {
+const focus_trap_1 = __importDefault(__webpack_require__(/*! focus-trap */ "./node_modules/focus-trap/index.js"));
+class BlazoredModal {
+    setFocusTrap(element) {
+        const options = {
+            escapeDeactivates: false
+        };
+        const trap = focus_trap_1.default(element, options);
+        trap.activate();
     }
-    /**
-     * setFocusTrap
-     */
-    BlazoredModal.prototype.setFocusTrap = function (element) {
-        var trap = new FocusTrap_1["default"](element, {});
-        trap.activate({});
-    };
-    return BlazoredModal;
-}());
+}
 exports.BlazoredModal = BlazoredModal;
 window.BlazoredModal = new BlazoredModal();
 
 
 /***/ }),
 
-/***/ "./FocusTrap.ts":
-/*!**********************!*\
-  !*** ./FocusTrap.ts ***!
-  \**********************/
+/***/ "./node_modules/focus-trap/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/focus-trap/index.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+var tabbable = __webpack_require__(/*! tabbable */ "./node_modules/tabbable/index.js");
+var xtend = __webpack_require__(/*! xtend */ "./node_modules/xtend/immutable.js");
 
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-exports.__esModule = true;
-var tabbable_1 = __webpack_require__(/*! tabbable */ "./node_modules/tabbable/index.js");
 var activeFocusDelay;
-var activeFocusTraps = (function () {
-    var trapQueue = [];
-    return {
-        activateTrap: function (trap) {
-            if (trapQueue.length > 0) {
-                var activeTrap = trapQueue[trapQueue.length - 1];
-                if (activeTrap !== trap) {
-                    activeTrap.pause();
-                }
-            }
-            var trapIndex = trapQueue.indexOf(trap);
-            if (trapIndex === -1) {
-                trapQueue.push(trap);
-            }
-            else {
-                // move this existing trap to the front of the queue
-                trapQueue.splice(trapIndex, 1);
-                trapQueue.push(trap);
-            }
-        },
-        deactivateTrap: function (trap) {
-            var trapIndex = trapQueue.indexOf(trap);
-            if (trapIndex !== -1) {
-                trapQueue.splice(trapIndex, 1);
-            }
-            if (trapQueue.length > 0) {
-                trapQueue[trapQueue.length - 1].unpause();
-            }
+
+var activeFocusTraps = (function() {
+  var trapQueue = [];
+  return {
+    activateTrap: function(trap) {
+      if (trapQueue.length > 0) {
+        var activeTrap = trapQueue[trapQueue.length - 1];
+        if (activeTrap !== trap) {
+          activeTrap.pause();
         }
-    };
-})();
-var FocusTrap = /** @class */ (function () {
-    function FocusTrap(element, userOptions) {
-        this.doc = document;
-        this.container = typeof element === "string" ? this.doc.querySelector(element) : element;
-        this.config = __assign({ returnFocusOnDeactivate: true, escapeDeactivates: true }, userOptions);
-        this.state = {
-            firstTabbableNode: null,
-            lastTabbableNode: null,
-            nodeFocusedBeforeActivation: null,
-            mostRecentlyFocusedNode: null,
-            active: false,
-            paused: false
-        };
-        this.trap = {
-            activate: this.activate,
-            deactivate: this.deactivate,
-            pause: this.pause,
-            unpause: this.unpause
-        };
+      }
+
+      var trapIndex = trapQueue.indexOf(trap);
+      if (trapIndex === -1) {
+        trapQueue.push(trap);
+      } else {
+        // move this existing trap to the front of the queue
+        trapQueue.splice(trapIndex, 1);
+        trapQueue.push(trap);
+      }
+    },
+
+    deactivateTrap: function(trap) {
+      var trapIndex = trapQueue.indexOf(trap);
+      if (trapIndex !== -1) {
+        trapQueue.splice(trapIndex, 1);
+      }
+
+      if (trapQueue.length > 0) {
+        trapQueue[trapQueue.length - 1].unpause();
+      }
     }
-    FocusTrap.prototype.activate = function (activateOptions) {
-        if (this.state.active)
-            return;
-        this.updateTabbableNodes();
-        this.state.active = true;
-        this.state.paused = false;
-        this.state.nodeFocusedBeforeActivation = this.doc.activeElement;
-        var onActivate = activateOptions && activateOptions.onActivate
-            ? activateOptions.onActivate
-            : this.config.onActivate;
-        if (onActivate) {
-            onActivate();
-        }
-        this.addListeners();
-        return this.trap;
-    };
-    FocusTrap.prototype.deactivate = function (deactivateOptions) {
-        if (!this.state.active)
-            return;
-        clearTimeout(activeFocusDelay);
-        this.removeListeners();
-        this.state.active = false;
-        this.state.paused = false;
-        activeFocusTraps.deactivateTrap(this.trap);
-        var onDeactivate = deactivateOptions && deactivateOptions.onDeactivate !== undefined
-            ? deactivateOptions.onDeactivate
-            : this.config.onDeactivate;
-        if (onDeactivate) {
-            onDeactivate();
-        }
-        var returnFocus = deactivateOptions && deactivateOptions.returnFocus !== undefined
-            ? deactivateOptions.returnFocus
-            : this.config.returnFocusOnDeactivate;
-        if (returnFocus) {
-            this.delay(function () {
-                this.tryFocus(this.getReturnFocusNode(this.state.nodeFocusedBeforeActivation));
-            });
-        }
-        return this.trap;
-    };
-    FocusTrap.prototype.pause = function () {
-        if (this.state.paused || !this.state.active)
-            return;
-        this.state.paused = true;
-        this.removeListeners();
-    };
-    FocusTrap.prototype.unpause = function () {
-        if (!this.state.paused || !this.state.active)
-            return;
-        this.state.paused = false;
-        this.updateTabbableNodes();
-        this.addListeners();
-    };
-    FocusTrap.prototype.addListeners = function () {
-        if (!this.state.active)
-            return;
-        // There can be only one listening focus trap at a time
-        activeFocusTraps.activateTrap(this.trap);
-        // Delay ensures that the focused element doesn't capture the event
-        // that caused the focus trap activation.
-        activeFocusDelay = this.delay(function () {
-            this.tryFocus(this.getInitialFocusNode());
-        });
-        this.doc.addEventListener('focusin', this.checkFocusIn, true);
-        this.doc.addEventListener('mousedown', this.checkPointerDown, {
-            capture: true,
-            passive: false
-        });
-        this.doc.addEventListener('touchstart', this.checkPointerDown, {
-            capture: true,
-            passive: false
-        });
-        this.doc.addEventListener('click', this.checkClick, {
-            capture: true,
-            passive: false
-        });
-        this.doc.addEventListener('keydown', this.checkKey, {
-            capture: true,
-            passive: false
-        });
-        return this.trap;
-    };
-    FocusTrap.prototype.removeListeners = function () {
-        if (!this.state.active)
-            return;
-        this.doc.removeEventListener('focusin', this.checkFocusIn, true);
-        this.doc.removeEventListener('mousedown', this.checkPointerDown, true);
-        this.doc.removeEventListener('touchstart', this.checkPointerDown, true);
-        this.doc.removeEventListener('click', this.checkClick, true);
-        this.doc.removeEventListener('keydown', this.checkKey, true);
-        return this.trap;
-    };
-    FocusTrap.prototype.getNodeForOption = function (optionName) {
-        var optionValue = this.config[optionName];
-        var node = optionValue;
-        if (!optionValue) {
-            return null;
-        }
-        if (typeof optionValue === 'string') {
-            node = this.doc.querySelector(optionValue);
-            if (!node) {
-                throw new Error('`' + optionName + '` refers to no known node');
-            }
-        }
-        if (typeof optionValue === 'function') {
-            node = optionValue();
-            if (!node) {
-                throw new Error('`' + optionName + '` did not return a node');
-            }
-        }
-        return node;
-    };
-    FocusTrap.prototype.getInitialFocusNode = function () {
-        var node;
-        if (this.getNodeForOption('initialFocus') !== null) {
-            node = this.getNodeForOption('initialFocus');
-        }
-        else if (this.container.contains(this.doc.activeElement)) {
-            node = this.doc.activeElement;
-        }
-        else {
-            node = this.state.firstTabbableNode || this.getNodeForOption('fallbackFocus');
-        }
-        if (!node) {
-            throw new Error('Your focus-trap needs to have at least one focusable element');
-        }
-        return node;
-    };
-    FocusTrap.prototype.getReturnFocusNode = function (previousActiveElement) {
-        var node = this.getNodeForOption('setReturnFocus');
-        return node ? node : previousActiveElement;
-    };
-    // This needs to be done on mousedown and touchstart instead of click
-    // so that it precedes the focus event.
-    FocusTrap.prototype.checkPointerDown = function (e) {
-        if (this.container.contains(e.target))
-            return;
-        if (this.config.clickOutsideDeactivates) {
-            this.deactivate({
-                returnFocus: !tabbable_1["default"].isFocusable(e.target)
-            });
-            return;
-        }
-        // This is needed for mobile devices.
-        // (If we'll only let `click` events through,
-        // then on mobile they will be blocked anyways if `touchstart` is blocked.)
-        if (this.config.allowOutsideClick && this.config.allowOutsideClick(e)) {
-            return;
-        }
-        e.preventDefault();
-    };
-    // In case focus escapes the trap for some strange reason, pull it back in.
-    FocusTrap.prototype.checkFocusIn = function (e) {
-        // In Firefox when you Tab out of an iframe the Document is briefly focused.
-        if (this.container.contains(e.target) || e.target instanceof Document) {
-            return;
-        }
-        e.stopImmediatePropagation();
-        this.tryFocus(this.state.mostRecentlyFocusedNode || this.getInitialFocusNode());
-    };
-    FocusTrap.prototype.checkKey = function (e) {
-        if (this.config.escapeDeactivates !== false && this.isEscapeEvent(e)) {
-            e.preventDefault();
-            this.deactivate();
-            return;
-        }
-        if (this.isTabEvent(e)) {
-            this.checkTab(e);
-            return;
-        }
-    };
-    // Hijack Tab events on the first and last focusable nodes of the trap,
-    // in order to prevent focus from escaping. If it escapes for even a
-    // moment it can end up scrolling the page and causing confusion so we
-    // kind of need to capture the action at the keydown phase.
-    FocusTrap.prototype.checkTab = function (e) {
-        this.updateTabbableNodes();
-        if (e.shiftKey && e.target === this.state.firstTabbableNode) {
-            e.preventDefault();
-            this.tryFocus(this.state.lastTabbableNode);
-            return;
-        }
-        if (!e.shiftKey && e.target === this.state.lastTabbableNode) {
-            e.preventDefault();
-            this.tryFocus(this.state.firstTabbableNode);
-            return;
-        }
-    };
-    FocusTrap.prototype.checkClick = function (e) {
-        if (this.config.clickOutsideDeactivates)
-            return;
-        if (this.container.contains(e.target))
-            return;
-        if (this.config.allowOutsideClick && this.config.allowOutsideClick(e)) {
-            return;
-        }
-        e.preventDefault();
-        e.stopImmediatePropagation();
-    };
-    FocusTrap.prototype.updateTabbableNodes = function () {
-        var tabbableNodes = tabbable_1["default"](this.container);
-        this.state.firstTabbableNode = tabbableNodes[0] || this.getInitialFocusNode();
-        this.state.lastTabbableNode = tabbableNodes[tabbableNodes.length - 1] || this.getInitialFocusNode();
-    };
-    FocusTrap.prototype.tryFocus = function (node) {
-        if (node === this.doc.activeElement)
-            return;
-        if (!node || !node.focus) {
-            this.tryFocus(this.getInitialFocusNode());
-            return;
-        }
-        node.focus({ preventScroll: this.config.userOptions.preventScroll });
-        this.state.mostRecentlyFocusedNode = node;
-        if (this.isSelectableInput(node)) {
-            node.select();
-        }
-    };
-    FocusTrap.prototype.isSelectableInput = function (node) {
-        return (node.tagName &&
-            node.tagName.toLowerCase() === 'input' &&
-            typeof node.select === 'function');
-    };
-    FocusTrap.prototype.isEscapeEvent = function (e) {
-        return e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27;
-    };
-    FocusTrap.prototype.isTabEvent = function (e) {
-        return e.key === 'Tab' || e.keyCode === 9;
-    };
-    FocusTrap.prototype.delay = function (fn) {
-        return setTimeout(fn, 0);
-    };
-    return FocusTrap;
-}());
-exports["default"] = FocusTrap;
+  };
+})();
+
+function focusTrap(element, userOptions) {
+  var doc = document;
+  var container =
+    typeof element === 'string' ? doc.querySelector(element) : element;
+
+  var config = xtend(
+    {
+      returnFocusOnDeactivate: true,
+      escapeDeactivates: true
+    },
+    userOptions
+  );
+
+  var state = {
+    firstTabbableNode: null,
+    lastTabbableNode: null,
+    nodeFocusedBeforeActivation: null,
+    mostRecentlyFocusedNode: null,
+    active: false,
+    paused: false
+  };
+
+  var trap = {
+    activate: activate,
+    deactivate: deactivate,
+    pause: pause,
+    unpause: unpause
+  };
+
+  return trap;
+
+  function activate(activateOptions) {
+    if (state.active) return;
+
+    updateTabbableNodes();
+
+    state.active = true;
+    state.paused = false;
+    state.nodeFocusedBeforeActivation = doc.activeElement;
+
+    var onActivate =
+      activateOptions && activateOptions.onActivate
+        ? activateOptions.onActivate
+        : config.onActivate;
+    if (onActivate) {
+      onActivate();
+    }
+
+    addListeners();
+    return trap;
+  }
+
+  function deactivate(deactivateOptions) {
+    if (!state.active) return;
+
+    clearTimeout(activeFocusDelay);
+
+    removeListeners();
+    state.active = false;
+    state.paused = false;
+
+    activeFocusTraps.deactivateTrap(trap);
+
+    var onDeactivate =
+      deactivateOptions && deactivateOptions.onDeactivate !== undefined
+        ? deactivateOptions.onDeactivate
+        : config.onDeactivate;
+    if (onDeactivate) {
+      onDeactivate();
+    }
+
+    var returnFocus =
+      deactivateOptions && deactivateOptions.returnFocus !== undefined
+        ? deactivateOptions.returnFocus
+        : config.returnFocusOnDeactivate;
+    if (returnFocus) {
+      delay(function() {
+        tryFocus(getReturnFocusNode(state.nodeFocusedBeforeActivation));
+      });
+    }
+
+    return trap;
+  }
+
+  function pause() {
+    if (state.paused || !state.active) return;
+    state.paused = true;
+    removeListeners();
+  }
+
+  function unpause() {
+    if (!state.paused || !state.active) return;
+    state.paused = false;
+    updateTabbableNodes();
+    addListeners();
+  }
+
+  function addListeners() {
+    if (!state.active) return;
+
+    // There can be only one listening focus trap at a time
+    activeFocusTraps.activateTrap(trap);
+
+    // Delay ensures that the focused element doesn't capture the event
+    // that caused the focus trap activation.
+    activeFocusDelay = delay(function() {
+      tryFocus(getInitialFocusNode());
+    });
+
+    doc.addEventListener('focusin', checkFocusIn, true);
+    doc.addEventListener('mousedown', checkPointerDown, {
+      capture: true,
+      passive: false
+    });
+    doc.addEventListener('touchstart', checkPointerDown, {
+      capture: true,
+      passive: false
+    });
+    doc.addEventListener('click', checkClick, {
+      capture: true,
+      passive: false
+    });
+    doc.addEventListener('keydown', checkKey, {
+      capture: true,
+      passive: false
+    });
+
+    return trap;
+  }
+
+  function removeListeners() {
+    if (!state.active) return;
+
+    doc.removeEventListener('focusin', checkFocusIn, true);
+    doc.removeEventListener('mousedown', checkPointerDown, true);
+    doc.removeEventListener('touchstart', checkPointerDown, true);
+    doc.removeEventListener('click', checkClick, true);
+    doc.removeEventListener('keydown', checkKey, true);
+
+    return trap;
+  }
+
+  function getNodeForOption(optionName) {
+    var optionValue = config[optionName];
+    var node = optionValue;
+    if (!optionValue) {
+      return null;
+    }
+    if (typeof optionValue === 'string') {
+      node = doc.querySelector(optionValue);
+      if (!node) {
+        throw new Error('`' + optionName + '` refers to no known node');
+      }
+    }
+    if (typeof optionValue === 'function') {
+      node = optionValue();
+      if (!node) {
+        throw new Error('`' + optionName + '` did not return a node');
+      }
+    }
+    return node;
+  }
+
+  function getInitialFocusNode() {
+    var node;
+    if (getNodeForOption('initialFocus') !== null) {
+      node = getNodeForOption('initialFocus');
+    } else if (container.contains(doc.activeElement)) {
+      node = doc.activeElement;
+    } else {
+      node = state.firstTabbableNode || getNodeForOption('fallbackFocus');
+    }
+
+    if (!node) {
+      throw new Error(
+        'Your focus-trap needs to have at least one focusable element'
+      );
+    }
+
+    return node;
+  }
+
+  function getReturnFocusNode(previousActiveElement) {
+    var node = getNodeForOption('setReturnFocus');
+    return node ? node : previousActiveElement;
+  }
+
+  // This needs to be done on mousedown and touchstart instead of click
+  // so that it precedes the focus event.
+  function checkPointerDown(e) {
+    if (container.contains(e.target)) return;
+    if (config.clickOutsideDeactivates) {
+      deactivate({
+        returnFocus: !tabbable.isFocusable(e.target)
+      });
+      return;
+    }
+    // This is needed for mobile devices.
+    // (If we'll only let `click` events through,
+    // then on mobile they will be blocked anyways if `touchstart` is blocked.)
+    if (config.allowOutsideClick && config.allowOutsideClick(e)) {
+      return;
+    }
+    e.preventDefault();
+  }
+
+  // In case focus escapes the trap for some strange reason, pull it back in.
+  function checkFocusIn(e) {
+    // In Firefox when you Tab out of an iframe the Document is briefly focused.
+    if (container.contains(e.target) || e.target instanceof Document) {
+      return;
+    }
+    e.stopImmediatePropagation();
+    tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
+  }
+
+  function checkKey(e) {
+    if (config.escapeDeactivates !== false && isEscapeEvent(e)) {
+      e.preventDefault();
+      deactivate();
+      return;
+    }
+    if (isTabEvent(e)) {
+      checkTab(e);
+      return;
+    }
+  }
+
+  // Hijack Tab events on the first and last focusable nodes of the trap,
+  // in order to prevent focus from escaping. If it escapes for even a
+  // moment it can end up scrolling the page and causing confusion so we
+  // kind of need to capture the action at the keydown phase.
+  function checkTab(e) {
+    updateTabbableNodes();
+    if (e.shiftKey && e.target === state.firstTabbableNode) {
+      e.preventDefault();
+      tryFocus(state.lastTabbableNode);
+      return;
+    }
+    if (!e.shiftKey && e.target === state.lastTabbableNode) {
+      e.preventDefault();
+      tryFocus(state.firstTabbableNode);
+      return;
+    }
+  }
+
+  function checkClick(e) {
+    if (config.clickOutsideDeactivates) return;
+    if (container.contains(e.target)) return;
+    if (config.allowOutsideClick && config.allowOutsideClick(e)) {
+      return;
+    }
+    e.preventDefault();
+    e.stopImmediatePropagation();
+  }
+
+  function updateTabbableNodes() {
+    var tabbableNodes = tabbable(container);
+    state.firstTabbableNode = tabbableNodes[0] || getInitialFocusNode();
+    state.lastTabbableNode =
+      tabbableNodes[tabbableNodes.length - 1] || getInitialFocusNode();
+  }
+
+  function tryFocus(node) {
+    if (node === doc.activeElement) return;
+    if (!node || !node.focus) {
+      tryFocus(getInitialFocusNode());
+      return;
+    }
+    node.focus();
+    state.mostRecentlyFocusedNode = node;
+    if (isSelectableInput(node)) {
+      node.select();
+    }
+  }
+}
+
+function isSelectableInput(node) {
+  return (
+    node.tagName &&
+    node.tagName.toLowerCase() === 'input' &&
+    typeof node.select === 'function'
+  );
+}
+
+function isEscapeEvent(e) {
+  return e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27;
+}
+
+function isTabEvent(e) {
+  return e.key === 'Tab' || e.keyCode === 9;
+}
+
+function delay(fn) {
+  return setTimeout(fn, 0);
+}
+
+module.exports = focusTrap;
 
 
 /***/ }),
@@ -588,6 +624,36 @@ function isHidden(node) {
 }
 
 module.exports = tabbable;
+
+
+/***/ }),
+
+/***/ "./node_modules/xtend/immutable.js":
+/*!*****************************************!*\
+  !*** ./node_modules/xtend/immutable.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = extend
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function extend() {
+    var target = {}
+
+    for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i]
+
+        for (var key in source) {
+            if (hasOwnProperty.call(source, key)) {
+                target[key] = source[key]
+            }
+        }
+    }
+
+    return target
+}
 
 
 /***/ })

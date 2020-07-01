@@ -5,7 +5,7 @@
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
     <div class="blazored-modal-wrapper">
-        <div class="@Class">
+        <div class="@Class"  @onkeyup="HandleWrapperKeyUp">
             @if (!HideHeader)
             {
                 <div class="blazored-modal-header">
@@ -41,7 +41,7 @@
     private bool HideHeader { get; set; }
     private bool HideCloseButton { get; set; }
     private bool DisableBackgroundCancel { get; set; }
-    
+
     private ElementReference _modalReference;
 
     protected override void OnInitialized()
@@ -51,7 +51,10 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JSRuntime.InvokeVoidAsync("BlazoredModal.setFocusTrap", _modalReference);
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("BlazoredModal.setFocusTrap", _modalReference);
+        }
     }
 
     /// <summary>
@@ -128,6 +131,15 @@
                 return "blazored-modal-bottomright";
             default:
                 return "blazored-modal-center";
+        }
+    }
+
+    private async Task HandleWrapperKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Code == "Escape")
+        {
+            await JSRuntime.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", _modalReference);
+            Parent.DismissInstance(Id, ModalResult.Cancel());
         }
     }
 

@@ -1,15 +1,14 @@
-import FocusTrap from './FocusTrap';
+import focusTrap, { Options } from 'focus-trap';
 
 export class BlazoredModal {
 
-    /**
-     * setFocusTrap
-     */
-    public setFocusTrap(element:any):void {
-        const trap = new FocusTrap(element, {});
-        trap.activate({});
+    public setFocusTrap(element: any): void {
+        const options: Options = {
+            escapeDeactivates: false
+        };
+        const trap = focusTrap(element, options);
+        trap.activate();
     }
-
 }
 
 declare global {

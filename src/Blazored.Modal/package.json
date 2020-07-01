@@ -13,6 +13,6 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
-    "tabbable": "4.0.0"
+    "focus-trap": "5.1.0"
   }
 }
