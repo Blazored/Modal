@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     
     <Authors>Chris Sainty</Authors>
@@ -19,11 +19,30 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <!-- File with mtime of last successful npm install -->
+    <NpmInstallStampFile>node_modules/.install-stamp</NpmInstallStampFile>
+  </PropertyGroup>
+
+  <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Inputs="package.json" Outputs="$(NpmInstallStampFile)">
+    <Exec Command="npm install" />
+    <Touch Files="$(NpmInstallStampFile)" AlwaysCreate="true" />
+  </Target>
+
+  <Target Name="DebugRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Debug'">
+    <Exec Command="npm run-script build:debug" ContinueOnError="false" />
+  </Target>
+
+  <Target Name="ReleaseRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Release'">
+    <Exec Command="npm run-script build:release" ContinueOnError="false" />
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="$(AspNetCoreVersion)" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="$(AspNetCoreVersion)" />
+    <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="$(BlazorVersion)" />
   </ItemGroup>
 
   <ItemGroup>

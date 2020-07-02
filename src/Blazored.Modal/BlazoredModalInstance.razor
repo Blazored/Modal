@@ -1,9 +1,11 @@
-﻿<div class="blazored-modal-container @Position">
+﻿@inject IJSRuntime JSRuntime
+
+<div class="blazored-modal-container @Position" @ref="_modalReference">
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
     <div class="blazored-modal-wrapper">
-        <div class="@Class">
+        <div class="@Class"  @onkeyup="HandleWrapperKeyUp">
             @if (!HideHeader)
             {
                 <div class="blazored-modal-header">
@@ -40,9 +42,19 @@
     private bool HideCloseButton { get; set; }
     private bool DisableBackgroundCancel { get; set; }
 
+    private ElementReference _modalReference;
+
     protected override void OnInitialized()
     {
         ConfigureInstance();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
+        }
     }
 
     /// <summary>
@@ -67,17 +79,17 @@
     /// Closes the modal with the specified <paramref name="modalResult"/>.
     /// </summary>
     /// <param name="modalResult"></param>
-    public void Close(ModalResult modalResult)
+    public async Task Close(ModalResult modalResult)
     {
-        Parent.DismissInstance(Id, modalResult);
+        await Parent.DismissInstance(Id, modalResult);
     }
 
     /// <summary>
     /// Closes the modal and returns a cancelled ModalResult.
     /// </summary>
-    public void Cancel()
+    public async Task Cancel()
     {
-        Parent.DismissInstance(Id, ModalResult.Cancel());
+        await Parent.DismissInstance(Id, ModalResult.Cancel());
     }
 
     private void ConfigureInstance()
@@ -119,6 +131,14 @@
                 return "blazored-modal-bottomright";
             default:
                 return "blazored-modal-center";
+        }
+    }
+
+    private async Task HandleWrapperKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Code == "Escape")
+        {
+            await Parent.DismissInstance(Id, ModalResult.Cancel());
         }
     }
 
@@ -166,11 +186,11 @@
         return false;
     }
 
-    private void HandleBackgroundClick()
+    private async Task HandleBackgroundClick()
     {
         if (DisableBackgroundCancel) return;
 
-        Parent.CancelInstance(Id);
+        await Parent.CancelInstance(Id);
     }
 
 }

@@ -17,12 +17,13 @@
     <app>
         @(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))
     </app>
-    
+
     <script type="text/javascript">
         if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
             document.write('<script src="js/blazor.polyfill.min.js"><\/script>');
         }
     </script>
-<script src="_framework/blazor.server.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/Blazored.Modal/blazored.modal.js"></script>
 </body>
 </html>
