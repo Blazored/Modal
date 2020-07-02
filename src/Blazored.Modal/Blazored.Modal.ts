@@ -12,11 +12,9 @@ export class BlazoredModal {
 
     public activateScrollLock(): void {
         const scrollY = window.scrollY;
-        console.log('Scroll position: ' + scrollY);
         const body = document.body;
         body.style.position = 'fixed';
         body.style.top = `-${scrollY}px`;
-        console.log('Scroll position: ' + scrollY);
     }
 
     public activateFocusTrap(element: any, id: string): void {
