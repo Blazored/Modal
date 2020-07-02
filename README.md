@@ -382,31 +382,29 @@ Or in the `Modal.Show()` method:
 ```
 
 #### Animation
-By default, Blazored Modal supports 2 different animations: Fade-in and Fade-out. These 2 can also be combined to both fade-in and fade-out. By default no animation is used. If you want to use an animation for the modal, you can set one globally or per modal. 
+The modal also supports some animations.
 
-##### Setting Animation Globally
+The following animation types are available out of the box: `ModalAnimationType.FadeIn`, `ModalAnimationType.FadeOut` and `ModalAnimationType.FadeInOut`.
 
-To set a global animation for all modals in your application, you can set the `Animation` parameter on the `BlazoredModal` component in your `MainLayout`. Below sets a Fade-in animation with a duration of 2 seconds.
+Use the `Animation` parameter to set the custom styling globally:
 
-```razor
-@inherits LayoutComponentBase
+`<BlazoredModal Animation="@(new ModalAnimation(ModalAnimationType.FadeIn, 2))"/>`
 
-<BlazoredModal Animation="@(new ModalAnimation(ModalAnimationType.FadeIn, 2))"/>
-
-<!-- Other code removed for brevity -->
-```
-
-##### Setting Animation Per Modal
-
-To set the Animation of a specific modal instance you can pass in a `ModalOptions` object when calling `Show`. Below exapmle will add a Fade-in and Fade-out animation, which will take 1 second each.
+Or in the `Modal.Show()` method:
 
 ```razor
-var options = new ModalOptions { Animation = new ModalAnimation(ModalAnimationType.FadeInOut, 1)};
+@code {
+    void ShowModal()
+    {
+        var options = new ModalOptions() 
+        { 
+            Animation = new ModalAnimation(ModalAnimationType.FadeInOut, 1)
+        };
 
-_ = Modal.Show<Confirm>("My Modal", options);
+        Modal.Show<Movies>("My Movies", options);
+    }
+}
 ```
-
-
 
 ### Multiple Modals
 
