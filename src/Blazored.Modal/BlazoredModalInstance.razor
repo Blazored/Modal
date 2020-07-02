@@ -79,17 +79,17 @@
     /// Closes the modal with the specified <paramref name="modalResult"/>.
     /// </summary>
     /// <param name="modalResult"></param>
-    public void Close(ModalResult modalResult)
+    public async Task Close(ModalResult modalResult)
     {
-        Parent.DismissInstance(Id, modalResult);
+        await Parent.DismissInstance(Id, modalResult);
     }
 
     /// <summary>
     /// Closes the modal and returns a cancelled ModalResult.
     /// </summary>
-    public void Cancel()
+    public async Task Cancel()
     {
-        Parent.DismissInstance(Id, ModalResult.Cancel());
+        await Parent.DismissInstance(Id, ModalResult.Cancel());
     }
 
     private void ConfigureInstance()
@@ -138,8 +138,7 @@
     {
         if (e.Code == "Escape")
         {
-            await JSRuntime.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", Id);
-            Parent.DismissInstance(Id, ModalResult.Cancel());
+            await Parent.DismissInstance(Id, ModalResult.Cancel());
         }
     }
 
@@ -187,11 +186,11 @@
         return false;
     }
 
-    private void HandleBackgroundClick()
+    private async Task HandleBackgroundClick()
     {
         if (DisableBackgroundCancel) return;
 
-        Parent.CancelInstance(Id);
+        await Parent.CancelInstance(Id);
     }
 
 }

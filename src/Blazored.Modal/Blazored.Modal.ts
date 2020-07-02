@@ -12,8 +12,14 @@ export class BlazoredModal {
 
     public activateFocusTrap(element: any, id: string): void {
         const trap = focusTrap(element, this._options);
-        trap.activate();
-        this._traps.push({ id, focusTrap: trap });
+        try {
+            trap.activate();
+            this._traps.push({ id, focusTrap: trap });
+        } catch (e) {
+            if (e instanceof Error && e.message === 'Your focus-trap needs to have at least one focusable element') {
+                console.log('Focus trap not activated - No focusable elements found.');
+            }
+        }
     }
 
     public deactivateFocusTrap(id: string): void {

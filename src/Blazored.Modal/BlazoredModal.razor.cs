@@ -1,9 +1,11 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Blazored.Modal
 {
@@ -11,6 +13,7 @@ namespace Blazored.Modal
     {
         [Inject] private IModalService ModalService { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
 
         [Parameter] public bool? HideHeader { get; set; }
         [Parameter] public bool? HideCloseButton { get; set; }
@@ -34,27 +37,28 @@ namespace Blazored.Modal
             GlobalModalOptions.Position = Position;
         }
 
-        internal void CloseInstance(ModalReference modal, ModalResult result)
+        internal async void CloseInstance(ModalReference modal, ModalResult result)
         {
-            DismissInstance(modal.Id, result);
+            await DismissInstance(modal.Id, result);
         }
 
-        internal void CloseInstance(Guid Id)
+        internal async Task CloseInstance(Guid Id)
         {
-            DismissInstance(Id, ModalResult.Ok<object>(null));
+            await DismissInstance(Id, ModalResult.Ok<object>(null));
         }
 
-        internal void CancelInstance(Guid Id)
+        internal async Task CancelInstance(Guid Id)
         {
-            DismissInstance(Id, ModalResult.Cancel());
+            await DismissInstance(Id, ModalResult.Cancel());
         }
 
-        internal void DismissInstance(Guid Id, ModalResult result)
+        internal async Task DismissInstance(Guid Id, ModalResult result)
         {
             var reference = Modals.SingleOrDefault(x => x.Id == Id);
 
             if (reference != null)
             {
+                await JSRuntime.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", Id);
                 reference.Dismiss(result);
                 Modals.Remove(reference);
                 StateHasChanged();
