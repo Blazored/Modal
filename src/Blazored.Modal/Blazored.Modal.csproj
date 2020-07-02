@@ -7,17 +7,23 @@
     <Authors>Chris Sainty</Authors>
     <Company></Company>
     <Copyright>Copyright 2018 (c) Chris Sainty. All rights reserved.</Copyright>
+    
+    <Description>A JavaScript free modal library for Blazor and Razor Components applications.</Description>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- NuGet settings -->
+    <PackageId>Blazored.Modal</PackageId>
+    <PackageTags>Blazored;Blazor;Razor;Components;Modal;Dialogue;ASP.NET Core;CSharp;Web</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Blazored/Modal</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/Blazored/Modal</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>Blazored Blazor Razor Components Modal Dialogue</PackageTags>
-    <Description>A JavaScript free modal library for Blazor and Razor Components applications.</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>5.0.0-preview.2</Version>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <RepositoryUrl>https://github.com/Blazored/Modal</RepositoryUrl>
+
+    <!-- SourceLink settings -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
   
   <PropertyGroup>
