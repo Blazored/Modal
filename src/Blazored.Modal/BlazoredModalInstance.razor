@@ -4,25 +4,23 @@
 
     <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
-    <div class="blazored-modal-wrapper">
-        <div class="@Class"  @onkeyup="HandleWrapperKeyUp">
-            @if (!HideHeader)
-            {
-                <div class="blazored-modal-header">
-                    <h3 class="blazored-modal-title">@Title</h3>
-                    @if (!HideCloseButton)
-                    {
-                        <button type="button" class="blazored-modal-close" @onclick="(() => Parent.CancelInstance(Id))">
-                            <span>&times;</span>
-                        </button>
-                    }
-                </div>
-            }
-            <div class="blazored-modal-content">
-                <CascadingValue Value="this">
-                    @Content
-                </CascadingValue>
+    <div class="@Class" @onkeyup="HandleWrapperKeyUp">
+        @if (!HideHeader)
+        {
+            <div class="blazored-modal-header">
+                <h3 class="blazored-modal-title">@Title</h3>
+                @if (!HideCloseButton)
+                {
+                    <button type="button" class="blazored-modal-close" @onclick="(() => Parent.CancelInstance(Id))">
+                        <span>&times;</span>
+                    </button>
+                }
             </div>
+        }
+        <div class="blazored-modal-content">
+            <CascadingValue Value="this">
+                @Content
+            </CascadingValue>
         </div>
     </div>
 </div>
@@ -70,9 +68,9 @@
     /// <summary>
     /// Closes the modal with a default Ok result />.
     /// </summary>
-    public void Close()
+    public async Task Close()
     {
-        Close(ModalResult.Ok<object>(null));
+        await Close(ModalResult.Ok<object>(null));
     }
 
     /// <summary>

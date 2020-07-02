@@ -1,6 +1,7 @@
 ﻿.blazored-modal-container {
     display: flex;
     position: fixed;
+    top: 0;
     width: 100%;
     height: 100%;
     z-index: 100;
@@ -19,6 +20,7 @@
 
 .blazored-modal {
     display: flex;
+    z-index: 102;
     flex-direction: column;
     background-color: #fff;
     border-radius: 4px;
@@ -49,34 +51,30 @@
     font-weight: bold;
 }
 
-.blazored-modal-wrapper {
-    z-index: 102;
-}
-
 .blazored-modal-center {
     align-items: center;
     justify-content: center;
 }
 
-.blazored-modal-topleft .blazored-modal-wrapper {
+.blazored-modal-topleft .blazored-modal {
     position: absolute;
     top: 32px;
     left: 32px;
 }
 
-.blazored-modal-topright .blazored-modal-wrapper {
+.blazored-modal-topright .blazored-modal {
     position: absolute;
     top: 32px;
     right: 32px;
 }
 
-.blazored-modal-bottomleft .blazored-modal-wrapper {
+.blazored-modal-bottomleft .blazored-modal {
     position: absolute;
     bottom: 32px;
     left: 32px;
 }
 
-.blazored-modal-bottomright .blazored-modal-wrapper {
+.blazored-modal-bottomright .blazored-modal {
     position: absolute;
     bottom: 32px;
     right: 32px;

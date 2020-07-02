@@ -10,8 +10,16 @@ export class BlazoredModal {
     readonly _options: Options = { escapeDeactivates: false };
     private _traps: Array<FocusTrapInstance> = [];
 
+    public activateScrollLock(): void {
+        const scrollY = window.scrollY;
+        const body = document.body;
+        body.style.position = 'fixed';
+        body.style.top = `-${scrollY}px`;
+    }
+
     public activateFocusTrap(element: any, id: string): void {
         const trap = focusTrap(element, this._options);
+
         try {
             trap.activate();
             this._traps.push({ id, focusTrap: trap });
@@ -24,6 +32,10 @@ export class BlazoredModal {
 
     public deactivateFocusTrap(id: string): void {
         const trap = this._traps.find(i => i.id === id);
+        const scrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
 
         if (trap) {
             trap.focusTrap.deactivate();

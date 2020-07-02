@@ -2,7 +2,7 @@
 
 A beautiful and customizable modal implementation for [Blazor](https://blazor.net) applications. It's free-range, gluten-free and 100% JavaScript free.
 
-[![Build Status](https://dev.azure.com/blazored/Modal/_apis/build/status/Blazored.Modal?branchName=master)](https://dev.azure.com/blazored/Modal/_build/latest?definitionId=4&branchName=master)
+![Build Status](https://github.com/Blazored/Modal/workflows/Build%20&%20Test%20Main/badge.svg)
 
 ![Nuget](https://img.shields.io/nuget/v/blazored.modal.svg)
 
@@ -83,7 +83,7 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server) 
 ```
 
 ## Usage
-Please checkout the [sample projects](https://github.com/Blazored/Modal/tree/master/samples) in this repo to see working examples of the features in the modal. 
+Please checkout the [sample projects](https://github.com/Blazored/Modal/tree/main/samples) in this repo to see working examples of the features in the modal. 
 
 ### Displaying the modal
 
