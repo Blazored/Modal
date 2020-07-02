@@ -102,12 +102,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BlazoredModal = void 0;
 const focus_trap_1 = __importDefault(__webpack_require__(/*! focus-trap */ "./node_modules/focus-trap/index.js"));
 class BlazoredModal {
-    setFocusTrap(element) {
-        const options = {
-            escapeDeactivates: false
-        };
-        const trap = focus_trap_1.default(element, options);
+    constructor() {
+        this._options = { escapeDeactivates: false };
+        this._traps = [];
+    }
+    activateFocusTrap(element, id) {
+        const trap = focus_trap_1.default(element, this._options);
         trap.activate();
+        this._traps.push({ id, focusTrap: trap });
+    }
+    deactivateFocusTrap(id) {
+        const trap = this._traps.find(i => i.id === id);
+        if (trap) {
+            trap.focusTrap.deactivate();
+            const index = this._traps.indexOf(trap);
+            if (index > -1) {
+                this._traps.splice(index, 1);
+            }
+        }
     }
 }
 exports.BlazoredModal = BlazoredModal;

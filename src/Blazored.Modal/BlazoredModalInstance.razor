@@ -53,7 +53,7 @@
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeVoidAsync("BlazoredModal.setFocusTrap", _modalReference);
+            await JSRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
         }
     }
 
@@ -138,7 +138,7 @@
     {
         if (e.Code == "Escape")
         {
-            await JSRuntime.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", _modalReference);
+            await JSRuntime.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", Id);
             Parent.DismissInstance(Id, ModalResult.Cancel());
         }
     }
