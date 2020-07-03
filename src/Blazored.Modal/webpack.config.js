@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = env => {
 
     return {
-        entry: './Blazored.Modal.ts',
+        entry: './Interop/Blazored.Modal.ts',
         devtool: env && env.production ? 'none' : 'source-map',
         module: {
             rules: [

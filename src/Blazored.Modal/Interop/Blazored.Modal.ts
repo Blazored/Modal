@@ -13,6 +13,7 @@ export class BlazoredModal {
     public activateScrollLock(): void {
         const scrollY = window.scrollY;
         const body = document.body;
+        body.style.width = `${body.offsetWidth}px`;
         body.style.position = 'fixed';
         body.style.top = `-${scrollY}px`;
     }
@@ -35,6 +36,7 @@ export class BlazoredModal {
         const scrollY = document.body.style.top;
         document.body.style.position = '';
         document.body.style.top = '';
+        document.body.style.width = '';
         window.scrollTo(0, parseInt(scrollY || '0') * -1);
 
         if (trap) {

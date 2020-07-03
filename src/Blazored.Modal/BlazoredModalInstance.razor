@@ -40,7 +40,7 @@
                 <h3 class="blazored-modal-title">@Title</h3>
                 @if (!HideCloseButton)
                 {
-                    <button type="button" class="blazored-modal-close" @onclick="(() => Parent.CancelInstance(Id))">
+                    <button type="button" class="blazored-modal-close" tabindex="-1" @onclick="(() => Parent.CancelInstance(Id))">
                         <span>&times;</span>
                     </button>
                 }
