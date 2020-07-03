@@ -12,7 +12,7 @@ To set a global animation for all modals in your application, you can set the `A
 ```html
 @inherits LayoutComponentBase
 
-<BlazoredModal Animation="@(new ModalAnimation(ModalAnimationType.FadeIn, 2))"/>
+<BlazoredModal Animation="@ModalAnimation.FadeIn(2)"/>
 
 <!-- Other code removed for brevity -->
 ```
@@ -22,7 +22,7 @@ To set a global animation for all modals in your application, you can set the `A
 To set the Animation of a specific modal instance you can pass in a `ModalOptions` object when calling `Show`. Below exapmle will add a Fade-in and Fade-out animation, which will take 1 second each.
 
 ```csharp
-var options = new ModalOptions { Animation = new ModalAnimation(ModalAnimationType.FadeInOut, 1)};
+var options = new ModalOptions { Animation = ModalAnimation.FadeInOut(1)};
 
 _ = Modal.Show<Confirm>("My Modal", options);
 ```

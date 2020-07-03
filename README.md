@@ -384,11 +384,11 @@ Or in the `Modal.Show()` method:
 #### Animation
 The modal also supports some animations.
 
-The following animation types are available out of the box: `ModalAnimationType.FadeIn`, `ModalAnimationType.FadeOut` and `ModalAnimationType.FadeInOut`.
+The following animation types are available out of the box: `ModalAnimation.FadeIn`, `ModalAnimation.FadeOut` and `ModalAnimation.FadeInOut`.
 
 Use the `Animation` parameter to set the custom styling globally:
 
-`<BlazoredModal Animation="@(new ModalAnimation(ModalAnimationType.FadeIn, 2))"/>`
+`<BlazoredModal Animation="@ModalAnimation.FadeIn(2)"/>`
 
 Or in the `Modal.Show()` method:
 
@@ -398,7 +398,7 @@ Or in the `Modal.Show()` method:
     {
         var options = new ModalOptions() 
         { 
-            Animation = new ModalAnimation(ModalAnimationType.FadeInOut, 1)
+            Animation = ModalAnimation.FadeInOut(1)
         };
 
         Modal.Show<Movies>("My Movies", options);
