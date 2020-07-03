@@ -6,15 +6,18 @@ namespace Blazored.Modal
 {
     public class ModalAnimation
     {
+        public ModalAnimationType Type { get; set; }
+        public double? Duration { get; set; }
+
         public ModalAnimation(ModalAnimationType type, double duration)
         {
             Type = type;
             Duration = duration;
         }
 
-        public ModalAnimationType Type { get; set; }
-
-        public double? Duration { get; set; }
+        public static ModalAnimation FadeIn(double duration) => new ModalAnimation(ModalAnimationType.FadeIn, duration);
+        public static ModalAnimation FadeOut(double duration) => new ModalAnimation(ModalAnimationType.FadeOut, duration);
+        public static ModalAnimation FadeInOut(double duration) => new ModalAnimation(ModalAnimationType.FadeInOut, duration);
     }
 
     public enum ModalAnimationType
