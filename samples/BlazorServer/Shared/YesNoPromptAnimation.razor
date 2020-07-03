@@ -1,0 +1,29 @@
+﻿@inject IModalService ModalService
+
+<div>
+    <p>Are you sure you want to delete the record?</p>
+
+    <button @onclick="Yes" class="btn btn-outline-danger">Yes</button>
+    <button @onclick="No" class="btn btn-primary">No</button>
+</div>
+
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    async Task Yes()
+    {
+        var options = new ModalOptions { Animation = new ModalAnimation(ModalAnimationType.FadeInOut, 5) };
+
+        var confirmationModal = ModalService.Show<Confirm>("Second Modal", options);
+        var result = await confirmationModal.Result;
+
+        if (result.Cancelled)
+            return;
+
+        BlazoredModal.Close();
+    }
+
+    void No() => BlazoredModal.Cancel();
+
+}

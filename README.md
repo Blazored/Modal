@@ -381,6 +381,31 @@ Or in the `Modal.Show()` method:
 }
 ```
 
+#### Animation
+The modal also supports some animations.
+
+The following animation types are available out of the box: `ModalAnimation.FadeIn`, `ModalAnimation.FadeOut` and `ModalAnimation.FadeInOut`.
+
+Use the `Animation` parameter to set the custom styling globally:
+
+`<BlazoredModal Animation="@ModalAnimation.FadeIn(2)"/>`
+
+Or in the `Modal.Show()` method:
+
+```razor
+@code {
+    void ShowModal()
+    {
+        var options = new ModalOptions() 
+        { 
+            Animation = ModalAnimation.FadeInOut(1)
+        };
+
+        Modal.Show<Movies>("My Movies", options);
+    }
+}
+```
+
 ### Multiple Modals
 
 It's possible to have multiple active modal instances at a time. You can find a working example of this in the sample projects but here is some sample code.

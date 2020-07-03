@@ -7,5 +7,7 @@
         public bool? DisableBackgroundCancel { get; set; }
         public bool? HideHeader { get; set; }
         public bool? HideCloseButton { get; set; }
+
+        public ModalAnimation Animation { get; set; }
     }
 }
