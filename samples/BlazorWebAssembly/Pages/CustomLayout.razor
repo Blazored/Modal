@@ -1,0 +1,24 @@
+﻿@page "/customlayout"
+@inject IModalService Modal
+
+
+<h1>Custom Layout</h1>
+
+<hr class="mb-5" />
+
+<p>
+    Custom layout can be set globally or on a per modal basis to change the look of modals.
+</p>
+
+
+<button @onclick="ShowModalCustomLayout" class="btn btn-primary">Show Modal</button>
+
+@code {
+
+    void ShowModalCustomLayout()
+    {
+        var options = new ModalOptions { UseCustomLayout = true };
+        Modal.Show<CustomBootstrapModal>("Custom Layout", options);
+    }
+
+}

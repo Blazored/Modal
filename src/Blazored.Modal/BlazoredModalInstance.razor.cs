@@ -25,6 +25,8 @@ namespace Blazored.Modal
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
 
+        public bool UseCustomLayout { get; set; }
+
         private ElementReference _modalReference;
 
         protected override void OnInitialized()
@@ -94,6 +96,23 @@ namespace Blazored.Modal
             HideHeader = SetHideHeader();
             HideCloseButton = SetHideCloseButton();
             DisableBackgroundCancel = SetDisableBackgroundCancel();
+            UseCustomLayout = SetUseCustomLayout();
+        }
+
+        private bool SetUseCustomLayout()
+        {
+            if (Options.UseCustomLayout.HasValue)
+            {
+                return Options.UseCustomLayout.Value;
+            }
+            else if (GlobalModalOptions.UseCustomLayout.HasValue)
+            {
+                return GlobalModalOptions.UseCustomLayout.Value;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private string SetPosition()

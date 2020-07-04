@@ -1,4 +1,12 @@
-﻿<style>
+﻿@if (UseCustomLayout)
+{
+    <CascadingValue Value="this">
+        @Content
+    </CascadingValue>
+}
+else
+{
+    <style>
     #_@(Id.ToString("N")).blazored-modal-fade-in {
         animation: @((Options?.Animation?.Duration ?? GlobalModalOptions?.Animation?.Duration ?? 0) * 1000)ms ease-out 0s ModalFadeIn;
     }
@@ -27,29 +35,31 @@
             opacity: 0;
         }
     }
-</style>
+    </style>
 
-<div class="blazored-modal-container @Position" @ref="_modalReference">
+    <div class="blazored-modal-container @Position" @ref="_modalReference">
 
-    <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
+        <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
-    <div id="_@Id.ToString("N")"class="@Class @AnimationClass" @onkeyup="HandleWrapperKeyUp">
-        @if (!HideHeader)
-        {
-            <div class="blazored-modal-header">
-                <h3 class="blazored-modal-title">@Title</h3>
-                @if (!HideCloseButton)
-                {
-                    <button type="button" class="blazored-modal-close" tabindex="-1" @onclick="(() => Parent.CancelInstance(Id))">
-                        <span>&times;</span>
-                    </button>
-                }
+        <div id="_@Id.ToString("N")" class="@Class @AnimationClass" @onkeyup="HandleWrapperKeyUp">
+            @if (!HideHeader)
+            {
+                <div class="blazored-modal-header">
+                    <h3 class="blazored-modal-title">@Title</h3>
+                    @if (!HideCloseButton)
+                    {
+                        <button type="button" class="blazored-modal-close" tabindex="-1" @onclick="(() => Parent.CancelInstance(Id))">
+                            <span>&times;</span>
+                        </button>
+                    }
+                </div>
+            }
+            <div class="blazored-modal-content">
+                <CascadingValue Value="this">
+                    @Content
+                </CascadingValue>
             </div>
-        }
-        <div class="blazored-modal-content">
-            <CascadingValue Value="this">
-                @Content
-            </CascadingValue>
         </div>
     </div>
-</div>
+}
+
