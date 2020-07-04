@@ -18,7 +18,9 @@
     void ShowModalCustomLayout()
     {
         var options = new ModalOptions { UseCustomLayout = true };
-        Modal.Show<CustomBootstrapModal>("Custom Layout", options);
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(CustomBootstrapModal.Message), "Hello custom modal!!");
+        Modal.Show<CustomBootstrapModal>("Custom Layout", parameters, options);
     }
 
 }
