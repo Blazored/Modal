@@ -22,6 +22,8 @@ namespace Blazored.Modal
         [Parameter] public string Class { get; set; }
         [Parameter] public ModalAnimation Animation { get; set; }
 
+        [Parameter] public bool? UseCustomLayout { get; set; }
+
         private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
         private readonly ModalOptions GlobalModalOptions = new ModalOptions();
 
@@ -37,6 +39,8 @@ namespace Blazored.Modal
             GlobalModalOptions.HideHeader = HideHeader;
             GlobalModalOptions.Position = Position;
             GlobalModalOptions.Animation = Animation;
+
+            GlobalModalOptions.UseCustomLayout = UseCustomLayout;
         }
 
         internal async void CloseInstance(ModalReference modal, ModalResult result)

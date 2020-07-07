@@ -1,0 +1,47 @@
+﻿@page "/customlayout"
+@inject IModalService Modal
+
+
+<h1>Custom Layout</h1>
+
+<hr class="mb-5" />
+
+<p>
+    Custom layout can be set globally or on a per modal basis to change the look of modals.
+</p>
+
+<div class="card mb-4">
+    <h5 class="card-header">Setting on a per modal basis</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("var options = new ModalOptions() { UseCustomLayout = true };")
+            </code>
+        </p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <h5 class="card-header">Setting globally for all modals</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("<BlazoredModal UseCustomLayout=\"true\"/> ")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="ShowModalCustomLayout" class="btn btn-primary">Show Modal</button>
+
+@code {
+
+    void ShowModalCustomLayout()
+    {
+        var options = new ModalOptions { UseCustomLayout = true };
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(CustomBootstrapModal.Message), "Hello custom modal!!");
+        Modal.Show<CustomBootstrapModal>("Custom Layout", parameters, options);
+    }
+
+}

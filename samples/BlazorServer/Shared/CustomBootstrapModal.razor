@@ -1,0 +1,28 @@
+﻿<div class="modal-backdrop fade show" @onclick="Cancel"></div>
+<div class="modal fade show d-block" style="pointer-events: none;" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content border-primary">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">@BlazoredModal.Title</h5>
+                <button type="button" class="close" aria-label="Close" @onclick="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                @Message
+            </div>
+
+        </div>
+    </div>
+</div>
+@code {
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+
+    [Parameter] public string Message { get; set; }
+
+    void Close() => BlazoredModal.Close(ModalResult.Ok(true));
+    void Cancel() => BlazoredModal.Cancel();
+
+}
