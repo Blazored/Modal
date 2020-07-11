@@ -4,6 +4,10 @@
         @Content
     </CascadingValue>
 }
+else if(Parent.ModalTemplate != null)
+{
+    @Parent.ModalTemplate(this)
+}
 else
 {
     <style>
