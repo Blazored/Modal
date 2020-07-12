@@ -1,4 +1,5 @@
-﻿@page "/customlayout"
+﻿@layout ModalTemplateLayout
+@page "/customlayout"
 @inject IModalService Modal
 
 
@@ -32,9 +33,48 @@
     </div>
 </div>
 
-<button @onclick="ShowModalCustomLayout" class="btn btn-primary">Show Modal</button>
+<div class="card mb-4">
+    <h5 class="card-header">Set modal template globally for all modals</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code style="white-space:pre;">@templateExample</code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
+<button @onclick="ShowModalCustomLayout" class="btn btn-primary">Show Custom Layout Modal</button>
 
 @code {
+
+    string templateExample = @"
+<BlazoredModal>
+    <ModalTemplate>
+        <div class='modal-backdrop fade show' @onclick='context.Cancel'></div>
+        <div class='modal fade show d-block' style='pointer-events: none;' tabindex='-1' role='dialog'>
+            <div class='modal-dialog ' role='document'>
+                <div class='modal-content border-warning'>
+                    <div class='modal-header bg-warning text-white'>
+                        <h5 class='modal-title'>@context.Title</h5>
+                        <button type='button' class='close' aria-label='Close' @onclick='context.Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>
+                    <div class='modal-body'>
+                        <CascadingValue Value='@context'>
+                            @context.Content
+                        </CascadingValue>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ModalTemplate>
+</BlazoredModal>".Replace('\'','"').Trim();
+
+    void ShowModal()
+    {
+        Modal.Show<Confirm>("Using ModalTemplate");
+    }
 
     void ShowModalCustomLayout()
     {
