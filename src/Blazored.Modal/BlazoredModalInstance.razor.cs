@@ -120,6 +120,7 @@ namespace Blazored.Modal
         private string SetPosition()
         {
             ModalPosition position;
+
             if (Options.Position.HasValue)
             {
                 position = Options.Position.Value;
@@ -145,6 +146,10 @@ namespace Blazored.Modal
                     return "blazored-modal-bottomleft";
                 case ModalPosition.BottomRight:
                     return "blazored-modal-bottomright";
+                case ModalPosition.Custom:
+                    if (string.IsNullOrWhiteSpace(Options.PositionCustomClass))
+                        throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set.");
+                    return Options.PositionCustomClass;
                 default:
                     return "blazored-modal-center";
             }

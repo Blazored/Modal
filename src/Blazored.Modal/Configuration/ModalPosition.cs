@@ -6,6 +6,7 @@
         TopLeft,
         TopRight,
         BottomLeft,
-        BottomRight
+        BottomRight,
+        Custom
     }
 }
