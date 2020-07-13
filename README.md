@@ -381,13 +381,13 @@ Or in the `Modal.Show()` method:
 
 #### Setting the position
 
-Modals are shown in the center of the viewport by default. The modal can be shown in different positions if needed. The positioning is flexible as it is set using CSS styling.
+Modals are shown in the center of the viewport by default. The modal can be shown in different positions if needed.
 
-The following positioning styles are available out of the box: `blazored-modal-center`, `blazored-modal-topleft`, `blazored-modal-topright`, `blazored-modal-bottomleft` and `blazored-modal-bottomright`.
+The following positions are available out of the box: `ModalPosition.Center`, `ModalPosition.TopLeft`, `ModalPosition.TopRight`, `ModalPosition.BottomLeft` and `ModalPosition.BottomRight`.
 
-Use the `Style` parameter to set the custom styling globally:
+Use the `Position` parameter to set the position globally:
 
-`<CascadingBlazoredModal Position="blazored-modal-bottomleft" />`
+`<CascadingBlazoredModal Position="ModalPosition.BottomLeft" />`
 
 Or in the `Modal.Show()` method:
 
@@ -397,9 +397,25 @@ Or in the `Modal.Show()` method:
     {
         var options = new ModalOptions()
         {
-            Position = "blazored-modal-bottomleft"
+            Position = "ModalPosition.BottomLeft"
         };
 
+        Modal.Show<Movies>("My Movies", options);
+    }
+}
+```
+
+If you need to use a custom position use `ModalPosition.Custom` and set the CSS class to use in `PositionCustomClass`.
+
+```razor
+@code {
+    void ShowModal()
+    {
+        var options = new ModalOptions()
+        {
+            Position = ModalPosition.Custom
+            PositionCustomClass = "custom-position-class";
+        };
         Modal.Show<Movies>("My Movies", options);
     }
 }
