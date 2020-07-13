@@ -1,5 +1,4 @@
 ﻿@page "/position"
-@inject IModalService Modal
 
 <h1>Positioning the modal</h1>
 
@@ -41,6 +40,8 @@
 <button @onclick="@(() => PositionCustom(ModalPosition.BottomRight))" class="btn btn-secondary">Bottom right</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     void PositionCenter()
     {

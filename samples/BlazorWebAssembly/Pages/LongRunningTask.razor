@@ -1,5 +1,4 @@
 ﻿@page "/longrunningtask"
-@inject IModalService Modal
 
 <h1>Closing Modal after long-running task</h1>
 
@@ -30,6 +29,8 @@
 
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     string _result;
 

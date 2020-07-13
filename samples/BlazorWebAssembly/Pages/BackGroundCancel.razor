@@ -1,5 +1,4 @@
 ﻿@page "/backgroundcancel"
-@inject IModalService Modal
 
 <h1>Background Click</h1>
 
@@ -38,6 +37,8 @@
 <button @onclick="BackgroundCancelDisabled" class="btn btn-secondary">Cancellation disabled</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     void BackgroundCancelEnabled()
     {

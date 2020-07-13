@@ -23,7 +23,7 @@ namespace Blazored.Modal.Tests
             // Arrange
             var testTitle = "Title";
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>(testTitle);
@@ -38,7 +38,7 @@ namespace Blazored.Modal.Tests
             // Arrange
             var options = new ModalOptions { Position = ModalPosition.TopLeft };
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>("", options);
@@ -54,7 +54,7 @@ namespace Blazored.Modal.Tests
             var modalService = Services.GetService<IModalService>();
             var customStyle = "my-custom-style";
             var options = new ModalOptions { Class = customStyle };
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>("", options);
@@ -68,7 +68,7 @@ namespace Blazored.Modal.Tests
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>();
@@ -83,7 +83,7 @@ namespace Blazored.Modal.Tests
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var options = new ModalOptions { HideCloseButton = true };
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>("", options);
@@ -97,7 +97,7 @@ namespace Blazored.Modal.Tests
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>();
@@ -112,7 +112,7 @@ namespace Blazored.Modal.Tests
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var options = new ModalOptions { HideHeader = true };
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>("", options);
@@ -126,7 +126,7 @@ namespace Blazored.Modal.Tests
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>("");
@@ -145,7 +145,7 @@ namespace Blazored.Modal.Tests
 
             var parameters = new ModalParameters();
             parameters.Add("Title", testTitle);
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>("", parameters);

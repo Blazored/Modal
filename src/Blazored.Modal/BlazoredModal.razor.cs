@@ -11,9 +11,10 @@ namespace Blazored.Modal
 {
     public partial class BlazoredModal
     {
-        [Inject] private IModalService ModalService { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
+
+        [CascadingParameter] private IModalService CascadedModalService { get; set; }
 
         [Parameter] public bool? HideHeader { get; set; }
         [Parameter] public bool? HideCloseButton { get; set; }
@@ -21,7 +22,6 @@ namespace Blazored.Modal
         [Parameter] public ModalPosition? Position { get; set; }
         [Parameter] public string Class { get; set; }
         [Parameter] public ModalAnimation Animation { get; set; }
-
         [Parameter] public bool? UseCustomLayout { get; set; }
 
         private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
@@ -29,8 +29,13 @@ namespace Blazored.Modal
 
         protected override void OnInitialized()
         {
-            ((ModalService)ModalService).OnModalInstanceAdded += Update;
-            ((ModalService) ModalService).OnModalCloseRequested += CloseInstance;
+            if (CascadedModalService == null)
+            {
+                throw new InvalidOperationException($"{GetType()} requires a cascading parameter of type {nameof(IModalService)}.");
+            }
+
+            ((ModalService)CascadedModalService).OnModalInstanceAdded += Update;
+            ((ModalService) CascadedModalService).OnModalCloseRequested += CloseInstance;
             NavigationManager.LocationChanged += CancelModals;
 
             GlobalModalOptions.Class = Class;
