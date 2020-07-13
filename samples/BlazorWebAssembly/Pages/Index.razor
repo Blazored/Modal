@@ -1,5 +1,4 @@
 ﻿@page "/"
-@inject IModalService Modal
 
 <h1>Blazored Modal Sample</h1>
 
@@ -22,6 +21,8 @@
 <button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
 

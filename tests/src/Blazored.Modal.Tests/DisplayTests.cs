@@ -20,8 +20,11 @@ namespace Blazored.Modal.Tests
         [Fact]
         public void ModalIsNotVisibleByDefault()
         {
-            // Arrange / Act
-            var cut = RenderComponent<BlazoredModal>();
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+
+            // Act
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Assert
             Assert.Empty(cut.FindAll(".blazored-modal-container"));
@@ -32,7 +35,7 @@ namespace Blazored.Modal.Tests
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>();
@@ -46,7 +49,7 @@ namespace Blazored.Modal.Tests
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>();
@@ -61,7 +64,7 @@ namespace Blazored.Modal.Tests
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>();
@@ -79,7 +82,7 @@ namespace Blazored.Modal.Tests
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
-            var cut = RenderComponent<BlazoredModal>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
             modalService.Show<TestComponent>();

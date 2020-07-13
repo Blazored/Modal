@@ -1,5 +1,4 @@
 ﻿@page "/custom"
-@inject IModalService Modal
 
 <h1>Custom Styling</h1>
 
@@ -36,6 +35,8 @@
 <button @onclick="ShowModalCustomStyle" class="btn btn-primary">Show Modal</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     void ShowModalCustomStyle()
     {

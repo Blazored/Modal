@@ -1,5 +1,4 @@
 ﻿@page "/returningdata"
-@inject IModalService Modal
 
 <h1>Returning Data From a Modal</h1>
 
@@ -34,6 +33,8 @@
 }
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     string _message;
 

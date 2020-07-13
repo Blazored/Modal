@@ -1,5 +1,4 @@
 ﻿@page "/passingdata"
-@inject IModalService Modal
 
 <h1>Passing Data to a Modal</h1>
 
@@ -32,6 +31,8 @@
 <button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     string _message;
 
