@@ -1,6 +1,5 @@
 ﻿@layout ModalTemplateLayout
 @page "/customlayout"
-@inject IModalService Modal
 
 
 <h1>Custom Layout</h1>
@@ -48,6 +47,8 @@
 </div>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     string templateExample = @"
 <BlazoredModal>
