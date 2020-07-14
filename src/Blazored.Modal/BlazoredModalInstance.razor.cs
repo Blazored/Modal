@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Blazored.Modal
 {
@@ -27,6 +28,7 @@ namespace Blazored.Modal
 
         public bool UseCustomLayout { get; set; }
 
+        [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
         private ElementReference _modalReference;
 
         protected override void OnInitialized()
@@ -118,6 +120,7 @@ namespace Blazored.Modal
         private string SetPosition()
         {
             ModalPosition position;
+
             if (Options.Position.HasValue)
             {
                 position = Options.Position.Value;
@@ -143,6 +146,10 @@ namespace Blazored.Modal
                     return "blazored-modal-bottomleft";
                 case ModalPosition.BottomRight:
                     return "blazored-modal-bottomright";
+                case ModalPosition.Custom:
+                    if (string.IsNullOrWhiteSpace(Options.PositionCustomClass))
+                        throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set.");
+                    return Options.PositionCustomClass;
                 default:
                     return "blazored-modal-center";
             }

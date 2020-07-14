@@ -1,6 +1,6 @@
 # Blazored Modal
 
-A beautiful and customizable modal implementation for [Blazor](https://blazor.net) applications. It's free-range, gluten-free and 100% JavaScript free.
+A beautiful and customizable modal implementation for [Blazor](https://blazor.net) applications.
 
 ![Build Status](https://github.com/Blazored/Modal/workflows/Build%20&%20Test%20Main/badge.svg)
 
@@ -65,21 +65,41 @@ public static async Task Main(string[] args)
 Add the following to your *_Imports.razor*
 
 ```razor
-@using Blazored
 @using Blazored.Modal
 @using Blazored.Modal.Services
 ```
 
-### 3. Add Modal Component
+### 3. Add CascadingBlazoredModal Component
 
-Add the `<BlazoredModal />` tag into your applications *MainLayout.razor*.
+Add the `<CascadingBlazoredModal />` component into your applications *App.razor*, wrapping the Router as per the example below.
 
-### 4. Add reference to style sheet
+```razor
+<CascadingBlazoredModal>
+    <Router AppAssembly="typeof(Program).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
+        </Found>
+        <NotFound>
+            <h1>Page not found</h1>
+            <p>Sorry, but there's nothing here!</p>
+        </NotFound>
+    </Router>
+</CascadingBlazoredModal>
+```
+
+### 4. Add reference to style sheet & javascript reference
 
 Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server) or `index.html` (Blazor WebAssembly).
 
 ```html
 <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
+```
+
+Then add a reference to the JavaScript file at the bottom of the page after the reference to the Blazor file.
+
+```html
+<script src="_framework/blazor.webassembly.js"></script>
+<script src="_content/Blazored.Modal/blazored.modal.js"></script>
 ```
 
 ## Usage
@@ -110,7 +130,6 @@ If you want to pass values to the component you're displaying in the modal, then
 
 ```razor
 @page "/"
-@inject IModalService Modal
 
 <h1>My Movies</h1>
 
@@ -122,6 +141,8 @@ If you want to pass values to the component you're displaying in the modal, then
 </ul>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     List<Movies> Movies { get; set; }
 
@@ -140,7 +161,6 @@ If you want to pass values to the component you're displaying in the modal, then
 
 ```razor
 @inject IMovieService MovieService
-@inject IModalService ModalService
 
 <div class="simple-form">
 
@@ -186,13 +206,15 @@ When you open a modal you can capture a reference to it and await the result of 
 
 ```razor
 @page "/"
-@inject IModalService Modal
 
 <h1>My Movies</h1>
 
 <button @onclick="ShowModal" class="btn btn-primary">View Movies</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
     async Task ShowModal()
     {
         var moviesModal = Modal.Show<Movies>("My Movies");
@@ -259,11 +281,13 @@ Below is the caller for the component above. When the result is returned the str
 
 ```razor
 @page "/"
-@inject IModalService Modal
 
 <button @onclick="ShowModal" class="btn btn-primary">View Form</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
     async Task ShowModal()
     {
         var formModal = Modal.Show<SignUpForm>("Please SignUp");
@@ -291,7 +315,7 @@ The modals can be customized to fit a wide variety of uses. These options can be
 
 A modal has a close button in the top right hand corner by default. The close button can be hidden by using the `HideCloseButton` parameter:
 
-`<BlazoredModal HideCloseButton="true" />`
+`<CascadingBlazoredModal HideCloseButton="true" />`
 
 Or in the `Modal.Show()` method:
 
@@ -313,7 +337,7 @@ Or in the `Modal.Show()` method:
 
 You can disable cancelling the modal by clicking on the background using the `DisableBackgroundCancel` parameter.
 
-`<BlazoredModal DisableBackgroundCancel="true" />`
+`<CascadingBlazoredModal DisableBackgroundCancel="true" />`
 
 Or in the `Modal.Show()` method:
 
@@ -337,7 +361,7 @@ You can set an alternative CSS style for the modal if you want to customize the 
 
 Use the `Class` parameter to set the custom styling globally:
 
-`<BlazoredModal Class="custom-modal" />`
+`<CascadingBlazoredModal Class="custom-modal" />`
 
 Or in the `Modal.Show()` method:
 
@@ -357,13 +381,13 @@ Or in the `Modal.Show()` method:
 
 #### Setting the position
 
-Modals are shown in the center of the viewport by default. The modal can be shown in different positions if needed. The positioning is flexible as it is set using CSS styling.
+Modals are shown in the center of the viewport by default. The modal can be shown in different positions if needed.
 
-The following positioning styles are available out of the box: `blazored-modal-center`, `blazored-modal-topleft`, `blazored-modal-topright`, `blazored-modal-bottomleft` and `blazored-modal-bottomright`.
+The following positions are available out of the box: `ModalPosition.Center`, `ModalPosition.TopLeft`, `ModalPosition.TopRight`, `ModalPosition.BottomLeft` and `ModalPosition.BottomRight`.
 
-Use the `Style` parameter to set the custom styling globally:
+Use the `Position` parameter to set the position globally:
 
-`<BlazoredModal Position="blazored-modal-bottomleft" />`
+`<CascadingBlazoredModal Position="ModalPosition.BottomLeft" />`
 
 Or in the `Modal.Show()` method:
 
@@ -373,9 +397,25 @@ Or in the `Modal.Show()` method:
     {
         var options = new ModalOptions()
         {
-            Position = "blazored-modal-bottomleft"
+            Position = "ModalPosition.BottomLeft"
         };
 
+        Modal.Show<Movies>("My Movies", options);
+    }
+}
+```
+
+If you need to use a custom position use `ModalPosition.Custom` and set the CSS class to use in `PositionCustomClass`.
+
+```razor
+@code {
+    void ShowModal()
+    {
+        var options = new ModalOptions()
+        {
+            Position = ModalPosition.Custom
+            PositionCustomClass = "custom-position-class";
+        };
         Modal.Show<Movies>("My Movies", options);
     }
 }
@@ -388,7 +428,7 @@ The following animation types are available out of the box: `ModalAnimation.Fade
 
 Use the `Animation` parameter to set the custom styling globally:
 
-`<BlazoredModal Animation="@ModalAnimation.FadeIn(2)"/>`
+`<CascadingBlazoredModal Animation="@ModalAnimation.FadeIn(2)"/>`
 
 Or in the `Modal.Show()` method:
 

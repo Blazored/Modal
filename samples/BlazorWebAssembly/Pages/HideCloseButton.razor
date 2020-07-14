@@ -1,5 +1,4 @@
 ﻿@page "/closebutton"
-@inject IModalService Modal
 
 <h1>Hiding the modal close button</h1>
 
@@ -37,6 +36,8 @@
 <button @onclick="CloseButtonHidden" class="btn btn-secondary">Hide the close button</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     void CloseButtonShown()
     {

@@ -1,5 +1,4 @@
 ﻿@page "/position"
-@inject IModalService Modal
 
 <h1>Positioning the modal</h1>
 
@@ -39,8 +38,11 @@
 <button @onclick="PositionCenter" class="btn btn-primary">Center</button>
 <button @onclick="@(() => PositionCustom(ModalPosition.BottomLeft))" class="btn btn-secondary">Bottom left</button>
 <button @onclick="@(() => PositionCustom(ModalPosition.BottomRight))" class="btn btn-secondary">Bottom right</button>
+<button @onclick="@(() => PositionCustom(ModalPosition.Custom))" class="btn btn-secondary">Custom</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     void PositionCenter()
     {
@@ -50,6 +52,9 @@
     void PositionCustom(ModalPosition position)
     {
         var options = new ModalOptions { Position = position };
+
+        if (position == ModalPosition.Custom)
+            options.PositionCustomClass = "my-custom-position";
 
         Modal.Show<Confirm>($"Position: {position}", options);
     }

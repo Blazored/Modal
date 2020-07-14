@@ -1,5 +1,4 @@
 ﻿@page "/animation"
-@inject IModalService Modal
 
 <h1>Animating the modal</h1>
 
@@ -47,6 +46,9 @@
 <button @onclick="@MultipleModals" class="btn btn-primary">Multiple Modals</button>
 
 @code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
     private double duration = 1.0;
 
     void AnimationDefault()
