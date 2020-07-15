@@ -1,0 +1,81 @@
+﻿.blazored-modal-container {
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.blazored-modal-overlay {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 101;
+    background-color: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+}
+
+.blazored-modal {
+    display: flex;
+    z-index: 102;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    padding: 1.5rem;
+    box-shadow: 0 2px 2px rgba(0,0,0,.25);
+}
+
+.blazored-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0 0 2rem 0;
+}
+
+.blazored-modal-title {
+    margin-bottom: 0;
+}
+
+.blazored-modal-close {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.blazored-modal-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.blazored-modal-topleft .blazored-modal {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+}
+
+.blazored-modal-topright .blazored-modal {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+}
+
+.blazored-modal-bottomleft .blazored-modal {
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+}
+
+.blazored-modal-bottomright .blazored-modal {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+}
