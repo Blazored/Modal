@@ -23,7 +23,7 @@ dotnet add package Blazored.Modal
 ```
 
 #### Internet Explorer 11
-This package can be used with Internet Explorer 11, but some special care has to be taken.
+This package can be used with Internet Explorer 11, but some special care should to be taken.
 
 - Only Blazor Server works with IE11. Blazor WebAssembly does not work with any IE version. See [this](https://docs.microsoft.com/en-us/aspnet/core/blazor/supported-platforms?view=aspnetcore-3.1)
 - A [polyfill](https://github.com/Daddoon/Blazor.Polyfill) is necessary for this component to work. See [this](https://github.com/Daddoon/Blazor.Polyfill) page for an explanation on how to install and use it. The sample project for Blazor Server uses the polyfill and thus should work on IE11
