@@ -95,10 +95,16 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server) 
 <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
 ```
 
-Then add a reference to the JavaScript file at the bottom of the page after the reference to the Blazor file.
+Then add a reference to the Blazored Modal JavaScript file at the bottom of the respective page after the reference to the Blazor file.
 
 ```html
 <script src="_framework/blazor.webassembly.js"></script>
+<script src="_content/Blazored.Modal/blazored.modal.js"></script>
+```
+
+
+```html
+<script src="_framework/blazor.server.js"></script>
 <script src="_content/Blazored.Modal/blazored.modal.js"></script>
 ```
 
