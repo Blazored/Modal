@@ -31,6 +31,8 @@ This package can be used with Internet Explorer 11, but some special care should
 
 Taking these things into account, `Blazored.Modal` should work on IE11.
 
+### Please note: When upgrading from v4 to v5 you must remove the `<BlazoredModal>` tag from your `MainLayout` component.
+
 ### 1. Register Services
 
 **For Blazor Server**: You will need to add the following using statement and add a call to register the Blazored Modal services in your applications `Startup.ConfigureServices` method.
