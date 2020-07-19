@@ -5,6 +5,7 @@ on:
     branches: [ main ]
 
 env:
+    PROJECT_NAME: Blazored.Modal
     NETCORE_VERSION: '3.1.301'
 
 jobs:
@@ -23,7 +24,7 @@ jobs:
       run: dotnet restore
 
     - name: Building project...
-      run: dotnet build --configuration Release --no-restore src/Blazored.Modal/Blazored.Modal.csproj
+      run: dotnet build --configuration Release --no-restore src/$PROJECT_NAME/$PROJECT_NAME.csproj
 
     - name: Testing...
       run: dotnet test --no-restore --verbosity normal

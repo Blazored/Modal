@@ -36,7 +36,7 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build -c Release --no-restore src/Blazored.Modal/Blazored.Modal.csproj
+      run: dotnet build -c Release --no-restore src/$PROJECT_NAME/$PROJECT_NAME.csproj
 
     - name: Test
       run: dotnet test -c Release
