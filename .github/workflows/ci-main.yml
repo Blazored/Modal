@@ -10,7 +10,7 @@ env:
     NETCORE_VERSION: '3.1.301'
     DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
     DOTNET_CLI_TELEMETRY_OPTOUT: true
-    PROJECT_NAME: Blazored.Modal
+    PROJECT_NAME: Modal
     GITHUB_FEED: https://nuget.pkg.github.com/Blazored/
     GITHUB_USER: chrissainty
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -36,16 +36,22 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build -c Release --no-restore src/$PROJECT_NAME/$PROJECT_NAME.csproj
+      run: dotnet build -c Release --no-restore src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.csproj
 
     - name: Test
       run: dotnet test -c Release
 
     - name: Pack
-      run: dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID src/$PROJECT_NAME/$PROJECT_NAME.*proj
+      run: dotnet pack -v normal -c Release --no-restore --include-symbols --include-source -p:PackageVersion=$GITHUB_RUN_ID src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.*proj
 
     - name: Publish Sample Site
       run: dotnet publish -c Release samples/BlazorWebAssembly/BlazorWebAssembly.csproj
+
+    - name: Rewrite base href
+      uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
+      with:
+        html_path: samples/BlazorWebAssembly/bin/Release/netstandard2.1/publish/wwwroot/index.html
+        base_href: /${{ env.PROJECT_NAME }}/
     
     - name: Deploy to Github Pages
       uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -60,7 +66,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: nupkg
-        path: ./src/${{ env.PROJECT_NAME }}/bin/Release/*.nupkg
+        path: ./src/Blazored.${{ env.PROJECT_NAME }}/bin/Release/*.nupkg
   prerelease:
     needs: build
     if: github.event_name != 'release'
@@ -93,7 +99,7 @@ jobs:
           echo Version: $VERSION
           VERSION="${VERSION//v}"
           echo Clean Version: $VERSION
-          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/$PROJECT_NAME/$PROJECT_NAME.*proj
+          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/Blazored.$PROJECT_NAME/Blazored.$PROJECT_NAME.*proj
       - name: Push to GitHub Feed
         run: |
           for f in ./nupkg/*.nupkg
