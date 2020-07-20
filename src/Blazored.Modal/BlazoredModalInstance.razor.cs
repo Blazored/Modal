@@ -155,14 +155,6 @@ namespace Blazored.Modal
             }
         }
 
-        private async Task HandleWrapperKeyUp(KeyboardEventArgs e)
-        {
-            if (e.Code == "Escape")
-            {
-                await Parent.DismissInstance(Id, ModalResult.Cancel());
-            }
-        }
-
         private string SetClass()
         {
             if (!string.IsNullOrWhiteSpace(Options.Class))
