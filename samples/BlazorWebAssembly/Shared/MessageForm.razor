@@ -1,23 +1,32 @@
 ﻿<div class="simple-form">
+    <EditForm Model="_form" OnValidSubmit="SubmitForm">
+        <DataAnnotationsValidator />
 
-    <div class="form-group">
-        <label for="message">Message</label>
-        <input @bind="Message" type="text" class="form-control" id="message" placeholder="Enter a message" />
-    </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <InputText @bind-Value="_form.Message" class="form-control" placeholder="Enter a message" />
+            <ValidationMessage For="@(() => _form.Message)" />
+        </div>
 
-    <button @onclick="SubmitForm" class="btn btn-primary">Submit</button>
-    <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+    </EditForm>
 </div>
 
 @code {
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
-    string Message { get; set; }
+    Form _form = new Form();
 
     protected override void OnInitialized() => BlazoredModal.SetTitle("Enter a Message");
-    
-    void SubmitForm() => BlazoredModal.Close(ModalResult.Ok(Message));
-    void Cancel() => BlazoredModal.Cancel();
 
+    async Task SubmitForm() => await BlazoredModal.Close(ModalResult.Ok(_form.Message));
+    async Task Cancel() => await BlazoredModal.Cancel();
+
+    public class Form
+    {
+        [Required(ErrorMessage = "Please enter a message")]
+        public string Message { get; set; }
+    }
 }
