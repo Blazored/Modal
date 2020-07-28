@@ -176,7 +176,7 @@ If you want to pass values to the component you're displaying in the modal, then
     </div>
 
     <button @onclick="SaveMovie" class="btn btn-primary">Submit</button>
-    <button @onclick="BlazoredModal.Cancel" class="btn btn-secondary">Cancel</button>
+    <button @onclick="BlazoredModal.CancelAsync" class="btn btn-secondary">Cancel</button>
 </div>
 
 @code {
@@ -270,9 +270,9 @@ In the example below, when the form is submitted a `ModalResult.Ok` containing t
         await BlazoredModal.CloseAsync(ModalResult.Ok($"Form was submitted successfully."));
     }
 
-    void Cancel()
+    async Task Cancel()
     {
-        BlazoredModal.Cancel();
+        await BlazoredModal.CancelAsync();
     }
 
 }

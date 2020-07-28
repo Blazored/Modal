@@ -23,6 +23,6 @@
     [Parameter] public string Message { get; set; }
 
     async Task Close() => await BlazoredModal.CloseAsync(ModalResult.Ok(true));
-    void Cancel() => BlazoredModal.Cancel();
+    async Task Cancel() => await BlazoredModal.CancelAsync();
 
 }

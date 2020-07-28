@@ -18,6 +18,6 @@
     protected override void OnInitialized() => BlazoredModal.SetTitle("Enter a Message");
     
     async Task SubmitForm() => await BlazoredModal.CloseAsync(ModalResult.Ok(Message));
-    void Cancel() => BlazoredModal.Cancel();
+    async Task Cancel() => await BlazoredModal.CancelAsync();
 
 }

@@ -85,7 +85,7 @@ namespace Blazored.Modal
         /// <summary>
         /// Closes the modal and returns a cancelled ModalResult.
         /// </summary>
-        public async Task Cancel()
+        public async Task CancelAsync()
         {
             await CloseAsync(ModalResult.Cancel());
         }
@@ -217,7 +217,7 @@ namespace Blazored.Modal
         {
             if (DisableBackgroundCancel) return;
 
-            await Cancel();
+            await CancelAsync();
         }
     }
 }

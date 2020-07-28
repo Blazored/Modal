@@ -24,6 +24,6 @@
         await BlazoredModal.CloseAsync();
     }
 
-    void No() => BlazoredModal.Cancel();
+    Task No() => await BlazoredModal.CancelAsync();
 
 }
