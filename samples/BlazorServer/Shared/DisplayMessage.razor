@@ -12,7 +12,7 @@
 
     [Parameter] public string Message { get; set; }
 
-    void SubmitForm() => BlazoredModal.Close();
+    async Task SubmitForm() => await BlazoredModal.CloseAsync();
     void Cancel() => BlazoredModal.Cancel();
 
 }

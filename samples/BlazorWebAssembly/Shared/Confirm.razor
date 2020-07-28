@@ -9,7 +9,7 @@
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
 
-    void Close() => BlazoredModal.Close(ModalResult.Ok(true));
+    async Task Close() => await BlazoredModal.CloseAsync(ModalResult.Ok(true));
     void Cancel() => BlazoredModal.Cancel();
 
 }

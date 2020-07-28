@@ -57,16 +57,16 @@ namespace Blazored.Modal
         /// <summary>
         /// Closes the modal with a default Ok result />.
         /// </summary>
-        public async Task Close()
+        public async Task CloseAsync()
         {
-            await Close(ModalResult.Ok<object>(null));
+            await CloseAsync(ModalResult.Ok<object>(null));
         }
 
         /// <summary>
         /// Closes the modal with the specified <paramref name="modalResult"/>.
         /// </summary>
         /// <param name="modalResult"></param>
-        public async Task Close(ModalResult modalResult)
+        public async Task CloseAsync(ModalResult modalResult)
         {
             // Fade out the modal, and after that actually remove it
             if (Options.Animation?.Type == ModalAnimationType.FadeOut || Options.Animation?.Type == ModalAnimationType.FadeInOut)
@@ -87,7 +87,7 @@ namespace Blazored.Modal
         /// </summary>
         public async Task Cancel()
         {
-            await Close(ModalResult.Cancel());
+            await CloseAsync(ModalResult.Cancel());
         }
 
         private void ConfigureInstance()
