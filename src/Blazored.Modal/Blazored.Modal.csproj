@@ -6,9 +6,9 @@
     
     <Authors>Chris Sainty</Authors>
     <Company></Company>
-    <Copyright>Copyright 2018 (c) Chris Sainty. All rights reserved.</Copyright>
+    <Copyright>Copyright 2020 (c) Chris Sainty. All rights reserved.</Copyright>
     
-    <Description>A JavaScript free modal library for Blazor and Razor Components applications.</Description>
+    <Description>A powerful and customizable modal implementation for Blazor applications.</Description>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
