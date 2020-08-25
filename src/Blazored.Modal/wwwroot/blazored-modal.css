@@ -79,3 +79,22 @@
     bottom: 32px;
     right: 32px;
 }
+
+.blazored-modal-scrollable {
+    display: flex;
+    max-height: calc(100% - 1rem);
+}
+
+@media (min-width: 576px) {
+    .blazored-modal-scrollable {
+        max-height: calc(100% - 3.5rem);
+    }
+}
+
+.blazored-modal-scrollable .blazored-modal-content {
+    overflow-y: auto;
+}
+
+.blazored-modal-scrollable .blazored-modal-footer, .blazored-modal-scrollable .blazored-modal-header {
+    flex-shrink: 0;
+}

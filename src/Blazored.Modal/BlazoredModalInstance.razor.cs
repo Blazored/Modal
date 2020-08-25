@@ -22,6 +22,7 @@ namespace Blazored.Modal
         private string Position { get; set; }
         private string Class { get; set; }
         private string AnimationClass { get; set; }
+        private string ScrollableClass { get; set; }
         private bool HideHeader { get; set; }
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
@@ -95,6 +96,7 @@ namespace Blazored.Modal
             Position = SetPosition();
             Class = SetClass();
             AnimationClass = SetAnimationClass();
+            ScrollableClass = SetScrollableClass();
             HideHeader = SetHideHeader();
             HideCloseButton = SetHideCloseButton();
             DisableBackgroundCancel = SetDisableBackgroundCancel();
@@ -175,6 +177,16 @@ namespace Blazored.Modal
             if (animation.Type == ModalAnimationType.FadeIn || animation.Type == ModalAnimationType.FadeInOut)
             {
                 return "blazored-modal-fade-in";
+            }
+
+            return string.Empty;
+        }
+
+        private string SetScrollableClass()
+        {
+            if (Options.ContentScrollable == true)
+            {
+                return "blazored-modal-scrollable";
             }
 
             return string.Empty;
