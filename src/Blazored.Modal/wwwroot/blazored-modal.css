@@ -85,12 +85,6 @@
     max-height: calc(100% - 1rem);
 }
 
-@media (min-width: 576px) {
-    .blazored-modal-scrollable {
-        max-height: calc(100% - 3.5rem);
-    }
-}
-
 .blazored-modal-scrollable .blazored-modal-content {
     overflow-y: auto;
 }
