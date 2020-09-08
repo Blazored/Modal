@@ -78,7 +78,7 @@ namespace Blazored.Modal
 
         private async void CancelModals(object sender, LocationChangedEventArgs e)
         {
-            foreach (var modalReference in Modals)
+            foreach (var modalReference in Modals.ToList())
             {
                 await JSRuntime.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", modalReference.Id);
                 modalReference.Dismiss(ModalResult.Cancel());
