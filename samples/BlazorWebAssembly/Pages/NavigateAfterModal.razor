@@ -1,0 +1,40 @@
+﻿@page "/navigateAway"
+
+<h1>Navigate away</h1>
+
+<hr class="mb-5" />
+
+@inject NavigationManager Navigator
+
+<p>
+    This is an example of using Blazored Modal and navigating to a different page afterwards
+</p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("Modal.Show<Confirm>(\"Welcome to Blazored Modal\", options);")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
+
+@code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    async void ShowModal()
+    {
+        var modal = Modal.Show<Confirm>("Do you want to navigate to a different page?");
+        var result = await modal.Result;
+
+        if (!result.Cancelled && (result.Data is bool accepted) && accepted)
+        {
+            Navigator.NavigateTo ("/");
+        }
+    }
+
+}
