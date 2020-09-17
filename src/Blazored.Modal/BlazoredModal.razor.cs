@@ -35,7 +35,7 @@ namespace Blazored.Modal
             }
 
             ((ModalService)CascadedModalService).OnModalInstanceAdded += Update;
-            ((ModalService) CascadedModalService).OnModalCloseRequested += CloseInstance;
+            ((ModalService)CascadedModalService).OnModalCloseRequested += CloseInstance;
             NavigationManager.LocationChanged += CancelModals;
 
             GlobalModalOptions.Class = Class;
@@ -50,29 +50,43 @@ namespace Blazored.Modal
 
         internal async void CloseInstance(ModalReference modal, ModalResult result)
         {
-            await DismissInstance(modal.Id, result);
-        }
-
-        internal async Task CloseInstance(Guid Id)
-        {
-            await DismissInstance(Id, ModalResult.Ok<object>(null));
-        }
-
-        internal async Task CancelInstance(Guid Id)
-        {
-            await DismissInstance(Id, ModalResult.Cancel());
-        }
-
-        internal async Task DismissInstance(Guid Id, ModalResult result)
-        {
-            var reference = Modals.SingleOrDefault(x => x.Id == Id);
-
-            if (reference != null)
+            if (modal.ModalInstanceRef != null)
             {
-                await JSRuntime.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", Id);
-                reference.Dismiss(result);
-                Modals.Remove(reference);
-                StateHasChanged();
+                // Gracefully close the modal
+                await modal.ModalInstanceRef.Close(result);
+            }
+            else
+            {
+                await DismissInstance(modal, result);
+            }
+        }
+
+        internal void CloseInstance(Guid Id)
+        {
+            var reference = GetModalReference(Id);
+            CloseInstance(reference, ModalResult.Ok<object>(null));
+        }
+
+        internal void CancelInstance(Guid Id)
+        {
+            var reference = GetModalReference(Id);
+            CloseInstance(reference, ModalResult.Cancel());
+        }
+
+        internal Task DismissInstance(Guid Id, ModalResult result)
+        {
+            var reference = GetModalReference(Id);
+            return DismissInstance(reference, result);
+        }
+
+        internal async Task DismissInstance(ModalReference modal, ModalResult result)
+        {
+            if (modal != null)
+            {
+                await JSRuntime.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", modal.Id);
+                modal.Dismiss(result);
+                Modals.Remove(modal);
+                await InvokeAsync(StateHasChanged);
             }
         }
 
@@ -93,6 +107,11 @@ namespace Blazored.Modal
             await JSRuntime.InvokeVoidAsync("BlazoredModal.activateScrollLock");
             Modals.Add(modalReference);
             await InvokeAsync(StateHasChanged);
+        }
+
+        private ModalReference GetModalReference(Guid Id)
+        {
+            return Modals.SingleOrDefault(x => x.Id == Id);
         }
     }
 }
