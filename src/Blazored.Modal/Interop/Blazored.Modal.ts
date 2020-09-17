@@ -6,8 +6,8 @@ interface FocusTrapInstance {
 }
 
 export class BlazoredModal {
-
-    readonly _options: Options = { escapeDeactivates: false };
+    
+    readonly _options: Options = { escapeDeactivates: false, allowOutsideClick: () => true };
     private _traps: Array<FocusTrapInstance> = [];
 
     public activateScrollLock(): void {

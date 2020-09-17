@@ -1,6 +1,6 @@
 # Blazored Modal
 
-A beautiful and customizable modal implementation for [Blazor](https://blazor.net) applications.
+A powerful and customizable modal implementation for [Blazor](https://blazor.net) applications.
 
 ![Build Status](https://github.com/Blazored/Modal/workflows/Build%20&%20Test%20Main/badge.svg)
 
