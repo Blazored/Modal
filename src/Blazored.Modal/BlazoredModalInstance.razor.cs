@@ -25,6 +25,13 @@ namespace Blazored.Modal
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
 
+		private string AnimationDuration {
+            get {
+                var duration = (Options?.Animation?.Duration ?? GlobalModalOptions?.Animation?.Duration ?? 0) * 1000;
+                return FormattableString.Invariant($"{duration}ms");
+            }
+        }
+
         public bool UseCustomLayout { get; set; }
 
         [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
