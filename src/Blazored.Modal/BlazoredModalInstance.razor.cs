@@ -1,6 +1,7 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -37,6 +38,9 @@ namespace Blazored.Modal
         [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
         private ElementReference _modalReference;
 
+        // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
+        private readonly Dictionary<string, object> _closeBtnAttributes = new Dictionary<string, object> { { "tabindex", "-1" } };
+
         protected override void OnInitialized()
         {
             ConfigureInstance();
@@ -47,6 +51,8 @@ namespace Blazored.Modal
             if (firstRender)
             {
                 await JSRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
+                _closeBtnAttributes.Clear();
+                StateHasChanged();
             }
         }
 
