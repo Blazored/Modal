@@ -41,14 +41,14 @@ else
 
         <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
 
-        <div id="_@Id.ToString("N")" class="@Class">
+        <div id="_@Id.ToString("N")" class="@Class" role="dialog" aria-modal="true" >
             @if (!HideHeader)
             {
                 <div class="blazored-modal-header">
                     <h3 class="blazored-modal-title">@Title</h3>
                     @if (!HideCloseButton)
                     {
-                        <button type="button" class="blazored-modal-close" tabindex="-1" @onclick="Cancel">
+                        <button type="button" class="blazored-modal-close" aria-label="close" @onclick="Cancel" @attributes="@_closeBtnAttributes"> 
                             <span>&times;</span>
                         </button>
                     }
