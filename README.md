@@ -194,7 +194,7 @@ If you want to pass values to the component you're displaying in the modal, then
     void SaveMovie()
     {
         MovieService.Save(Movie);
-        BlazoredModal.Close(ModalResult.Ok<Movie>(Movie));
+        BlazoredModal.CloseAsync(ModalResult.Ok<Movie>(Movie));
     }
 
 }
@@ -266,12 +266,12 @@ In the example below, when the form is submitted a `ModalResult.Ok` containing t
 
     void SubmitForm()
     {
-        BlazoredModal.Close(ModalResult.Ok($"Form was submitted successfully."));
+        BlazoredModal.CloseAsync(ModalResult.Ok($"Form was submitted successfully."));
     }
 
     void Cancel()
     {
-        BlazoredModal.Cancel();
+        BlazoredModal.CancelAsync();
     }
 
 }
@@ -476,12 +476,12 @@ Below is a component which being displayed inside a Blazored Modal instance. Whe
         if (result.Cancelled)
             return;
 
-        BlazoredModal.Close(ModalResult.Ok($"The user said 'Yes'"));
+        BlazoredModal.CloseAsync(ModalResult.Ok($"The user said 'Yes'"));
     }
 
     void No()
     {
-        BlazoredModal.Close(ModalResult.Cancel());
+        BlazoredModal.CloseAsync(ModalResult.Cancel());
     }
 
 }

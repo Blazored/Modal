@@ -48,7 +48,7 @@ else
                     <h3 class="blazored-modal-title">@Title</h3>
                     @if (!HideCloseButton)
                     {
-                        <button type="button" class="blazored-modal-close" aria-label="close" @onclick="Cancel" @attributes="@_closeBtnAttributes"> 
+                        <button type="button" class="blazored-modal-close" aria-label="close" @onclick="CancelAsync" @attributes="@_closeBtnAttributes"> 
                             <span>&times;</span>
                         </button>
                     }
