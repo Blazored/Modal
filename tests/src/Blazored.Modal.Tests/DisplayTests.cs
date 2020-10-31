@@ -94,5 +94,22 @@ namespace Blazored.Modal.Tests
             // Assert
             Assert.Empty(cut.FindAll(".blazored-modal-container"));
         }
+
+        [Fact]
+        public void ModalHidesWhenReferenceCloseCalled()
+        {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            var modalReferece = modalService.Show<TestComponent>();
+            Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
+
+            modalReferece.Close();
+
+            // Assert
+            Assert.Empty(cut.FindAll(".blazored-modal-container"));
+        }
     }
 }

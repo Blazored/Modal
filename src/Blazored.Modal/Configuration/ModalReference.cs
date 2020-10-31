@@ -36,6 +36,7 @@ namespace Blazored.Modal
 
         internal Guid Id { get; }
         internal RenderFragment ModalInstance { get; }
+        internal BlazoredModalInstance ModalInstanceRef { get; set; }
 
         public Task<ModalResult> Result => _resultCompletion.Task;
 
