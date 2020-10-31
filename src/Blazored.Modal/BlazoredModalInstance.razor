@@ -39,7 +39,7 @@ else
 
     <div class="blazored-modal-container @Position" @ref="_modalReference">
 
-        <div class="blazored-modal-overlay" @onclick="HandleBackgroundClick"></div>
+        <div class="blazored-modal-overlay @OverlayCustomClass" @onclick="HandleBackgroundClick"></div>
 
         <div id="_@Id.ToString("N")" class="@Class" role="dialog" aria-modal="true" >
             @if (!HideHeader)

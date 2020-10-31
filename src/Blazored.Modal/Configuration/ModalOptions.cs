@@ -4,6 +4,7 @@
     {
         public ModalPosition? Position { get; set; }
         public string PositionCustomClass { get; set; }
+        public string OverlayCustomClass { get; set; }
         public string Class { get; set; }
         public bool? DisableBackgroundCancel { get; set; }
         public bool? HideHeader { get; set; }
