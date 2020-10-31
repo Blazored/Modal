@@ -19,6 +19,7 @@ namespace Blazored.Modal
         [Parameter] public bool? HideHeader { get; set; }
         [Parameter] public bool? HideCloseButton { get; set; }
         [Parameter] public bool? DisableBackgroundCancel { get; set; }
+        [Parameter] public string OverlayCustomClass { get; set; }
         [Parameter] public ModalPosition? Position { get; set; }
         [Parameter] public string Class { get; set; }
         [Parameter] public ModalAnimation Animation { get; set; }
@@ -44,6 +45,7 @@ namespace Blazored.Modal
             GlobalModalOptions.HideHeader = HideHeader;
             GlobalModalOptions.Position = Position;
             GlobalModalOptions.Animation = Animation;
+            GlobalModalOptions.OverlayCustomClass = OverlayCustomClass;
 
             GlobalModalOptions.UseCustomLayout = UseCustomLayout;
         }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System.Diagnostics.CodeAnalysis;
 
@@ -25,6 +24,7 @@ namespace Blazored.Modal
         private bool HideHeader { get; set; }
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
+        private string OverlayCustomClass { get; set; }
 
         private string AnimationDuration
         {
@@ -113,6 +113,7 @@ namespace Blazored.Modal
             HideCloseButton = SetHideCloseButton();
             DisableBackgroundCancel = SetDisableBackgroundCancel();
             UseCustomLayout = SetUseCustomLayout();
+            OverlayCustomClass = SetOverlayCustomClass();
         }
 
         private bool SetUseCustomLayout()
@@ -254,6 +255,17 @@ namespace Blazored.Modal
                 return GlobalModalOptions.DisableBackgroundCancel.Value;
 
             return false;
+        }
+
+        private string SetOverlayCustomClass()
+        {
+            if (!string.IsNullOrWhiteSpace(Options.OverlayCustomClass))
+                return Options.OverlayCustomClass;
+
+            if (!string.IsNullOrWhiteSpace(GlobalModalOptions.OverlayCustomClass))
+                return GlobalModalOptions.OverlayCustomClass;
+
+            return string.Empty;
         }
 
         private async Task HandleBackgroundClick()
