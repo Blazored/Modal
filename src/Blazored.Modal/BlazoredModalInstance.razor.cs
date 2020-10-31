@@ -1,6 +1,7 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -25,8 +26,10 @@ namespace Blazored.Modal
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
 
-		private string AnimationDuration {
-            get {
+        private string AnimationDuration
+        {
+            get
+            {
                 var duration = (Options?.Animation?.Duration ?? GlobalModalOptions?.Animation?.Duration ?? 0) * 1000;
                 return FormattableString.Invariant($"{duration}ms");
             }
@@ -37,6 +40,9 @@ namespace Blazored.Modal
         [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
         private ElementReference _modalReference;
 
+        // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
+        private readonly Dictionary<string, object> _closeBtnAttributes = new Dictionary<string, object> { { "tabindex", "-1" } };
+
         protected override void OnInitialized()
         {
             ConfigureInstance();
@@ -46,7 +52,10 @@ namespace Blazored.Modal
         {
             if (firstRender)
             {
-                await JSRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
+                if (Options?.FocusFirstElement ?? true)
+                    await JSRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
+                _closeBtnAttributes.Clear();
+                StateHasChanged();
             }
         }
 
@@ -143,18 +152,24 @@ namespace Blazored.Modal
             {
                 case ModalPosition.Center:
                     return "blazored-modal-center";
+
                 case ModalPosition.TopLeft:
                     return "blazored-modal-topleft";
+
                 case ModalPosition.TopRight:
                     return "blazored-modal-topright";
+
                 case ModalPosition.BottomLeft:
                     return "blazored-modal-bottomleft";
+
                 case ModalPosition.BottomRight:
                     return "blazored-modal-bottomright";
+
                 case ModalPosition.Custom:
                     if (string.IsNullOrWhiteSpace(Options.PositionCustomClass))
                         throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set.");
                     return Options.PositionCustomClass;
+
                 default:
                     return "blazored-modal-center";
             }
