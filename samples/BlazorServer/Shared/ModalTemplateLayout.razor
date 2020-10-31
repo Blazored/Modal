@@ -1,4 +1,6 @@
-﻿<CascadingBlazoredModal>
+﻿@inherits LayoutComponentBase
+
+<BlazoredModal >
     <ModalTemplate>
         <div class="modal-backdrop fade show" @onclick="context.Cancel"></div>
         <div class="modal fade show d-block" style="pointer-events: none;" tabindex="-1" role="dialog">
@@ -19,18 +21,18 @@
             </div>
         </div>
     </ModalTemplate>
-    <ChildContent>
-        <Router AppAssembly="@typeof(Program).Assembly">
-            <Found Context="routeData">
-                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-            </Found>
-            <NotFound>
-                <CascadingAuthenticationState>
-                    <LayoutView Layout="@typeof(MainLayout)">
-                        <p>Sorry, there's nothing at this address.</p>
-                    </LayoutView>
-                </CascadingAuthenticationState>
-            </NotFound>
-        </Router>
-    </ChildContent>
-</CascadingBlazoredModal>
+</BlazoredModal>
+
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+    </div>
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>

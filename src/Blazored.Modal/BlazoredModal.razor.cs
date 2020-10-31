@@ -24,6 +24,8 @@ namespace Blazored.Modal
         [Parameter] public ModalAnimation Animation { get; set; }
         [Parameter] public bool? UseCustomLayout { get; set; }
 
+        [Parameter] public RenderFragment<BlazoredModalInstance> ModalTemplate { get; set; }
+
         private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
         private readonly ModalOptions GlobalModalOptions = new ModalOptions();
 
