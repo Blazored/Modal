@@ -11,5 +11,6 @@
         public ModalAnimation Animation { get; set; }
         public bool? UseCustomLayout { get; set; }
         public bool? ContentScrollable { get; set; }
+        public bool? FocusFirstElement { get; set; }
     }
 }
