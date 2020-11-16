@@ -5,6 +5,7 @@
                    HideCloseButton="@HideCloseButton"
                    DisableBackgroundCancel="@DisableBackgroundCancel"
                    Position="@Position"
+                   PositionCustomClass="@PositionCustomClass"
                    Class="@Class"
                    Animation="@Animation"
                    UseCustomLayout="@UseCustomLayout"
@@ -26,4 +27,5 @@
     [Parameter] public string OverlayCustomClass { get; set; }
     [Parameter] public bool? ContentScrollable { get; set; }
     [Parameter] public bool? FocusFirstElement { get; set; }
+    [Parameter] public string PositionCustomClass { get; set; }
 }

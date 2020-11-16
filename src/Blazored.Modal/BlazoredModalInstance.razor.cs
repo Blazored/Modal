@@ -170,9 +170,12 @@ namespace Blazored.Modal
                     return "blazored-modal-bottomright";
 
                 case ModalPosition.Custom:
-                    if (string.IsNullOrWhiteSpace(Options.PositionCustomClass))
-                        throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set.");
-                    return Options.PositionCustomClass;
+                    if (!string.IsNullOrWhiteSpace(Options.PositionCustomClass))
+                        return Options.PositionCustomClass;
+                    if (!string.IsNullOrWhiteSpace(GlobalModalOptions.PositionCustomClass))
+                        return GlobalModalOptions.PositionCustomClass;
+
+                    throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set.");
 
                 default:
                     return "blazored-modal-center";
