@@ -24,6 +24,7 @@ namespace Blazored.Modal
         [Parameter] public string Class { get; set; }
         [Parameter] public ModalAnimation Animation { get; set; }
         [Parameter] public bool? UseCustomLayout { get; set; }
+        [Parameter] public bool? FocusFirstElement { get; set; }
 
         private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
         private readonly ModalOptions GlobalModalOptions = new ModalOptions();
@@ -48,6 +49,7 @@ namespace Blazored.Modal
             GlobalModalOptions.OverlayCustomClass = OverlayCustomClass;
 
             GlobalModalOptions.UseCustomLayout = UseCustomLayout;
+            GlobalModalOptions.FocusFirstElement = FocusFirstElement;
         }
 
         internal async void CloseInstance(ModalReference modal, ModalResult result)

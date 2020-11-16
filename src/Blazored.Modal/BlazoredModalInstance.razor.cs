@@ -26,6 +26,7 @@ namespace Blazored.Modal
         private bool DisableBackgroundCancel { get; set; }
         private string OverlayCustomClass { get; set; }
         private ModalAnimation Animation { get; set; }
+        private bool FocusFirstElement { get; set; }
         private string AnimationDuration
         {
             get
@@ -52,7 +53,7 @@ namespace Blazored.Modal
         {
             if (firstRender)
             {
-                if (Options?.FocusFirstElement ?? true)
+                if (FocusFirstElement)
                     await JSRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
                 _closeBtnAttributes.Clear();
                 StateHasChanged();
@@ -115,6 +116,7 @@ namespace Blazored.Modal
             DisableBackgroundCancel = SetDisableBackgroundCancel();
             UseCustomLayout = SetUseCustomLayout();
             OverlayCustomClass = SetOverlayCustomClass();
+            FocusFirstElement = SetFocusFirstElement();
         }
 
         private bool SetUseCustomLayout()
@@ -268,6 +270,17 @@ namespace Blazored.Modal
                 return GlobalModalOptions.OverlayCustomClass;
 
             return string.Empty;
+        }
+
+        private bool SetFocusFirstElement()
+        {
+            if (Options.FocusFirstElement.HasValue)
+                return Options.FocusFirstElement.Value;
+
+            if (GlobalModalOptions.FocusFirstElement.HasValue)
+                return GlobalModalOptions.FocusFirstElement.Value;
+
+            return true; // Default to true to match old behaviour
         }
 
         private async Task HandleBackgroundClick()

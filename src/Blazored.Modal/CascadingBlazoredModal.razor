@@ -8,7 +8,8 @@
                    Class="@Class"
                    Animation="@Animation"
                    UseCustomLayout="@UseCustomLayout"
-                   OverlayCustomClass="@OverlayCustomClass" />
+                   OverlayCustomClass="@OverlayCustomClass"
+                   FocusFirstElement="@FocusFirstElement"/>
     @ChildContent
 </CascadingValue>
 
@@ -22,4 +23,5 @@
     [Parameter] public ModalAnimation Animation { get; set; }
     [Parameter] public bool? UseCustomLayout { get; set; }
     [Parameter] public string OverlayCustomClass { get; set; }
+    [Parameter] public bool? FocusFirstElement { get; set; }
 }
