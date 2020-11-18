@@ -5,10 +5,13 @@
                    HideCloseButton="@HideCloseButton"
                    DisableBackgroundCancel="@DisableBackgroundCancel"
                    Position="@Position"
+                   PositionCustomClass="@PositionCustomClass"
                    Class="@Class"
                    Animation="@Animation"
                    UseCustomLayout="@UseCustomLayout"
-                   OverlayCustomClass="@OverlayCustomClass" />
+                   OverlayCustomClass="@OverlayCustomClass"
+                   ContentScrollable="@ContentScrollable"
+                   FocusFirstElement="@FocusFirstElement"/>
     @ChildContent
 </CascadingValue>
 
@@ -22,4 +25,7 @@
     [Parameter] public ModalAnimation Animation { get; set; }
     [Parameter] public bool? UseCustomLayout { get; set; }
     [Parameter] public string OverlayCustomClass { get; set; }
+    [Parameter] public bool? ContentScrollable { get; set; }
+    [Parameter] public bool? FocusFirstElement { get; set; }
+    [Parameter] public string PositionCustomClass { get; set; }
 }

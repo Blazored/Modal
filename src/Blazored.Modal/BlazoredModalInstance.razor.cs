@@ -25,12 +25,13 @@ namespace Blazored.Modal
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
         private string OverlayCustomClass { get; set; }
-
+        private ModalAnimation Animation { get; set; }
+        private bool FocusFirstElement { get; set; }
         private string AnimationDuration
         {
             get
             {
-                var duration = (Options?.Animation?.Duration ?? GlobalModalOptions?.Animation?.Duration ?? 0) * 1000;
+                var duration = Animation.Duration * 1000;
                 return FormattableString.Invariant($"{duration}ms");
             }
         }
@@ -52,7 +53,7 @@ namespace Blazored.Modal
         {
             if (firstRender)
             {
-                if (Options?.FocusFirstElement ?? true)
+                if (FocusFirstElement)
                     await JSRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
                 _closeBtnAttributes.Clear();
                 StateHasChanged();
@@ -84,13 +85,13 @@ namespace Blazored.Modal
         public async Task Close(ModalResult modalResult)
         {
             // Fade out the modal, and after that actually remove it
-            if (Options.Animation?.Type == ModalAnimationType.FadeOut || Options.Animation?.Type == ModalAnimationType.FadeInOut)
+            if (Animation.Type == ModalAnimationType.FadeOut || Animation.Type == ModalAnimationType.FadeInOut)
             {
                 Class += " blazored-modal-fade-out";
                 StateHasChanged();
-                if (Options?.Animation?.Duration > 0)
+                if (Animation.Duration > 0)
                 {
-                    await Task.Delay((int)(Options?.Animation?.Duration * 1000) + 100); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
+                    await Task.Delay((int)(Animation.Duration * 1000) + 100); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
                 }
             }
 
@@ -107,6 +108,7 @@ namespace Blazored.Modal
 
         private void ConfigureInstance()
         {
+            Animation = SetAnimation();
             Position = SetPosition();
             Class = SetClass();
             HideHeader = SetHideHeader();
@@ -114,6 +116,7 @@ namespace Blazored.Modal
             DisableBackgroundCancel = SetDisableBackgroundCancel();
             UseCustomLayout = SetUseCustomLayout();
             OverlayCustomClass = SetOverlayCustomClass();
+            FocusFirstElement = SetFocusFirstElement();
         }
 
         private bool SetUseCustomLayout()
@@ -167,9 +170,12 @@ namespace Blazored.Modal
                     return "blazored-modal-bottomright";
 
                 case ModalPosition.Custom:
-                    if (string.IsNullOrWhiteSpace(Options.PositionCustomClass))
-                        throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set.");
-                    return Options.PositionCustomClass;
+                    if (!string.IsNullOrWhiteSpace(Options.PositionCustomClass))
+                        return Options.PositionCustomClass;
+                    if (!string.IsNullOrWhiteSpace(GlobalModalOptions.PositionCustomClass))
+                        return GlobalModalOptions.PositionCustomClass;
+
+                    throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set.");
 
                 default:
                     return "blazored-modal-center";
@@ -200,13 +206,14 @@ namespace Blazored.Modal
             return modalClass;
         }
 
+        private ModalAnimation SetAnimation()
+        {
+            return Options?.Animation ?? GlobalModalOptions?.Animation ?? new ModalAnimation(ModalAnimationType.None, 0);
+        }
+
         private string SetAnimationClass()
         {
-            ModalAnimation animation;
-            animation = Options?.Animation ??
-                        GlobalModalOptions?.Animation ?? new ModalAnimation(ModalAnimationType.None, 0);
-
-            if (animation.Type == ModalAnimationType.FadeIn || animation.Type == ModalAnimationType.FadeInOut)
+            if (Animation.Type == ModalAnimationType.FadeIn || Animation.Type == ModalAnimationType.FadeInOut)
             {
                 return "blazored-modal-fade-in";
             }
@@ -266,6 +273,17 @@ namespace Blazored.Modal
                 return GlobalModalOptions.OverlayCustomClass;
 
             return string.Empty;
+        }
+
+        private bool SetFocusFirstElement()
+        {
+            if (Options.FocusFirstElement.HasValue)
+                return Options.FocusFirstElement.Value;
+
+            if (GlobalModalOptions.FocusFirstElement.HasValue)
+                return GlobalModalOptions.FocusFirstElement.Value;
+
+            return true; // Default to true to match old behaviour
         }
 
         private async Task HandleBackgroundClick()
