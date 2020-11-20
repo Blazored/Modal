@@ -61,7 +61,7 @@ namespace Blazored.Modal
             if (modal.ModalInstanceRef != null)
             {
                 // Gracefully close the modal
-                await modal.ModalInstanceRef.Close(result);
+                await modal.ModalInstanceRef.CloseAsync(result);
             }
             else
             {

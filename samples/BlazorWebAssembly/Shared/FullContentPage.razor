@@ -37,10 +37,10 @@
 @code {
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
-    
+
     [Parameter] public string Message { get; set; }
 
-    void SubmitForm() => BlazoredModal.Close();
-    void Cancel() => BlazoredModal.Cancel();
+    async Task SubmitForm() => await BlazoredModal.CloseAsync();
+    async Task Cancel() => await BlazoredModal.CancelAsync();
 
 }

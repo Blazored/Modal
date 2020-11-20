@@ -21,9 +21,9 @@
         if (result.Cancelled)
             return;
 
-        BlazoredModal.Close();
+        await BlazoredModal.CloseAsync();
     }
 
-    void No() => BlazoredModal.Cancel();
+    async Task No() => await BlazoredModal.CancelAsync();
 
 }
