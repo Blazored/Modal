@@ -104,6 +104,7 @@ namespace Blazored.Modal.Services
         /// Shows the modal with the component type using the specified <paramref name="title"/>,
         /// passing the specified <paramref name="parameters"/> and setting a custom CSS style.
         /// </summary>
+        /// <param name="contentComponent">Type of component to display.</param>
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>

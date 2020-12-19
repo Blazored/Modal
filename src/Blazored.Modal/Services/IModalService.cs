@@ -55,16 +55,16 @@ namespace Blazored.Modal.Services
         /// <summary>
         /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/> and <paramref name="options"/>.
         /// </summary>
-        /// <param name="title">Modal title.</param>
         /// <param name="component">Type of component to display.</param>
+        /// <param name="title">Modal title.</param>
         /// <param name="options">Options to configure the modal.</param>
         IModalReference Show(Type component, string title, ModalOptions options);
 
         /// <summary>
         /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/> and <paramref name="parameters"/>.
         /// </summary>
-        /// <param name="title">Modal title.</param>
         /// <param name="component">Type of component to display.</param>
+        /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         IModalReference Show(Type component, string title, ModalParameters parameters);
 
@@ -72,6 +72,7 @@ namespace Blazored.Modal.Services
         /// Shows a modal containing a <paramref name="component"/> with the specified <paramref name="title"/>, <paramref name="parameters"/>
         /// and <paramref name="options"/>.
         /// </summary>
+        /// <param name="component">Type of component to display.</param>
         /// <param name="title">Modal title.</param>
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
