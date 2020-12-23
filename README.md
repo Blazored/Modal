@@ -180,7 +180,7 @@ If you want to pass values to the component you're displaying in the modal, then
 
 @code {
 
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
     [Parameter] public int MovieId { get; set; }
 
@@ -194,7 +194,7 @@ If you want to pass values to the component you're displaying in the modal, then
     void SaveMovie()
     {
         MovieService.Save(Movie);
-        BlazoredModal.CloseAsync(ModalResult.Ok<Movie>(Movie));
+        ModalInstance.CloseAsync(ModalResult.Ok<Movie>(Movie));
     }
 
 }
@@ -257,7 +257,7 @@ In the example below, when the form is submitted a `ModalResult.Ok` containing t
 
 @code {
 
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
     bool ShowForm { get; set; } = true;
     string FirstName { get; set; }
@@ -266,12 +266,12 @@ In the example below, when the form is submitted a `ModalResult.Ok` containing t
 
     void SubmitForm()
     {
-        BlazoredModal.CloseAsync(ModalResult.Ok($"Form was submitted successfully."));
+        ModalInstance.CloseAsync(ModalResult.Ok($"Form was submitted successfully."));
     }
 
     void Cancel()
     {
-        BlazoredModal.CancelAsync();
+        ModalInstance.CancelAsync();
     }
 
 }
@@ -466,7 +466,7 @@ Below is a component which being displayed inside a Blazored Modal instance. Whe
 
 @code {
 
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
     async Task Yes()
     {
@@ -476,12 +476,12 @@ Below is a component which being displayed inside a Blazored Modal instance. Whe
         if (result.Cancelled)
             return;
 
-        BlazoredModal.CloseAsync(ModalResult.Ok($"The user said 'Yes'"));
+        ModalInstance.CloseAsync(ModalResult.Ok($"The user said 'Yes'"));
     }
 
     void No()
     {
-        BlazoredModal.CloseAsync(ModalResult.Cancel());
+        ModalInstance.CloseAsync(ModalResult.Cancel());
     }
 
 }
