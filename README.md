@@ -113,13 +113,16 @@ For example, if I have a component called `Movies` which I want to display in th
 
 ```razor
 @page "/"
-@inject IModalService Modal
 
 <h1>Hello, world!</h1>
 
 Welcome to Blazored Modal.
 
 <button @onclick="@(() => Modal.Show<Movies>("My Movies"))" class="btn btn-primary">View Movies</button>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+}
 ```
 
 ### Passing Parameters
@@ -453,8 +456,6 @@ It's possible to have multiple active modal instances at a time. You can find a 
 Below is a component which being displayed inside a Blazored Modal instance. When a user clicks on the _Delete_ button the `Yes` method is invoked and creates a new modal instance.  
 
 ```razor
-@inject IModalService ModalService
-
 <div class="simple-form">
     <div class="form-group">
         Are you sure you want to delete the record?
@@ -466,6 +467,7 @@ Below is a component which being displayed inside a Blazored Modal instance. Whe
 
 @code {
 
+    [CascadingParameter] public IModalService Modal { get; set; }
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
     async Task Yes()
