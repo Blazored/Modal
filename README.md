@@ -467,7 +467,7 @@ Below is a component which being displayed inside a Blazored Modal instance. Whe
 
 @code {
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter] IModalService Modal { get; set; }
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
     async Task Yes()
