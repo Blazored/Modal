@@ -26,11 +26,11 @@ This package can be used with Internet Explorer 11, but some special care should
 
 - Only Blazor Server works with IE11. Blazor WebAssembly does not work with any IE version. See [this](https://docs.microsoft.com/en-us/aspnet/core/blazor/supported-platforms?view=aspnetcore-3.1)
 - A [polyfill](https://github.com/Daddoon/Blazor.Polyfill) is necessary for this component to work. See [this](https://github.com/Daddoon/Blazor.Polyfill) page for an explanation on how to install and use it. The sample project for Blazor Server uses the polyfill and thus should work on IE11
-- V4.2.0 or higher of `Blazored.Modal` should be used for correct CSS in IE11
+- V6.0.1 or higher of `Blazored.Modal` should be used
 
 Taking these things into account, `Blazored.Modal` should work on IE11.
 
-### Please note: When upgrading from v4 to v5 you must remove the `<BlazoredModal>` tag from your `MainLayout` component.
+### Please note: When upgrading from v4 to v5 (or higher) you must remove the `<BlazoredModal>` tag from your `MainLayout` component.
 
 ### 1. Register Services
 
@@ -113,13 +113,16 @@ For example, if I have a component called `Movies` which I want to display in th
 
 ```razor
 @page "/"
-@inject IModalService Modal
 
 <h1>Hello, world!</h1>
 
 Welcome to Blazored Modal.
 
 <button @onclick="@(() => Modal.Show<Movies>("My Movies"))" class="btn btn-primary">View Movies</button>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+}
 ```
 
 ### Passing Parameters
@@ -453,8 +456,6 @@ It's possible to have multiple active modal instances at a time. You can find a 
 Below is a component which being displayed inside a Blazored Modal instance. When a user clicks on the _Delete_ button the `Yes` method is invoked and creates a new modal instance.  
 
 ```razor
-@inject IModalService ModalService
-
 <div class="simple-form">
     <div class="form-group">
         Are you sure you want to delete the record?
@@ -466,6 +467,7 @@ Below is a component which being displayed inside a Blazored Modal instance. Whe
 
 @code {
 
+    [CascadingParameter] IModalService Modal { get; set; }
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
 
     async Task Yes()
