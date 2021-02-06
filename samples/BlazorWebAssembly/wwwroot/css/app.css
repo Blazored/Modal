@@ -1,0 +1,90 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a, .btn-link {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.custom-modal-overlay {
+    background-color: rgba(17, 0, 114, 0.5);
+}
+
+.blazored-custom-modal {
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    height: 60vh;
+    background-color: #fafafa;
+    border-radius: 12px;
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    z-index: 102;
+    box-shadow: 0 2px 2px rgba(0,0,0,.75);
+}
+
+.blazored-prompt-modal {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    background-color: #fefefe;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    z-index: 102;
+    box-shadow: 0 2px 2px rgba(0,0,0,.75);
+}
+
+.blazored-prompt-modal .blazored-modal-header {
+    display: none;
+}
+
+.my-custom-position {
+    position: absolute;
+    top: 0px;
+    left: 100px;
+    height: 200px;
+}
