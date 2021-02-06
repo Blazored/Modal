@@ -6,7 +6,7 @@ on:
 
 env:
     PROJECT_NAME: Blazored.Modal
-    NETCORE_VERSION: '3.1.301'
+    NETCORE_VERSION: '5.0.102'
 
 jobs:
   build:
