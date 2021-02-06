@@ -1,20 +1,19 @@
 ﻿using Blazored.Modal.Services;
 using Blazored.Modal.Tests.Assets;
 using Bunit;
-using Bunit.Mocking.JSInterop;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using static Bunit.ComponentParameterFactory;
 
 namespace Blazored.Modal.Tests
 {
-    public class ModalOptionsTests : ComponentTestFixture
+    public class ModalOptionsTests : TestContext
     {
         public ModalOptionsTests()
         {
             Services.AddScoped<NavigationManager, MockNavigationManager>();
             Services.AddBlazoredModal();
-            Services.AddMockJsRuntime();
         }
 
         [Fact]

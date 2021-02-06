@@ -4,27 +4,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Components;
 using Blazored.Modal.Tests.Assets;
 using Blazored.Modal.Services;
-using Bunit.Mocking.JSInterop;
+using static Bunit.ComponentParameterFactory;
 
 namespace Blazored.Modal.Tests
 {
-    public class DisplayTests : ComponentTestFixture
+    public class DisplayTests : TestContext
     {
         public DisplayTests()
         {
             Services.AddScoped<NavigationManager, MockNavigationManager>();
             Services.AddBlazoredModal();
-            Services.AddMockJsRuntime();
         }
 
         [Fact]
         public void ModalIsNotVisibleByDefault()
         {
             // Arrange
-            var modalService = Services.GetService<IModalService>();
-
             // Act
-            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+            var cut = RenderComponent<BlazoredModal>();
 
             // Assert
             Assert.Empty(cut.FindAll(".blazored-modal-container"));
