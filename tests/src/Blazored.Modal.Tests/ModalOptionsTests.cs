@@ -14,9 +14,10 @@ namespace Blazored.Modal.Tests
         {
             Services.AddScoped<NavigationManager, MockNavigationManager>();
             Services.AddBlazoredModal();
+            JSInterop.Mode = JSRuntimeMode.Loose;
         }
-
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        
+        [Fact]
         public void ModalDisplaysSpecifiedTitle()
         {
             // Arrange
@@ -30,8 +31,8 @@ namespace Blazored.Modal.Tests
             // Assert
             Assert.Equal(testTitle, cut.Find(".blazored-modal-title").InnerHtml);
         }
-
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        
+        [Fact]
         public void ModalDisplaysCorrectPositionClassWhenIsCentered()
         {
             // Arrange
@@ -46,7 +47,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.Find(".blazored-modal-container.blazored-modal-center"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysCorrectPositionClassWhenIsNotCentered()
         {
             // Arrange
@@ -62,7 +63,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.Find(".blazored-modal-container.blazored-modal-topleft"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysCorrectPositionClassWhenUsingCustomPositiopn()
         {
             // Arrange
@@ -82,7 +83,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.Find(".blazored-modal-container.my-custom-class"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysCustomStyles()
         {
             // Arrange
@@ -98,7 +99,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.Find($"div.{customStyle}"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysCloseButtonByDefault()
         {
             // Arrange
@@ -112,7 +113,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.Find(".blazored-modal-close"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDoesNotDisplayCloseButtonWhenSetToFalseInOptions()
         {
             // Arrange
@@ -127,7 +128,7 @@ namespace Blazored.Modal.Tests
             Assert.Empty(cut.FindAll(".blazored-modal-close"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysHeaderByDefault()
         {
             // Arrange
@@ -141,7 +142,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.Find(".blazored-modal-header"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDoesNotDisplayHeaderWhenSetToFalseInOptions()
         {
             // Arrange
@@ -156,7 +157,7 @@ namespace Blazored.Modal.Tests
             Assert.Empty(cut.FindAll(".blazored-modal-header"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysCorrectContent()
         {
             // Arrange
@@ -170,7 +171,7 @@ namespace Blazored.Modal.Tests
             Assert.Equal(TestComponent.DefaultTitle, cut.Find(".test-component h1").InnerHtml);
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysCorrectContentWhenUsingModalParameters()
         {
             var testTitle = "Testing Components";
@@ -189,7 +190,7 @@ namespace Blazored.Modal.Tests
             Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysCustomStyleWithScrollableContent()
         {
             // Arrange
@@ -206,7 +207,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysStandardStyleWithScrollableContent()
         {
             // Arrange
@@ -222,7 +223,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalDisplaysStandardStyleWithScrollableContentAndAnimationFadeInClass()
         {
             // Arrange

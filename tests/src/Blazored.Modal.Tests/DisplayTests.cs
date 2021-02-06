@@ -14,9 +14,11 @@ namespace Blazored.Modal.Tests
         {
             Services.AddScoped<NavigationManager, MockNavigationManager>();
             Services.AddBlazoredModal();
+
+            JSInterop.Mode = JSRuntimeMode.Loose;
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalIsNotVisibleByDefault()
         {
             // Arrange
@@ -29,7 +31,7 @@ namespace Blazored.Modal.Tests
             Assert.Empty(cut.FindAll(".blazored-modal-container"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalIsVisibleWhenShowCalled()
         {
             // Arrange
@@ -43,7 +45,7 @@ namespace Blazored.Modal.Tests
             Assert.NotNull(cut.FindComponent<BlazoredModalInstance>());
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void MultipleModalsAreVisibleWhenShowCalledMultipleTimes()
         {
             // Arrange
@@ -58,7 +60,7 @@ namespace Blazored.Modal.Tests
             Assert.Equal(2, cut.FindAll(".blazored-modal-container").Count);
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalHidesWhenCloseCalled()
         {
             // Arrange
@@ -76,7 +78,7 @@ namespace Blazored.Modal.Tests
             Assert.Empty(cut.FindAll(".blazored-modal-container"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalHidesWhenCancelCalled()
         {
             // Arrange
@@ -94,7 +96,7 @@ namespace Blazored.Modal.Tests
             Assert.Empty(cut.FindAll(".blazored-modal-container"));
         }
 
-        [Fact(Skip="Broken by change to .NET5 - False fails library is fine")]
+        [Fact]
         public void ModalHidesWhenReferenceCloseCalled()
         {
             // Arrange
