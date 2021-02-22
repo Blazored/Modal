@@ -70,20 +70,14 @@ Add the following to your *_Imports.razor*
 @using Blazored.Modal.Services
 ```
 
-### 3. Add CascadingBlazoredModal Component
+### 3. Add CascadingBlazoredModal Component around the existing Router component
 
 Add the `<CascadingBlazoredModal />` component into your applications *App.razor*, wrapping the Router as per the example below.
 
 ```razor
 <CascadingBlazoredModal>
     <Router AppAssembly="typeof(Program).Assembly">
-        <Found Context="routeData">
-            <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
-        </Found>
-        <NotFound>
-            <h1>Page not found</h1>
-            <p>Sorry, but there's nothing here!</p>
-        </NotFound>
+        ...
     </Router>
 </CascadingBlazoredModal>
 ```
