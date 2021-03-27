@@ -46,6 +46,12 @@ namespace Blazored.Modal.Services
             return Show<T>(title, parameters, new ModalOptions());
         }
 
+        /// <inheritdoc cref="Show{T}(string, ModalParameters)"/>
+        public IModalReference Show<T>(string title, ModalParameters<T> parameters) where T : IComponent
+        {
+            return Show(title, parameters, new ModalOptions());
+        }
+
         /// <summary>
         /// Shows the modal with the component type using the specified <paramref name="title"/>,
         /// passing the specified <paramref name="parameters"/> and setting a custom CSS style.
@@ -54,6 +60,12 @@ namespace Blazored.Modal.Services
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
         public IModalReference Show<T>(string title, ModalParameters parameters, ModalOptions options) where T : IComponent
+        {
+            return Show(typeof(T), title, parameters, options);
+        }
+
+        /// <inheritdoc cref="Show{T}(string, ModalParameters, ModalOptions)"/>
+        public IModalReference Show<T>(string title, ModalParameters<T> parameters, ModalOptions options) where T : IComponent
         {
             return Show(typeof(T), title, parameters, options);
         }

@@ -1,4 +1,4 @@
-﻿@page "/passingdata"
+﻿@page "/passingdatageneric"
 
 <h1>Passing Data to a Modal</h1>
 
@@ -13,9 +13,12 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("var parameters = new ModalParameters();")<br />
-                @("parameters.Add(nameof(DisplayMessage.Message), _message);")<br />
-                @("var messageForm = Modal.Show<DisplayMessage>(\"Passing Data\", parameters);")<br />
+                @("var parameters = new ModalParameters<DisplayMessage>")<br />
+                @("{")<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;@("{ component => component.Message, _message }")<br />
+                @("};")<br />
+                <br />
+                @("var messageForm = Modal.Show(\"Passing Data Generic\", parameters);")<br />
                 @("var result = await messageForm.Result;")<br />
                 <br />
                 @("_message = \"\";")
@@ -37,12 +40,16 @@
 
     string _message;
 
+
+
     async Task ShowModal()
     {
-        var parameters = new ModalParameters();
-        parameters.Add(nameof(DisplayMessage.Message), _message);
+        var parameters = new ModalParameters<DisplayMessage>
+    {
+            { component => component.Message, _message }
+        };
 
-        var messageForm = Modal.Show<DisplayMessage>("Passing Data", parameters);
+        var messageForm = Modal.Show("Passing Data Generic", parameters);
         var result = await messageForm.Result;
 
         _message = "";
