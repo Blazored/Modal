@@ -42,7 +42,7 @@
             DisableBackgroundCancel = true,
             HideHeader = true
         };
-        var loading = Modal.Show<Loading>(string.Empty, options);
+        var loading = await Modal.ShowAsync<Loading>(string.Empty, options);
 
         await Task.Delay(5000);
 
@@ -62,7 +62,7 @@
             DisableBackgroundCancel = true,
             HideHeader = true
         };
-        var loading = Modal.Show<Loading>(string.Empty, options);
+        var loading = await Modal.ShowAsync<Loading>(string.Empty, options);
 
         await Task.Delay(5000);
 
@@ -82,7 +82,7 @@
             DisableBackgroundCancel = true,
             HideHeader = true
         };
-        var loading = Modal.Show<Loading>(string.Empty, options);
+        var loading = await Modal.ShowAsync<Loading>(string.Empty, options);
 
         await Task.Delay(5000);
 

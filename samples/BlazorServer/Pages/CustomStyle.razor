@@ -38,10 +38,9 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void ShowModalCustomStyle()
+    async Task ShowModalCustomStyle()
     {
         var options = new ModalOptions { Class = "blazored-prompt-modal" };
-        Modal.Show<Confirm>("Custom Style", options);
+        await Modal.ShowAsync<Confirm>("Custom Style", options);
     }
-
 }

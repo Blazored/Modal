@@ -3,6 +3,7 @@ using Blazored.Modal.Tests.Assets;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 using Xunit;
 using static Bunit.ComponentParameterFactory;
 
@@ -18,7 +19,7 @@ namespace Blazored.Modal.Tests
         }
         
         [Fact]
-        public void ModalDisplaysSpecifiedTitle()
+        public async Task ModalDisplaysSpecifiedTitle()
         {
             // Arrange
             var testTitle = "Title";
@@ -26,14 +27,14 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>(testTitle);
+            await modalService.ShowAsync<TestComponent>(testTitle);
 
             // Assert
             Assert.Equal(testTitle, cut.Find(".blazored-modal-title").InnerHtml);
         }
         
         [Fact]
-        public void ModalDisplaysCorrectPositionClassWhenIsCentered()
+        public async Task ModalDisplaysCorrectPositionClassWhenIsCentered()
         {
             // Arrange
             var options = new ModalOptions { Position = ModalPosition.Center };
@@ -41,14 +42,14 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
             // Assert
             Assert.NotNull(cut.Find(".blazored-modal-container.blazored-modal-center"));
         }
 
         [Fact]
-        public void ModalDisplaysCorrectPositionClassWhenIsNotCentered()
+        public async Task ModalDisplaysCorrectPositionClassWhenIsNotCentered()
         {
             // Arrange
             var options = new ModalOptions { Position = ModalPosition.TopLeft };
@@ -56,7 +57,7 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
 
             // Assert
@@ -64,7 +65,7 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
-        public void ModalDisplaysCorrectPositionClassWhenUsingCustomPositiopn()
+        public async Task ModalDisplaysCorrectPositionClassWhenUsingCustomPositiopn()
         {
             // Arrange
             var options = new ModalOptions
@@ -77,14 +78,14 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
             // Assert
             Assert.NotNull(cut.Find(".blazored-modal-container.my-custom-class"));
         }
 
         [Fact]
-        public void ModalDisplaysCustomStyles()
+        public async Task ModalDisplaysCustomStyles()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
@@ -93,28 +94,28 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
             // Assert
             Assert.NotNull(cut.Find($"div.{customStyle}"));
         }
 
         [Fact]
-        public void ModalDisplaysCloseButtonByDefault()
+        public async Task ModalDisplaysCloseButtonByDefault()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>();
+            await modalService.ShowAsync<TestComponent>();
 
             // Assert
             Assert.NotNull(cut.Find(".blazored-modal-close"));
         }
 
         [Fact]
-        public void ModalDoesNotDisplayCloseButtonWhenSetToFalseInOptions()
+        public async Task ModalDoesNotDisplayCloseButtonWhenSetToFalseInOptions()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
@@ -122,28 +123,28 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
             // Assert
             Assert.Empty(cut.FindAll(".blazored-modal-close"));
         }
 
         [Fact]
-        public void ModalDisplaysHeaderByDefault()
+        public async Task ModalDisplaysHeaderByDefault()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>();
+            await modalService.ShowAsync<TestComponent>();
 
             // Assert
             Assert.NotNull(cut.Find(".blazored-modal-header"));
         }
 
         [Fact]
-        public void ModalDoesNotDisplayHeaderWhenSetToFalseInOptions()
+        public async Task ModalDoesNotDisplayHeaderWhenSetToFalseInOptions()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
@@ -151,28 +152,28 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
             // Assert
             Assert.Empty(cut.FindAll(".blazored-modal-header"));
         }
 
         [Fact]
-        public void ModalDisplaysCorrectContent()
+        public async Task ModalDisplaysCorrectContent()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("");
+            await modalService.ShowAsync<TestComponent>("");
 
             // Assert
             Assert.Equal(TestComponent.DefaultTitle, cut.Find(".test-component h1").InnerHtml);
         }
 
         [Fact]
-        public void ModalDisplaysCorrectContentWhenUsingModalParameters()
+        public async Task ModalDisplaysCorrectContentWhenUsingModalParameters()
         {
             var testTitle = "Testing Components";
 
@@ -184,14 +185,14 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", parameters);
+            await modalService.ShowAsync<TestComponent>("", parameters);
 
             // Assert
             Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
         }
 
         [Fact]
-        public void ModalDisplaysCustomStyleWithScrollableContent()
+        public async Task ModalDisplaysCustomStyleWithScrollableContent()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
@@ -200,7 +201,7 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
             // Assert
             Assert.NotNull(cut.Find($"div.{customStyle}"));
@@ -208,7 +209,7 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
-        public void ModalDisplaysStandardStyleWithScrollableContent()
+        public async Task ModalDisplaysStandardStyleWithScrollableContent()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
@@ -216,7 +217,7 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
             // Assert
             Assert.NotNull(cut.Find($"div.blazored-modal"));
@@ -224,7 +225,7 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
-        public void ModalDisplaysStandardStyleWithScrollableContentAndAnimationFadeInClass()
+        public async Task ModalDisplaysStandardStyleWithScrollableContentAndAnimationFadeInClass()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
@@ -232,7 +233,7 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>("", options);
+            await modalService.ShowAsync<TestComponent>("", options);
 
             // Assert
             Assert.NotNull(cut.Find($"div.blazored-modal"));

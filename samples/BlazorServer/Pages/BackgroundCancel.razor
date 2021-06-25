@@ -40,15 +40,15 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void BackgroundCancelEnabled()
+    async Task BackgroundCancelEnabled()
     {
-        Modal.Show<Confirm>("Background Cancel Enabled (Default)");
+        await Modal.ShowAsync<Confirm>("Background Cancel Enabled (Default)");
     }
 
-    void BackgroundCancelDisabled()
+    async Task BackgroundCancelDisabled()
     {
         var options = new ModalOptions { DisableBackgroundCancel = true };
 
-        Modal.Show<Confirm>("Background Cancel Disabled", options);
+        await Modal.ShowAsync<Confirm>("Background Cancel Disabled", options);
     }
 }

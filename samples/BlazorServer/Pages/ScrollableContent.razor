@@ -38,15 +38,15 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void ContentScrollableEnabled()
+    async Task ContentScrollableEnabled()
     {
         var options = new ModalOptions { ContentScrollable = true };
 
-        Modal.Show<FullContentPage>("Content Scrollable", options);
+        await Modal.ShowAsync<FullContentPage>("Content Scrollable", options);
     }
 
-    void ContentScrollableDefault()
+    async Task ContentScrollableDefault()
     {
-        Modal.Show<FullContentPage>("Default Setting");
+        await Modal.ShowAsync<FullContentPage>("Default Setting");
     }
 }

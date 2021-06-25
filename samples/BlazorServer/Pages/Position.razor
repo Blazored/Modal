@@ -44,18 +44,18 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void PositionCenter()
+    async Task PositionCenter()
     {
-        Modal.Show<Confirm>("Centered Modal (Default)");
+        await Modal.ShowAsync<Confirm>("Centered Modal (Default)");
     }
 
-    void PositionCustom(ModalPosition position)
+    async Task PositionCustom(ModalPosition position)
     {
         var options = new ModalOptions { Position = position };
 
         if (position == ModalPosition.Custom)
             options.PositionCustomClass = "my-custom-position";
 
-        Modal.Show<Confirm>($"Position: {position}", options);
+        await Modal.ShowAsync<Confirm>($"Position: {position}", options);
     }
 }

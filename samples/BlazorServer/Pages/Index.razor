@@ -24,6 +24,5 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
-
+    async Task ShowModal() => await Modal.ShowAsync<Confirm>("Welcome to Blazored Modal");
 }
