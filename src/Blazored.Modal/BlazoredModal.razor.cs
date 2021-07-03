@@ -26,7 +26,7 @@ namespace Blazored.Modal
         [Parameter] public ModalAnimation Animation { get; set; }
         [Parameter] public bool? UseCustomLayout { get; set; }
         [Parameter] public bool? ContentScrollable { get; set; }
-        [Parameter] public bool? FocusFirstElement { get; set; }
+        [Parameter] public bool? ActivateFocusTrap { get; set; }
 
         private readonly Collection<ModalReference> Modals = new Collection<ModalReference>();
         private readonly ModalOptions GlobalModalOptions = new ModalOptions();
@@ -53,7 +53,7 @@ namespace Blazored.Modal
 
             GlobalModalOptions.UseCustomLayout = UseCustomLayout;
             GlobalModalOptions.ContentScrollable = ContentScrollable;
-            GlobalModalOptions.FocusFirstElement = FocusFirstElement;
+            GlobalModalOptions.ActivateFocusTrap = ActivateFocusTrap;
         }
 
         internal async void CloseInstance(ModalReference modal, ModalResult result)
