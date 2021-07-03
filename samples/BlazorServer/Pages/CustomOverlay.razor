@@ -38,10 +38,9 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void ShowModalCustomOverlay()
+    async Task ShowModalCustomOverlay()
     {
         var options = new ModalOptions { OverlayCustomClass = "custom-modal-overlay" };
-        Modal.Show<Confirm>("Custom Overlay", options);
+        await Modal.ShowAsync<Confirm>("Custom Overlay", options);
     }
-
 }

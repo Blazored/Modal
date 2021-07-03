@@ -15,7 +15,7 @@
     {
         var options = new ModalOptions { Animation = new ModalAnimation(ModalAnimationType.FadeInOut, 5) };
 
-        var confirmationModal = ModalService.Show<Confirm>("Second Modal", options);
+        var confirmationModal = await ModalService.ShowAsync<Confirm>("Second Modal", options);
         var result = await confirmationModal.Result;
 
         if (result.Cancelled)

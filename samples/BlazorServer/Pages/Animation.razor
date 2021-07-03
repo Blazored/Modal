@@ -51,25 +51,25 @@
 
     private double duration = 1.0;
 
-    void AnimationDefault()
+    async Task AnimationDefault()
     {
-        Modal.Show<Confirm>("Default Animation");
+        await Modal.ShowAsync<Confirm>("Default Animation");
     }
 
-    void AnimationCustom(ModalAnimation animation)
+    async Task AnimationCustom(ModalAnimation animation)
     {
         var options = new ModalOptions { Animation = animation };
 
-        Modal.Show<Confirm>($"Animation: {animation.Type}", options);
+        await Modal.ShowAsync<Confirm>($"Animation: {animation.Type}", options);
     }
 
-    void MultipleModals()
+    async Task MultipleModals()
     {
         var options = new ModalOptions
         {
             Animation = ModalAnimation.FadeIn(2)
         };
 
-        Modal.Show<YesNoPromptAnimation>("Multiple Modals", options);
+        await Modal.ShowAsync<YesNoPromptAnimation>("Multiple Modals", options);
     }
 }

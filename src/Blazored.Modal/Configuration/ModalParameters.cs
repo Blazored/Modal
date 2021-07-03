@@ -11,6 +11,17 @@ namespace Blazored.Modal
             _parameters = new Dictionary<string, object>();
         }
 
+        public ModalParameters(IEnumerable<KeyValuePair<string, object>> parameters)
+        {
+            _parameters = new Dictionary<string, object>(parameters);
+        }
+
+        public object this[string parameterName]
+        {
+            get => _parameters[parameterName];
+            set => _parameters[parameterName] = value;
+        }
+
         public void Add(string parameterName, object value)
         {
             _parameters[parameterName] = value;
@@ -22,7 +33,7 @@ namespace Blazored.Modal
             {
                 return (T)value;
             }
-            
+
             throw new KeyNotFoundException($"{parameterName} does not exist in modal parameters");
         }
 

@@ -40,7 +40,7 @@
 
     async Task ShowModal()
     {
-        var messageForm = Modal.Show<MessageForm>();
+        var messageForm = await Modal.ShowAsync<MessageForm>();
         var result = await messageForm.Result;
 
         if (!result.Cancelled)

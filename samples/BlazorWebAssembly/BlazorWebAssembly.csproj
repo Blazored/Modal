@@ -4,6 +4,31 @@
       <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Content Include="..\BlazorServer\Pages\Animation.razor" Link="Pages\Animation.razor" />
+      <Content Include="..\BlazorServer\Pages\BackgroundCancel.razor" Link="Pages\BackgroundCancel.razor" />
+      <Content Include="..\BlazorServer\Pages\CustomLayout.razor" Link="Pages\CustomLayout.razor" />
+      <Content Include="..\BlazorServer\Pages\CustomOverlay.razor" Link="Pages\CustomOverlay.razor" />
+      <Content Include="..\BlazorServer\Pages\CustomStyle.razor" Link="Pages\CustomStyle.razor" />
+      <Content Include="..\BlazorServer\Pages\HideCloseButton.razor" Link="Pages\HideCloseButton.razor" />
+      <Content Include="..\BlazorServer\Pages\Index.razor" Link="Pages\Index.razor" />
+      <Content Include="..\BlazorServer\Pages\LongRunningTask.razor" Link="Pages\LongRunningTask.razor" />
+      <Content Include="..\BlazorServer\Pages\MultipleModals.razor" Link="Pages\MultipleModals.razor" />
+      <Content Include="..\BlazorServer\Pages\PassDataToModal.razor" Link="Pages\PassDataToModal.razor" />
+      <Content Include="..\BlazorServer\Pages\Position.razor" Link="Pages\Position.razor" />
+      <Content Include="..\BlazorServer\Pages\ReturnDataFromModal.razor" Link="Pages\ReturnDataFromModal.razor" />
+      <Content Include="..\BlazorServer\Pages\ScrollableContent.razor" Link="Pages\ScrollableContent.razor" />
+      
+      <Content Include="..\BlazorServer\Shared\Confirm.razor" Link="Shared\Confirm.razor" />
+      <Content Include="..\BlazorServer\Shared\CustomBootstrapModal.razor" Link="Shared\CustomBootstrapModal.razor" />
+      <Content Include="..\BlazorServer\Shared\DisplayMessage.razor" Link="Shared\DisplayMessage.razor" />
+      <Content Include="..\BlazorServer\Shared\FullContentPage.razor" Link="Shared\FullContentPage.razor" />
+      <Content Include="..\BlazorServer\Shared\Loading.razor" Link="Shared\Loading.razor" />
+      <Content Include="..\BlazorServer\Shared\MessageForm.razor" Link="Shared\MessageForm.razor" />
+      <Content Include="..\BlazorServer\Shared\YesNoPrompt.razor" Link="Shared\YesNoPrompt.razor" />
+      <Content Include="..\BlazorServer\Shared\YesNoPromptAnimation.razor" Link="Shared\YesNoPromptAnimation.razor" />
+    </ItemGroup>
+
 	<ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.2" PrivateAssets="all" />
@@ -13,6 +38,10 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Blazored.Modal\Blazored.Modal.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Shared\" />
 	</ItemGroup>
 
 </Project>

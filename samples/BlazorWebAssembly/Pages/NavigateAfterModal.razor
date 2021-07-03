@@ -28,7 +28,7 @@
 
     async void ShowModal()
     {
-        var modal = Modal.Show<Confirm>("Do you want to navigate to a different page?");
+        var modal = await Modal.ShowAsync<Confirm>("Do you want to navigate to a different page?");
         var result = await modal.Result;
 
         if (!result.Cancelled && (result.Data is bool accepted) && accepted)

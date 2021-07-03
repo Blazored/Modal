@@ -110,7 +110,7 @@ namespace Blazored.Modal
             await InvokeAsync(StateHasChanged);
         }
 
-        private async void Update(ModalReference modalReference)
+        private async Task Update(ModalReference modalReference)
         {
             await JSRuntime.InvokeVoidAsync("BlazoredModal.activateScrollLock", modalReference.Id);
             Modals.Add(modalReference);
