@@ -16,7 +16,7 @@ namespace Blazored.Modal.Tests
             Services.AddBlazoredModal();
             JSInterop.Mode = JSRuntimeMode.Loose;
         }
-        
+
         [Fact]
         public void ModalDisplaysSpecifiedTitle()
         {
@@ -31,7 +31,7 @@ namespace Blazored.Modal.Tests
             // Assert
             Assert.Equal(testTitle, cut.Find(".blazored-modal-title").InnerHtml);
         }
-        
+
         [Fact]
         public void ModalDisplaysCorrectPositionClassWhenIsCentered()
         {
@@ -185,6 +185,27 @@ namespace Blazored.Modal.Tests
 
             // Act
             modalService.Show<TestComponent>("", parameters);
+
+            // Assert
+            Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
+        }
+
+        [Fact]
+        public void ModalDisplaysCorrectContentWhenUsingModalParametersGeneric()
+        {
+            const string testTitle = "Testing Components";
+
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+
+            var parameters = new ModalParameters<TestComponent>
+            {
+                { component => component.Title, testTitle }
+            };
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show("", parameters);
 
             // Assert
             Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);

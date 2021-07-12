@@ -9,7 +9,7 @@ A powerful and customizable modal implementation for [Blazor](https://blazor.net
 
 ## Getting Setup
 
-You can install the package via the nuget package manager just search for *Blazored.Modal*. You can also install via powershell using the following command.
+You can install the package via the nuget package manager just search for _Blazored.Modal_. You can also install via powershell using the following command.
 
 ```powershell
 Install-Package Blazored.Modal
@@ -22,6 +22,7 @@ dotnet add package Blazored.Modal
 ```
 
 #### Internet Explorer 11
+
 This package can be used with Internet Explorer 11, but some special care should to be taken.
 
 - Only Blazor Server works with IE11. Blazor WebAssembly does not work with any IE version. See [this](https://docs.microsoft.com/en-us/aspnet/core/blazor/supported-platforms?view=aspnetcore-3.1)
@@ -63,7 +64,7 @@ public static async Task Main(string[] args)
 
 ### 2. Add Imports
 
-Add the following to your *_Imports.razor*
+Add the following to your _\_Imports.razor_
 
 ```razor
 @using Blazored.Modal
@@ -72,7 +73,7 @@ Add the following to your *_Imports.razor*
 
 ### 3. Add CascadingBlazoredModal Component around the existing Router component
 
-Add the `<CascadingBlazoredModal />` component into your applications *App.razor*, wrapping the Router as per the example below.
+Add the `<CascadingBlazoredModal />` component into your applications _App.razor_, wrapping the Router as per the example below.
 
 ```razor
 <CascadingBlazoredModal>
@@ -97,7 +98,8 @@ Then add a reference to the Blazored Modal JavaScript file at the bottom of the 
 ```
 
 ## Usage
-Please checkout the [sample projects](https://github.com/Blazored/Modal/tree/main/samples) in this repo to see working examples of the features in the modal. 
+
+Please checkout the [sample projects](https://github.com/Blazored/Modal/tree/main/samples) in this repo to see working examples of the features in the modal.
 
 ### Displaying the modal
 
@@ -149,6 +151,39 @@ If you want to pass values to the component you're displaying in the modal, then
         parameters.Add(nameof(EditMovie.MovieId), movieId);
 
         Modal.Show<EditMovie>("Edit Movie", parameters);
+    }
+
+}
+```
+
+#### Index Component (Generic ModalParameters)
+
+```razor
+@page "/"
+
+<h1>My Movies</h1>
+
+<ul>
+    @foreach (var movie in Movies)
+    {
+        <li>@movie.Name (@movie.Year) - <button @onclick="@(() => ShowEditMovie(movie.Id))" class="btn btn-primary">Edit Movie</button></li>
+    }
+</ul>
+
+@code {
+
+    [CascadingParameter] public IModalService Modal { get; set; }
+
+    List<Movies> Movies { get; set; }
+
+    void ShowEditMovie(int movieId)
+    {
+        var parameters = new ModalParameters<EditMovie>()
+        {
+            { component => component.MovieId, movieId }
+        }
+
+        Modal.Show("Edit Movie", parameters);
     }
 
 }
@@ -302,7 +337,7 @@ Below is the caller for the component above. When the result is returned the str
 }
 ```
 
-The example above is only using a string value but you can also pass complex objects back as well. 
+The example above is only using a string value but you can also pass complex objects back as well.
 
 ### Customizing the modal
 
@@ -419,6 +454,7 @@ If you need to use a custom position use `ModalPosition.Custom` and set the CSS 
 ```
 
 #### Animation
+
 The modal also supports some animations.
 
 The following animation types are available out of the box: `ModalAnimation.FadeIn`, `ModalAnimation.FadeOut` and `ModalAnimation.FadeInOut`.
@@ -433,8 +469,8 @@ Or in the `Modal.Show()` method:
 @code {
     void ShowModal()
     {
-        var options = new ModalOptions() 
-        { 
+        var options = new ModalOptions()
+        {
             Animation = ModalAnimation.FadeInOut(1)
         };
 
@@ -447,7 +483,7 @@ Or in the `Modal.Show()` method:
 
 It's possible to have multiple active modal instances at a time. You can find a working example of this in the sample projects but here is some sample code.
 
-Below is a component which being displayed inside a Blazored Modal instance. When a user clicks on the _Delete_ button the `Yes` method is invoked and creates a new modal instance.  
+Below is a component which being displayed inside a Blazored Modal instance. When a user clicks on the _Delete_ button the `Yes` method is invoked and creates a new modal instance.
 
 ```razor
 <div class="simple-form">

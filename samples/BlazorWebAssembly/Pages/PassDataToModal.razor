@@ -13,11 +13,12 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("var messageForm = Modal.Show<MessageForm>();")<br />
+                @("var parameters = new ModalParameters();")<br />
+                @("parameters.Add(nameof(DisplayMessage.Message), _message);")<br />
+                @("var messageForm = Modal.Show<DisplayMessage>(\"Passing Data\", parameters);")<br />
                 @("var result = await messageForm.Result;")<br />
                 <br />
-                @("if (!result.Cancelled)")<br />
-                @("    _message = result.Data.ToString();")
+                @("_message = \"\";")
             </code>
         </p>
     </div>

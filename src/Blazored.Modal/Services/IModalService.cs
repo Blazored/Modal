@@ -30,6 +30,9 @@ namespace Blazored.Modal.Services
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed</param>
         IModalReference Show<TComponent>(string title, ModalParameters parameters) where TComponent : IComponent;
 
+        /// <inheritdoc cref="Show{TComponent}(string, ModalParameters)"/>
+        IModalReference Show<TComponent>(string title, ModalParameters<TComponent> parameters) where TComponent : IComponent;
+
         /// <summary>
         /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="title"/>,
         /// <paramref name="parameters"/> and <paramref name="options"/>.
@@ -38,6 +41,9 @@ namespace Blazored.Modal.Services
         /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
         /// <param name="options">Options to configure the modal.</param>
         IModalReference Show<TComponent>(string title, ModalParameters parameters = null, ModalOptions options = null) where TComponent : IComponent;
+
+        /// <inheritdoc cref="Show{TComponent}(string, ModalParameters, ModalOptions)"/>
+        IModalReference Show<TComponent>(string title, ModalParameters<TComponent> parameters = null, ModalOptions options = null) where TComponent : IComponent;
 
         /// <summary>
         /// Shows a modal containing a <paramref name="component"/>.
