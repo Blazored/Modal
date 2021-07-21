@@ -347,24 +347,27 @@ Example in the `Modal.Show()` method:
 
 ```razor
 @code {
-    var options = new ModalOptions
+    void ShowModal()
     {
-        ConfimationOnCancelOptions = new ConfirmationModalOptions()
+        var options = new ModalOptions
         {
-            Title = "Are you sure!",
-            Content = "Do you really want to cancel the modal",
-            CloseButtonText = "Yes",
-            CancelButtonText = "No",
-            CloseButtonClass = "btn btn-primary",
-            CancelButtonClass = "btn btn-secondary",
-            OtherOptions = new ModalOptions
+            ConfimationOnCancelOptions = new ConfirmationModalOptions()
             {
-                DisableBackgroundCancel = true,
-                HideCloseButton = true
+                Title = "Are you sure!",
+                Content = "Do you really want to cancel the modal",
+                CloseButtonText = "Yes",
+                CancelButtonText = "No",
+                CloseButtonClass = "btn btn-primary",
+                CancelButtonClass = "btn btn-secondary",
+                OtherOptions = new ModalOptions
+                {
+                    DisableBackgroundCancel = true,
+                    HideCloseButton = true
+                }
             }
-        }
-    };
-    Modal.Show<Confirm>("Confirm Cancel", options);
+        };
+        Modal.Show<Confirm>("Confirm Cancel", options);
+    }
 }
 ```
 
