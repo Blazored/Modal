@@ -330,6 +330,30 @@ Or in the `Modal.Show()` method:
 }
 ```
 
+#### Cancel Confirmation
+
+A dialog box can be displayed when the modal is about to be canceled to confirm to the user if the dialog should really be closed.
+To confirmation can be enabled using `ConfirmCancel` and the message can be set with `ConfirmCancelMessage`
+
+`<CascadingBlazoredModal ConfirmCancel="true" ConfirmCancelMessage="Are you sure you want to close the modal?" />`
+
+Or in the `Modal.Show()` method:
+
+```razor
+@code {
+    void ShowModal()
+    {
+        var options = new ModalOptions()
+        {
+            ConfirmCancel = true,
+            ConfirmCancelMessage = "Are you sure you want to close the modal?"
+        };
+
+        Modal.Show<Movies>("My Movies", options);
+    }
+}
+```
+
 #### Disabling background click cancellation
 
 You can disable cancelling the modal by clicking on the background using the `DisableBackgroundCancel` parameter.
