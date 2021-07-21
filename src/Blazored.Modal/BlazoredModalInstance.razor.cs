@@ -1,4 +1,4 @@
-﻿using Blazored.Modal.Services;
+using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -25,6 +25,8 @@ namespace Blazored.Modal
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
         private string OverlayCustomClass { get; set; }
+        private bool ConfirmCancel { get; set; }
+        private string ConfirmCancelMessage { get; set; }
         private ModalAnimation Animation { get; set; }
         private bool ActivateFocusTrap { get; set; }
         private string AnimationDuration
@@ -103,6 +105,13 @@ namespace Blazored.Modal
         /// </summary>
         public async Task CancelAsync()
         {
+            if (ConfirmCancel)
+            {
+                bool didConfirm = await JSRuntime.InvokeAsync<bool>("confirm", Options.ConfirmCancelMessage);
+
+                if (!didConfirm) return;
+            }
+
             await CloseAsync(ModalResult.Cancel());
         }
 
@@ -117,6 +126,8 @@ namespace Blazored.Modal
             UseCustomLayout = SetUseCustomLayout();
             OverlayCustomClass = SetOverlayCustomClass();
             ActivateFocusTrap = SetActivateFocusTrap();
+            ConfirmCancel = SetConfirmCancel();
+            ConfirmCancelMessage = SetConfirmCancelMessage();
         }
 
         private bool SetUseCustomLayout()
@@ -284,6 +295,28 @@ namespace Blazored.Modal
                 return GlobalModalOptions.ActivateFocusTrap.Value;
 
             return true; // Default to true to match old behaviour
+        }
+
+        private bool SetConfirmCancel()
+        {
+            if (Options.ConfirmCancel.HasValue)
+                return Options.ConfirmCancel.Value;
+
+            if (GlobalModalOptions.ConfirmCancel.HasValue)
+                return GlobalModalOptions.ConfirmCancel.Value;
+
+            return false;
+        }
+
+        private string SetConfirmCancelMessage()
+        {
+            if (!string.IsNullOrWhiteSpace(Options.ConfirmCancelMessage))
+                return Options.ConfirmCancelMessage;
+
+            if (!string.IsNullOrWhiteSpace(GlobalModalOptions.ConfirmCancelMessage))
+                return GlobalModalOptions.ConfirmCancelMessage;
+
+            return string.Empty;
         }
 
         private async Task HandleBackgroundClick()
