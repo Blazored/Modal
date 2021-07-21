@@ -13,7 +13,6 @@
         public bool? UseCustomLayout { get; set; }
         public bool? ContentScrollable { get; set; }
         public bool? ActivateFocusTrap { get; set; }
-        public bool? ConfirmCancel { get; set; }
-        public string ConfirmCancelMessage { get; set; }
+        public ConfirmationModalOptions ConfimationOnCancelOptions { get; set; }
     }
 }

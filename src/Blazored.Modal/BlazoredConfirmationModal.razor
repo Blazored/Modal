@@ -1,0 +1,11 @@
+﻿@inject IModalService ModalService
+
+<div>
+    @if (!string.IsNullOrWhiteSpace(Options.Content))
+    {
+        <p>@Options.Content</p>
+    }
+
+    <button @onclick="Close" class="@Options.CloseButtonClass">@Options.CloseButtonText</button>
+    <button @onclick="Cancel" class="@Options.CancelButtonClass">@Options.CancelButtonText</button>
+</div>

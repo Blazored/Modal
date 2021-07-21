@@ -13,6 +13,7 @@ namespace Blazored.Modal
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [CascadingParameter] private BlazoredModal Parent { get; set; }
         [CascadingParameter] private ModalOptions GlobalModalOptions { get; set; }
+        [CascadingParameter] private IModalService Modal { get; set; }
 
         [Parameter] public ModalOptions Options { get; set; }
         [Parameter] public string Title { get; set; }
@@ -25,8 +26,7 @@ namespace Blazored.Modal
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
         private string OverlayCustomClass { get; set; }
-        private bool ConfirmCancel { get; set; }
-        private string ConfirmCancelMessage { get; set; }
+        private ConfirmationModalOptions ConfimationOnCancelOptions { get; set; }
         private ModalAnimation Animation { get; set; }
         private bool ActivateFocusTrap { get; set; }
         private string AnimationDuration
@@ -105,11 +105,17 @@ namespace Blazored.Modal
         /// </summary>
         public async Task CancelAsync()
         {
-            if (ConfirmCancel)
+            if (ConfimationOnCancelOptions != null)
             {
-                bool didConfirm = await JSRuntime.InvokeAsync<bool>("confirm", Options.ConfirmCancelMessage);
+                var parameters = new ModalParameters();
+                parameters.Add(nameof(BlazoredConfirmationModal.Options), ConfimationOnCancelOptions);
 
-                if (!didConfirm) return;
+                var confirmationModal = Modal.Show<BlazoredConfirmationModal>(ConfimationOnCancelOptions.Title, parameters, ConfimationOnCancelOptions.OtherOptions);
+
+                var result = await confirmationModal.Result;
+
+                if (result.Cancelled)
+                    return;
             }
 
             await CloseAsync(ModalResult.Cancel());
@@ -126,8 +132,7 @@ namespace Blazored.Modal
             UseCustomLayout = SetUseCustomLayout();
             OverlayCustomClass = SetOverlayCustomClass();
             ActivateFocusTrap = SetActivateFocusTrap();
-            ConfirmCancel = SetConfirmCancel();
-            ConfirmCancelMessage = SetConfirmCancelMessage();
+            ConfimationOnCancelOptions = SetConfimationOnCancelOptions();
         }
 
         private bool SetUseCustomLayout()
@@ -297,26 +302,11 @@ namespace Blazored.Modal
             return true; // Default to true to match old behaviour
         }
 
-        private bool SetConfirmCancel()
-        {
-            if (Options.ConfirmCancel.HasValue)
-                return Options.ConfirmCancel.Value;
+        private ConfirmationModalOptions SetConfimationOnCancelOptions() {
+            if (Options.ConfimationOnCancelOptions != null)
+                return Options.ConfimationOnCancelOptions;
 
-            if (GlobalModalOptions.ConfirmCancel.HasValue)
-                return GlobalModalOptions.ConfirmCancel.Value;
-
-            return false;
-        }
-
-        private string SetConfirmCancelMessage()
-        {
-            if (!string.IsNullOrWhiteSpace(Options.ConfirmCancelMessage))
-                return Options.ConfirmCancelMessage;
-
-            if (!string.IsNullOrWhiteSpace(GlobalModalOptions.ConfirmCancelMessage))
-                return GlobalModalOptions.ConfirmCancelMessage;
-
-            return string.Empty;
+            return null;
         }
 
         private async Task HandleBackgroundClick()
