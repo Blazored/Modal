@@ -332,25 +332,39 @@ Or in the `Modal.Show()` method:
 
 #### Cancel Confirmation
 
-A dialog box can be displayed when the modal is about to be canceled to confirm to the user if the dialog should really be closed.
-To confirmation can be enabled using `ConfirmCancel` and the message can be set with `ConfirmCancelMessage`
+A confimation modal can be displayed when the modal is about to be canceled by setting `ConfimationOnCancelOptions` to a new instance of `ConfirmationModalOptions`.
 
-`<CascadingBlazoredModal ConfirmCancel="true" ConfirmCancelMessage="Are you sure you want to close the modal?" />`
+You can change the settings of the confirmation message using the following options:
+- `Title` to set the title of the confirmation
+- `Content` to set the content of the confirmation
+- `CloseButtonText` to set the text of the close button
+- `CancelButtonText` to set the text of the cancel button
+- `CloseButtonClass` to set the class of the close button
+- `CancelButtonClass` to set the class of the cancel button
+- `OtherOptions` to set the normal modal options
 
-Or in the `Modal.Show()` method:
+Example in the `Modal.Show()` method:
 
 ```razor
 @code {
-    void ShowModal()
+    var options = new ModalOptions
     {
-        var options = new ModalOptions()
+        ConfimationOnCancelOptions = new ConfirmationModalOptions()
         {
-            ConfirmCancel = true,
-            ConfirmCancelMessage = "Are you sure you want to close the modal?"
-        };
-
-        Modal.Show<Movies>("My Movies", options);
-    }
+            Title = "Are you sure!",
+            Content = "Do you really want to cancel the modal",
+            CloseButtonText = "Yes",
+            CancelButtonText = "No",
+            CloseButtonClass = "btn btn-primary",
+            CancelButtonClass = "btn btn-secondary",
+            OtherOptions = new ModalOptions
+            {
+                DisableBackgroundCancel = true,
+                HideCloseButton = true
+            }
+        }
+    };
+    Modal.Show<Confirm>("Confirm Cancel", options);
 }
 ```
 
