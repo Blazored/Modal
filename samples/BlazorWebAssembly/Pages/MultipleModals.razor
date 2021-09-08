@@ -17,6 +17,6 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void ShowModal() => Modal.Show<YesNoPrompt>("First Modal");
+    async Task ShowModal() => await Modal.ShowAsync<YesNoPrompt>("First Modal");
 
 }

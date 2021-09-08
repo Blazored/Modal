@@ -12,7 +12,7 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("Modal.Show<Confirm>(\"Welcome to Blazored Modal\", options);")
+                @("await Modal.ShowAsync<Confirm>(\"Welcome to Blazored Modal\", options);")
             </code>
         </p>
     </div>
@@ -24,6 +24,6 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
+    Task ShowModal() => Modal.ShowAsync<Confirm>("Welcome to Blazored Modal");
 
 }

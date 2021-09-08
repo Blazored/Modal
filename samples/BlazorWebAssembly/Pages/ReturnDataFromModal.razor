@@ -13,7 +13,7 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("var messageForm = Modal.Show<MessageForm>();")<br />
+                @("var messageForm = await Modal.ShowAsync<MessageForm>();")<br />
                 @("var result = await messageForm.Result;")<br />
                 <br />
                 @("if (!result.Cancelled)")<br />
@@ -40,7 +40,7 @@
 
     async Task ShowModal()
     {
-        var messageForm = Modal.Show<MessageForm>();
+        var messageForm = await Modal.ShowAsync<MessageForm>();
         var result = await messageForm.Result;
 
         if (!result.Cancelled)

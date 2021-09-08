@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using Blazored.Modal.Tests.Assets;
 using Blazored.Modal.Services;
 using static Bunit.ComponentParameterFactory;
+using System.Threading.Tasks;
 
 namespace Blazored.Modal.Tests
 {
@@ -32,29 +33,29 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
-        public void ModalIsVisibleWhenShowCalled()
+        public async Task ModalIsVisibleWhenShowCalled()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>();
+            await modalService.ShowAsync<TestComponent>();
 
             // Assert
             Assert.NotNull(cut.FindComponent<BlazoredModalInstance>());
         }
 
         [Fact]
-        public void MultipleModalsAreVisibleWhenShowCalledMultipleTimes()
+        public async Task MultipleModalsAreVisibleWhenShowCalledMultipleTimes()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>();
-            modalService.Show<TestComponent>();
+            await modalService.ShowAsync<TestComponent>();
+            await modalService.ShowAsync<TestComponent>();
 
             // Assert
             Assert.Equal(2, cut.FindAll(".blazored-modal-container").Count);
@@ -68,7 +69,7 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>();
+            modalService.ShowAsync<TestComponent>();
             Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
 
             var closeButton = cut.Find(".test-component__close-button");
@@ -79,14 +80,14 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
-        public void ModalHidesWhenCancelCalled()
+        public async Task ModalHidesWhenCancelCalled()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>();
+            await modalService.ShowAsync<TestComponent>();
             Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
 
             var closeButton = cut.Find(".blazored-modal-close");
@@ -97,17 +98,17 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
-        public void ModalHidesWhenReferenceCloseCalled()
+        public async Task ModalHidesWhenReferenceCloseCalled()
         {
             // Arrange
             var modalService = Services.GetService<IModalService>();
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            var modalReferece = modalService.Show<TestComponent>();
+            var modalReference = await modalService.ShowAsync<TestComponent>();
             Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
 
-            modalReferece.Close();
+            modalReference.Close();
 
             // Assert
             Assert.Empty(cut.FindAll(".blazored-modal-container"));

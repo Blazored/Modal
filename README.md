@@ -112,7 +112,7 @@ For example, if I have a component called `Movies` which I want to display in th
 
 Welcome to Blazored Modal.
 
-<button @onclick="@(() => Modal.Show<Movies>("My Movies"))" class="btn btn-primary">View Movies</button>
+<button @onclick="@(() => await Modal.ShowAsync<Movies>("My Movies"))" class="btn btn-primary">View Movies</button>
 
 @code {
     [CascadingParameter] public IModalService Modal { get; set; }
@@ -143,12 +143,12 @@ If you want to pass values to the component you're displaying in the modal, then
 
     List<Movies> Movies { get; set; }
 
-    void ShowEditMovie(int movieId)
+    async Task ShowEditMovie(int movieId)
     {
         var parameters = new ModalParameters();
         parameters.Add(nameof(EditMovie.MovieId), movieId);
 
-        Modal.Show<EditMovie>("Edit Movie", parameters);
+        await Modal.ShowAsync<EditMovie>("Edit Movie", parameters);
     }
 
 }
@@ -214,7 +214,7 @@ When you open a modal you can capture a reference to it and await the result of 
 
     async Task ShowModal()
     {
-        var moviesModal = Modal.Show<Movies>("My Movies");
+        var moviesModal = await Modal.ShowAsync<Movies>("My Movies");
         var result = await moviesModal.Result;
 
         if (result.Cancelled)
@@ -287,7 +287,7 @@ Below is the caller for the component above. When the result is returned the str
 
     async Task ShowModal()
     {
-        var formModal = Modal.Show<SignUpForm>("Please SignUp");
+        var formModal = await Modal.ShowAsync<SignUpForm>("Please SignUp");
         var result = await formModal.Result;
 
         if (result.Cancelled)
@@ -314,18 +314,18 @@ A modal has a close button in the top right hand corner by default. The close bu
 
 `<CascadingBlazoredModal HideCloseButton="true" />`
 
-Or in the `Modal.Show()` method:
+Or in the `Modal.ShowAsync()` method:
 
 ```razor
 @code {
-    void ShowModal()
+    async Task ShowModal()
     {
         var options = new ModalOptions()
         {
             HideCloseButton = false
         };
 
-        Modal.Show<Movies>("My Movies", options);
+        await Modal.ShowAsync<Movies>("My Movies", options);
     }
 }
 ```
@@ -336,18 +336,18 @@ You can disable cancelling the modal by clicking on the background using the `Di
 
 `<CascadingBlazoredModal DisableBackgroundCancel="true" />`
 
-Or in the `Modal.Show()` method:
+Or in the `Modal.ShowAsync()` method:
 
 ```razor
 @code {
-    void ShowModal()
+    async Task ShowModal()
     {
         var options = new ModalOptions()
         {
             DisableBackgroundCancel = true
         };
 
-        Modal.Show<Movies>("My Movies", options);
+        await Modal.ShowAsync<Movies>("My Movies", options);
     }
 }
 ```
@@ -360,18 +360,18 @@ Use the `Class` parameter to set the custom styling globally:
 
 `<CascadingBlazoredModal Class="custom-modal" />`
 
-Or in the `Modal.Show()` method:
+Or in the `Modal.ShowAsync()` method:
 
 ```razor
 @code {
-    void ShowModal()
+    async Task ShowModal()
     {
         var options = new ModalOptions()
         {
             Class = "blazored-modal-movies"
         };
 
-        Modal.Show<Movies>("My Movies", options);
+        await Modal.ShowAsync<Movies>("My Movies", options);
     }
 }
 ```
@@ -386,18 +386,18 @@ Use the `Position` parameter to set the position globally:
 
 `<CascadingBlazoredModal Position="ModalPosition.BottomLeft" />`
 
-Or in the `Modal.Show()` method:
+Or in the `Modal.ShowAsync()` method:
 
 ```razor
 @code {
-    void ShowModal()
+    async Task ShowModal()
     {
         var options = new ModalOptions()
         {
             Position = "ModalPosition.BottomLeft"
         };
 
-        Modal.Show<Movies>("My Movies", options);
+        await Modal.ShowAsync<Movies>("My Movies", options);
     }
 }
 ```
@@ -406,14 +406,14 @@ If you need to use a custom position use `ModalPosition.Custom` and set the CSS 
 
 ```razor
 @code {
-    void ShowModal()
+    async Task ShowModal()
     {
         var options = new ModalOptions()
         {
             Position = ModalPosition.Custom
             PositionCustomClass = "custom-position-class";
         };
-        Modal.Show<Movies>("My Movies", options);
+        await Modal.ShowAsync<Movies>("My Movies", options);
     }
 }
 ```
@@ -427,18 +427,18 @@ Use the `Animation` parameter to set the custom styling globally:
 
 `<CascadingBlazoredModal Animation="@ModalAnimation.FadeIn(2)"/>`
 
-Or in the `Modal.Show()` method:
+Or in the `Modal.ShowAsync()` method:
 
 ```razor
 @code {
-    void ShowModal()
+    async Task ShowModal()
     {
         var options = new ModalOptions() 
         { 
             Animation = ModalAnimation.FadeInOut(1)
         };
 
-        Modal.Show<Movies>("My Movies", options);
+        await Modal.ShowAsync<Movies>("My Movies", options);
     }
 }
 ```
@@ -466,7 +466,7 @@ Below is a component which being displayed inside a Blazored Modal instance. Whe
 
     async Task Yes()
     {
-        var confirmationModal = ModalService.Show<ConfirmationPrompt>();
+        var confirmationModal = await Modal.ShowAsync<ConfirmationPrompt>();
         var result = await confirmationModal.Result;
 
         if (result.Cancelled)

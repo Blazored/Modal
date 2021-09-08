@@ -37,12 +37,12 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void ShowModalCustomLayout()
+    async Task ShowModalCustomLayout()
     {
         var options = new ModalOptions { UseCustomLayout = true };
         var parameters = new ModalParameters();
         parameters.Add(nameof(CustomBootstrapModal.Message), "Hello Bootstrap modal!!");
-        Modal.Show<CustomBootstrapModal>("Custom Layout", parameters, options);
+        await Modal.ShowAsync<CustomBootstrapModal>("Custom Layout", parameters, options);
     }
 
 }

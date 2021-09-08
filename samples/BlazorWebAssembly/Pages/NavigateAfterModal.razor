@@ -14,7 +14,7 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("Modal.Show<Confirm>(\"Welcome to Blazored Modal\", options);")
+                @("await Modal.ShowAsync<Confirm>(\"Welcome to Blazored Modal\", options);")
             </code>
         </p>
     </div>
@@ -26,9 +26,9 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    async void ShowModal()
+    async Task ShowModal()
     {
-        var modal = Modal.Show<Confirm>("Do you want to navigate to a different page?");
+        var modal = await Modal.ShowAsync<Confirm>("Do you want to navigate to a different page?");
         var result = await modal.Result;
 
         if (!result.Cancelled && (result.Data is bool accepted) && accepted)

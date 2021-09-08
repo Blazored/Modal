@@ -15,7 +15,7 @@
             <code>
                 @("var options = new ModalOptions() { OverlayCustomClass = \"my-custom-class\" };")
                 <br />
-                @("Modal.Show<Confirm>(\"Custom Overlay\", options);")
+                @("await Modal.ShowAsync<Confirm>(\"Custom Overlay\", options);")
             </code>
         </p>
     </div>
@@ -38,10 +38,9 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void ShowModalCustomOverlay()
+    async Task ShowModalCustomOverlay()
     {
         var options = new ModalOptions { OverlayCustomClass = "custom-modal-overlay" };
-        Modal.Show<Confirm>("Custom Overlay", options);
+        await Modal.ShowAsync<Confirm>("Custom Overlay", options);
     }
-
 }

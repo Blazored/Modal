@@ -15,7 +15,7 @@
             <code>
                 @("var options = new ModalOptions() { HideCloseButton = true };")
                 <br />
-                @("Modal.Show<Confirm>(\"Hiding Close Button\", options);")
+                @("await Modal.ShowAsync<Confirm>(\"Hiding Close Button\", options);")
             </code>
         </p>
     </div>
@@ -39,14 +39,14 @@
 
     [CascadingParameter] public IModalService Modal { get; set; }
 
-    void CloseButtonShown()
+    async Task CloseButtonShown()
     {
-        Modal.Show<Confirm>("Showing Close Button (default)");
+        await Modal.ShowAsync<Confirm>("Showing Close Button (default)");
     }
 
-    void CloseButtonHidden()
+    async Task CloseButtonHidden()
     {
         var options = new ModalOptions { HideCloseButton = true };
-        Modal.Show<Confirm>("Hiding Close Button", options);
+        await Modal.ShowAsync<Confirm>("Hiding Close Button", options);
     }
 }

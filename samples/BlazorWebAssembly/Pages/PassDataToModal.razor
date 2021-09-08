@@ -13,7 +13,7 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("var messageForm = Modal.Show<MessageForm>();")<br />
+                @("var messageForm = await Modal.ShowAsync<MessageForm>();")<br />
                 @("var result = await messageForm.Result;")<br />
                 <br />
                 @("if (!result.Cancelled)")<br />
@@ -41,7 +41,7 @@
         var parameters = new ModalParameters();
         parameters.Add(nameof(DisplayMessage.Message), _message);
 
-        var messageForm = Modal.Show<DisplayMessage>("Passing Data", parameters);
+        var messageForm = await Modal.ShowAsync<DisplayMessage>("Passing Data", parameters);
         var result = await messageForm.Result;
 
         _message = "";
