@@ -110,6 +110,9 @@ namespace Blazored.Modal.Services
         /// <param name="options">Options to configure the modal.</param>
         public IModalReference Show(Type contentComponent, string title, ModalParameters parameters, ModalOptions options)
         {
+            if (parameters == null) parameters = new ModalParameters();
+            if (options == null) options = new ModalOptions();
+            
             if (!typeof(IComponent).IsAssignableFrom(contentComponent))
             {
                 throw new ArgumentException($"{contentComponent.FullName} must be a Blazor Component");
@@ -130,7 +133,7 @@ namespace Blazored.Modal.Services
             var modalInstance = new RenderFragment(builder =>
             {
                 builder.OpenComponent<BlazoredModalInstance>(0);
-                builder.AddAttribute(1, "Options", options ?? new ModalOptions());
+                builder.AddAttribute(1, "Options", options);
                 builder.AddAttribute(2, "Title", title);
                 builder.AddAttribute(3, "Content", modalContent);
                 builder.AddAttribute(4, "Id", modalInstanceId);

@@ -172,6 +172,48 @@ namespace Blazored.Modal.Tests
         }
 
         [Fact]
+        public void ModalDisplaysWithNullModalParametersAndNullModalOptions()
+        {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show<TestComponent>("", null, null);
+
+            // Assert
+            Assert.Equal(TestComponent.DefaultTitle, cut.Find(".test-component h1").InnerHtml);
+        }
+
+        [Fact]
+        public void ModalDisplaysWithNullModalParameters()
+        {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show<TestComponent>("", (ModalParameters)null);
+
+            // Assert
+            Assert.Equal(TestComponent.DefaultTitle, cut.Find(".test-component h1").InnerHtml);
+        }
+
+        [Fact]
+        public void ModalDisplaysWithNullModalOptions()
+        {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show<TestComponent>("", (ModalOptions)null);
+
+            // Assert
+            Assert.Equal(TestComponent.DefaultTitle, cut.Find(".test-component h1").InnerHtml);
+        }
+
+        [Fact]
         public void ModalDisplaysCorrectContentWhenUsingModalParameters()
         {
             var testTitle = "Testing Components";
