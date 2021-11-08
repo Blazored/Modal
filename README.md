@@ -172,7 +172,7 @@ If you want to pass values to the component you're displaying in the modal, then
     </div>
 
     <button @onclick="SaveMovie" class="btn btn-primary">Submit</button>
-    <button @onclick="BlazoredModal.Cancel" class="btn btn-secondary">Cancel</button>
+    <button @onclick="ModalInstance.CancelAsync" class="btn btn-secondary">Cancel</button>
 </div>
 
 @code {
