@@ -5,7 +5,7 @@
 <hr class="mb-5" />
 
 <p>
-    Custom CSS classes can be set globally or on a per modal basis to change the look of modals.
+    Custom CSS classes can be set globally or on a per modal basis to change the look of modals by overriding the default CSS class .blazored-modal.
 </p>
 
 <div class="card mb-4">
@@ -13,7 +13,7 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("var options = new ModalOptions() { Class = \"my-custom-class\" };")
+                @("var options = new ModalOptions() { Class = \"my-custom-modal-class\" };")
                 <br />
                 @("Modal.Show<Confirm>(\"Custom Styling\", options);")
             </code>
@@ -26,13 +26,16 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("<BlazoredModal Class=\"my-custom-class\" />")
+                @("<BlazoredModal Class=\"my-custom-modal-class\" />")
             </code>
         </p>
     </div>
 </div>
 
-<button @onclick="ShowModalCustomStyle" class="btn btn-primary">Show Modal</button>
+<button @onclick="ShowModalCustomStyle" class="btn btn-primary">Show Custom Modal</button>
+<br />
+<br />
+<button @onclick="ShowDefaultModal" class="btn btn-secondary">Show Default Modal</button>
 
 @code {
 
@@ -40,8 +43,12 @@
 
     void ShowModalCustomStyle()
     {
-        var options = new ModalOptions { Class = "blazored-prompt-modal" };
+        var options = new ModalOptions { Class = "my-custom-modal-class" };
         Modal.Show<Confirm>("Custom Style", options);
     }
 
+    void ShowDefaultModal()
+    {
+        Modal.Show<Confirm>("Default Style");
+    }
 }

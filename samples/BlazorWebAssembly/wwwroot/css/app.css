@@ -53,33 +53,17 @@ a, .btn-link {
     background-color: rgba(17, 0, 114, 0.5);
 }
 
-.blazored-custom-modal {
+.my-custom-modal-class {
     display: flex;
     flex-direction: column;
     width: 60vw;
     height: 60vh;
-    background-color: #fafafa;
+    background-color: #3c7b34;
     border-radius: 12px;
-    border: 1px solid #fff;
+    border: 1px solid #1c1c1c;
     padding: 0.5rem;
     z-index: 102;
-    box-shadow: 0 2px 2px rgba(0,0,0,.75);
-}
-
-.blazored-prompt-modal {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    background-color: #fefefe;
-    border-radius: 4px;
-    border: 1px solid #fff;
-    padding: 0.5rem;
-    z-index: 102;
-    box-shadow: 0 2px 2px rgba(0,0,0,.75);
-}
-
-.blazored-prompt-modal .blazored-modal-header {
-    display: none;
+    box-shadow: 0 15px 15px rgba(0,0,0,.75);
 }
 
 .my-custom-position {
