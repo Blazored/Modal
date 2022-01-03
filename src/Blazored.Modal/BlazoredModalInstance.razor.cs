@@ -24,6 +24,7 @@ namespace Blazored.Modal
         private bool HideHeader { get; set; }
         private bool HideCloseButton { get; set; }
         private bool DisableBackgroundCancel { get; set; }
+        private string OverlayAnimationClass { get; set; }
         private string OverlayCustomClass { get; set; }
         private ModalAnimation Animation { get; set; }
         private bool ActivateFocusTrap { get; set; }
@@ -88,6 +89,7 @@ namespace Blazored.Modal
             if (Animation.Type == ModalAnimationType.FadeOut || Animation.Type == ModalAnimationType.FadeInOut)
             {
                 Class += " blazored-modal-fade-out";
+                OverlayAnimationClass += " blazored-modal-fade-out";
                 StateHasChanged();
                 if (Animation.Duration > 0)
                 {
@@ -117,6 +119,7 @@ namespace Blazored.Modal
             UseCustomLayout = SetUseCustomLayout();
             OverlayCustomClass = SetOverlayCustomClass();
             ActivateFocusTrap = SetActivateFocusTrap();
+            OverlayAnimationClass = SetAnimationClass();
         }
 
         private bool SetUseCustomLayout()
