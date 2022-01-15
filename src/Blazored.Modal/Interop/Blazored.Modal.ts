@@ -1,8 +1,8 @@
-import focusTrap, { Options, FocusTrap } from 'focus-trap';
+import * as focusTrap from 'focus-trap';
 
 interface FocusTrapInstance {
     id: string;
-    focusTrap: FocusTrap;
+    focusTrap: any;
 }
 
 interface ModalInstance {
@@ -11,7 +11,7 @@ interface ModalInstance {
 
 export class BlazoredModal {
     
-    readonly _options: Options = { escapeDeactivates: false, allowOutsideClick: () => true };
+    readonly _options: focusTrap.Options = { escapeDeactivates: false, allowOutsideClick: () => true };
     private _traps: Array<FocusTrapInstance> = [];
     private _modals: Array<ModalInstance> = [];
 
@@ -25,7 +25,7 @@ export class BlazoredModal {
     }
 
     public activateFocusTrap(element: any, id: string): void {
-        const trap = focusTrap(element, this._options);
+        const trap = focusTrap.createFocusTrap(element, this._options);
 
         try {
             trap.activate();
