@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Blazored.Modal
 {
-    public class ModalParameters
+    public class ModalParameters : IEnumerable<KeyValuePair<string, object>>
     {
         internal Dictionary<string, object> _parameters;
 
@@ -35,5 +36,9 @@ namespace Blazored.Modal
 
             return default;
         }
+
+        public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => _parameters.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => _parameters.GetEnumerator();
     }
 }

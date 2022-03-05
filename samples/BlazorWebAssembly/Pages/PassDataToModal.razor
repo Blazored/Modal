@@ -13,11 +13,12 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("var messageForm = Modal.Show<MessageForm>();")<br />
-                @("var result = await messageForm.Result;")<br />
+                @("var parameters = new ModalParameters")<br />
+                @("{")<br />
+                &nbsp;&nbsp;&nbsp;&nbsp;@("{ nameof(DisplayMessage.Message), _message }")<br />
+                @("};")<br />
                 <br />
-                @("if (!result.Cancelled)")<br />
-                @("    _message = result.Data.ToString();")
+                @("Modal.Show<DisplayMessage>(\"Passing Data\", parameters);")<br />
             </code>
         </p>
     </div>
@@ -36,14 +37,14 @@
 
     string _message;
 
-    async Task ShowModal()
+    void ShowModal()
     {
-        var parameters = new ModalParameters();
-        parameters.Add(nameof(DisplayMessage.Message), _message);
+        var parameters = new ModalParameters
+        {
+            { nameof(DisplayMessage.Message), _message }
+        };
 
-        var messageForm = Modal.Show<DisplayMessage>("Passing Data", parameters);
-        var result = await messageForm.Result;
-
+        Modal.Show<DisplayMessage>("Passing Data", parameters);
         _message = "";
     }
 
