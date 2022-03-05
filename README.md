@@ -354,7 +354,7 @@ Or in the `Modal.Show()` method:
 
 #### Styling the modal
 
-You can set an alternative CSS style for the modal if you want to customize the look and feel. This is useful when your web application requires different kinds of modals, like a warning, confirmation or an input form.
+You can set an alternative CSS class for the modal if you want to customize the look and feel. This is useful when your web application requires different kinds of modals, like a warning, confirmation or an input form.
 
 Use the `Class` parameter to set the custom styling globally:
 
@@ -375,6 +375,16 @@ Or in the `Modal.Show()` method:
     }
 }
 ```
+
+Note that supplying a custom CSS class will remove **all** of the default parameters and values used to display modals, specifically by overwriting the `.blazored-modal` class in `blazored-modal.css` with a class you supply. All default values for layout and background will be lost.
+
+Unexpected behavior may result if certain CSS parameters are not provided to replace the default values, such as:
+* `flex-direction: column;` while using a header 
+    * The modal header and content use a `flexbox`. If you display a header but do not specify that the modal should be a `column`, the header and content will be displayed side-by-side in a row.
+* `z-index: 102;`
+    * The z-index needs to be greater than the background overlay, otherwise the modal and overlay will be displayed together and you cannot interact with any modal elements, such as forms or buttons. If the overlay click to close is disabled, this will lock the modal open until the page is refreshed. 
+* `background-color: #fff;` and `border`.
+    * If no background color or border is provided, the modal background will be transparent (which may be desired).
 
 #### Setting the position
 
