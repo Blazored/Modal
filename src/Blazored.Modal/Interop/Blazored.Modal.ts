@@ -64,8 +64,8 @@ export class BlazoredModal {
     }
 }
 
-declare global {
-    interface Window { BlazoredModal: BlazoredModal; }
-}
+// declare global {
+//     interface Window { BlazoredModal: BlazoredModal; }
+// }
 
-window.BlazoredModal = new BlazoredModal();
+//window.BlazoredModal = new BlazoredModal();

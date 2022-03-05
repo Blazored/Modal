@@ -1,13 +1,10 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blazored.Modal
+namespace Blazored.Modal;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
-    {
-        public static IServiceCollection AddBlazoredModal(this IServiceCollection services)
-        {
-            return services.AddScoped<IModalService, ModalService>();
-        }
-    }
+    public static IServiceCollection AddBlazoredModal(this IServiceCollection services) 
+        => services.AddScoped<IModalService, ModalService>();
 }

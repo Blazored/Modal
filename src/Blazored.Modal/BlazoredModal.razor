@@ -1,8 +1,143 @@
-﻿<CascadingValue Value="this">
-    <CascadingValue Value="GlobalModalOptions">
-        @foreach (var modal in Modals)
+﻿@using System.Collections.ObjectModel
+@using Microsoft.AspNetCore.Components.Routing
+
+@implements IAsyncDisposable
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<CascadingValue Value="this">
+    <CascadingValue Value="_globalModalOptions">
+        @foreach (var modal in _modals)
         {
             @modal.ModalInstance
         }
     </CascadingValue>
 </CascadingValue>
+
+@code {
+    [CascadingParameter] private IModalService CascadedModalService { get; set; } = default!;
+
+    [Parameter] public bool? HideHeader { get; set; }
+    [Parameter] public bool? HideCloseButton { get; set; }
+    [Parameter] public bool? DisableBackgroundCancel { get; set; }
+    [Parameter] public string? OverlayCustomClass { get; set; }
+    [Parameter] public ModalPosition? Position { get; set; }
+    [Parameter] public string? PositionCustomClass { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public ModalAnimation? Animation { get; set; }
+    [Parameter] public bool? UseCustomLayout { get; set; }
+    [Parameter] public bool? ContentScrollable { get; set; }
+    [Parameter] public bool? ActivateFocusTrap { get; set; }
+
+    private readonly Collection<ModalReference> _modals = new();
+    private readonly ModalOptions _globalModalOptions = new();
+
+    private IJSObjectReference? _module;
+
+    protected override void OnInitialized()
+    {
+        if (CascadedModalService == null)
+        {
+            throw new InvalidOperationException($"{GetType()} requires a cascading parameter of type {nameof(IModalService)}.");
+        }
+
+        ((ModalService) CascadedModalService).OnModalInstanceAdded += Update;
+        ((ModalService) CascadedModalService).OnModalCloseRequested += CloseInstance;
+        NavigationManager.LocationChanged += CancelModals;
+
+        _globalModalOptions.Class = Class;
+        _globalModalOptions.DisableBackgroundCancel = DisableBackgroundCancel;
+        _globalModalOptions.HideCloseButton = HideCloseButton;
+        _globalModalOptions.HideHeader = HideHeader;
+        _globalModalOptions.Position = Position;
+        _globalModalOptions.PositionCustomClass = PositionCustomClass;
+        _globalModalOptions.Animation = Animation;
+        _globalModalOptions.OverlayCustomClass = OverlayCustomClass;
+
+        _globalModalOptions.UseCustomLayout = UseCustomLayout;
+        _globalModalOptions.ContentScrollable = ContentScrollable;
+        _globalModalOptions.ActivateFocusTrap = ActivateFocusTrap;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/Blazored.Modal/blazored-modal.js");
+        }
+    }
+
+    internal async void CloseInstance(ModalReference? modal, ModalResult result)
+    {
+        if (modal?.ModalInstanceRef != null)
+        {
+            // Gracefully close the modal
+            await modal.ModalInstanceRef.CloseAsync(result);
+        }
+        else
+        {
+            await DismissInstance(modal, result);
+        }
+    }
+
+    internal void CloseInstance(Guid id)
+    {
+        var reference = GetModalReference(id);
+        CloseInstance(reference, ModalResult.Ok<object>(null));
+    }
+
+    internal void CancelInstance(Guid id)
+    {
+        var reference = GetModalReference(id);
+        CloseInstance(reference, ModalResult.Cancel());
+    }
+
+    internal Task DismissInstance(Guid id, ModalResult result)
+    {
+        var reference = GetModalReference(id);
+        return DismissInstance(reference, result);
+    }
+
+    internal async Task DismissInstance(ModalReference? modal, ModalResult result)
+    {
+        if (modal != null && _module is not null)
+        {
+            await _module.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", modal.Id);
+            modal.Dismiss(result);
+            _modals.Remove(modal);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async void CancelModals(object? sender, LocationChangedEventArgs e)
+    {
+        foreach (var modalReference in _modals.ToList())
+        {
+            if (_module is null) continue;
+            await _module.InvokeVoidAsync("BlazoredModal.deactivateFocusTrap", modalReference.Id);
+            modalReference.Dismiss(ModalResult.Cancel());
+        }
+
+        _modals.Clear();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async void Update(ModalReference modalReference)
+    {
+        if (_module is null) return;
+        await _module.InvokeVoidAsync("BlazoredModal.activateScrollLock", modalReference.Id);
+        _modals.Add(modalReference);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private ModalReference? GetModalReference(Guid id)
+        => _modals.SingleOrDefault(x => x.Id == id);
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (_module is not null)
+        {
+            await _module.DisposeAsync();
+        }
+    }
+}

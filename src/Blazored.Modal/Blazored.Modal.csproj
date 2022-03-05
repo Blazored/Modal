@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <RazorLangVersion>3.0</RazorLangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
     
     <Authors>Chris Sainty</Authors>
     <Company></Company>
@@ -31,17 +32,14 @@
     <NpmInstallStampFile>node_modules/.install-stamp</NpmInstallStampFile>
   </PropertyGroup>
 
-  <Target Name="NpmInstall" BeforeTargets="BeforeBuild" Inputs="package.json" Outputs="$(NpmInstallStampFile)">
+  <Target Name="NpmInstall" BeforeTargets="BuildJs" Inputs="package.json" Outputs="$(NpmInstallStampFile)">
     <Exec Command="npm install" />
     <Touch Files="$(NpmInstallStampFile)" AlwaysCreate="true" />
   </Target>
 
-  <Target Name="DebugRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Debug'">
-    <Exec Command="npm run-script build:debug" ContinueOnError="false" />
-  </Target>
-
-  <Target Name="ReleaseRunWebPack" BeforeTargets="Build" Condition="$(Configuration) == 'Release'">
-    <Exec Command="npm run-script build:release" ContinueOnError="false" />
+  <Target Name="BuildJs" BeforeTargets="Compile">
+    <Exec Command="npm run-script build:debug" ContinueOnError="false" Condition=" '$(Configuration)' == 'Debug' " />
+    <Exec Command="npm run-script build:release" ContinueOnError="false" Condition=" '$(Configuration)' == 'Release' " />
   </Target>
 
   <ItemGroup>
@@ -51,10 +49,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="6.0.0" />
+    <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="6.0.2" />
   </ItemGroup>
 
   <ItemGroup>
