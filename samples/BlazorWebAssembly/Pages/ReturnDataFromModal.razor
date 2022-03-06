@@ -44,7 +44,7 @@
         var result = await messageForm.Result;
 
         if (!result.Cancelled)
-            _message = result.Data.ToString() ?? string.Empty;
+            _message = result.Data?.ToString() ?? string.Empty;
     }
 
 }
