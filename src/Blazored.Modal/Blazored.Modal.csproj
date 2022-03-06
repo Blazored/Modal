@@ -26,27 +26,6 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
   </PropertyGroup>
-  
-  <PropertyGroup>
-    <!-- File with mtime of last successful npm install -->
-    <NpmInstallStampFile>node_modules/.install-stamp</NpmInstallStampFile>
-  </PropertyGroup>
-
-  <Target Name="NpmInstall" BeforeTargets="BuildJs" Inputs="package.json" Outputs="$(NpmInstallStampFile)">
-    <Exec Command="npm install" />
-    <Touch Files="$(NpmInstallStampFile)" AlwaysCreate="true" />
-  </Target>
-
-  <Target Name="BuildJs" BeforeTargets="Compile">
-    <Exec Command="npm run-script build:debug" ContinueOnError="false" Condition=" '$(Configuration)' == 'Debug' " />
-    <Exec Command="npm run-script build:release" ContinueOnError="false" Condition=" '$(Configuration)' == 'Release' " />
-  </Target>
-
-  <ItemGroup>
-    <Content Remove="package-lock.json" />
-    <Content Remove="package.json" />
-    <Content Remove="tsconfig.json" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.2" />
@@ -57,8 +36,5 @@
 
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="\" />
-    <None Include="package-lock.json" />
-    <None Include="package.json" />
-    <None Include="tsconfig.json" />
   </ItemGroup>
 </Project>

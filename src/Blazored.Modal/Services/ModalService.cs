@@ -4,8 +4,8 @@ namespace Blazored.Modal.Services;
 
 public class ModalService : IModalService
 {
-    internal event Action<ModalReference> OnModalInstanceAdded;
-    internal event Action<ModalReference, ModalResult> OnModalCloseRequested;
+    internal event Action<ModalReference>? OnModalInstanceAdded;
+    internal event Action<ModalReference, ModalResult>? OnModalCloseRequested;
 
     /// <summary>
     /// Shows the modal with the component type.
@@ -93,18 +93,18 @@ public class ModalService : IModalService
     {
         if (!typeof(IComponent).IsAssignableFrom(contentComponent))
         {
-            throw new ArgumentException($"{contentComponent!.FullName} must be a Blazor Component");
+            throw new ArgumentException($"{contentComponent.FullName} must be a Blazor Component");
         }
 
-        ModalReference modalReference = null;
+        ModalReference? modalReference = null;
         var modalInstanceId = Guid.NewGuid();
         var modalContent = new RenderFragment(builder =>
         {
             var i = 0;
             builder.OpenComponent(i++, contentComponent);
-            foreach (var parameter in parameters.Parameters)
+            foreach (var (name, value) in parameters.Parameters)
             {
-                builder.AddAttribute(i++, parameter.Key, parameter.Value);
+                builder.AddAttribute(i++, name, value);
             }
             builder.CloseComponent();
         });
@@ -116,7 +116,7 @@ public class ModalService : IModalService
             builder.AddAttribute(2, "Title", title);
             builder.AddAttribute(3, "Content", modalContent);
             builder.AddAttribute(4, "Id", modalInstanceId);
-            builder.AddComponentReferenceCapture(5, compRef => modalReference.ModalInstanceRef = (BlazoredModalInstance)compRef);
+            builder.AddComponentReferenceCapture(5, compRef => modalReference!.ModalInstanceRef = (BlazoredModalInstance)compRef);
             builder.CloseComponent();
         });
         modalReference = new ModalReference(modalInstanceId, modalInstance, this);
@@ -127,7 +127,7 @@ public class ModalService : IModalService
     }
 
     internal void Close(ModalReference modal) 
-        => Close(modal, ModalResult.Ok<object>(null));
+        => Close(modal, ModalResult.Ok());
 
     internal void Close(ModalReference modal, ModalResult result) 
         => OnModalCloseRequested?.Invoke(modal, result);

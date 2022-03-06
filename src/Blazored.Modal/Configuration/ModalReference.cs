@@ -9,6 +9,10 @@ public class ModalReference : IModalReference
     private readonly Action<ModalResult> _closed;
     private readonly ModalService _modalService;
 
+    internal Guid Id { get; }
+    internal RenderFragment ModalInstance { get; }
+    internal BlazoredModalInstance? ModalInstanceRef { get; set; }
+    
     public ModalReference(Guid modalInstanceId, RenderFragment modalInstance, ModalService modalService)
     {
         Id = modalInstanceId;
@@ -23,15 +27,11 @@ public class ModalReference : IModalReference
     public void Close(ModalResult result) 
         => _modalService.Close(this, result);
 
-    private void HandleClosed(ModalResult obj) 
-        => _ = _resultCompletion.TrySetResult(obj);
-
-    internal Guid Id { get; }
-    internal RenderFragment ModalInstance { get; }
-    internal BlazoredModalInstance ModalInstanceRef { get; set; }
-
     public Task<ModalResult> Result => _resultCompletion.Task;
 
     internal void Dismiss(ModalResult result) 
         => _closed.Invoke(result);
+    
+    private void HandleClosed(ModalResult obj) 
+        => _ = _resultCompletion.TrySetResult(obj);
 }

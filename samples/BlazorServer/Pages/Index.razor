@@ -24,7 +24,7 @@
 
 @code {
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
     void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
 

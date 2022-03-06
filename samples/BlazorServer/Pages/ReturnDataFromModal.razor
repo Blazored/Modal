@@ -34,9 +34,9 @@
 
 @code {
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
-    string _message;
+    string? _message;
 
     async Task ShowModal()
     {

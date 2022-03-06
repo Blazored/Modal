@@ -6,6 +6,7 @@
 # Custom rules
 src/Blazored.Modal/wwwroot/*.js
 src/Blazored.Modal/wwwroot/*.map
+.DS_Store
 
 # User-specific files
 *.suo

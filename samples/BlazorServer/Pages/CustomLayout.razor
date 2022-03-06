@@ -35,13 +35,12 @@
 
 @code {
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
     void ShowModalCustomLayout()
     {
         var options = new ModalOptions { UseCustomLayout = true };
-        var parameters = new ModalParameters();
-        parameters.Add(nameof(CustomBootstrapModal.Message), "Hello custom modal!!");
+        var parameters = new ModalParameters {{nameof(CustomBootstrapModal.Message), "Hello custom modal!!"}};
         Modal.Show<CustomBootstrapModal>("Custom Layout", parameters, options);
     }
 

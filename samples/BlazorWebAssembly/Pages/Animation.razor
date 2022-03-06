@@ -32,12 +32,12 @@
     </div>
 </div>
 
-<input type="number" @bind-value="@duration" />
+<input type="number" @bind-value="@_duration" />
 
-<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeIn(duration)))" class="btn btn-secondary">Fade-In</button>
-<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeOut(duration)))" class="btn btn-secondary">Fade-Out</button>
+<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeIn(_duration)))" class="btn btn-secondary">Fade-In</button>
+<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeOut(_duration)))" class="btn btn-secondary">Fade-Out</button>
 <button @onclick="AnimationDefault" class="btn btn-primary">Globally set value (default no animation)</button>
-<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeInOut(duration)))" class="btn btn-secondary">Fade-in Fade-Out</button>
+<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeInOut(_duration)))" class="btn btn-secondary">Fade-in Fade-Out</button>
 
 <p>
     It is also possible to have multiple modals (like in the Multiple Modals example) with different animations. With the below modal, the first modal will only fade-in with a duration of 2 seconds. The second modal will fade-in and fade-out in 5.0 seconds.
@@ -47,9 +47,9 @@
 
 @code {
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
-    private double duration = 1.0;
+    private double _duration = 1.0;
 
     void AnimationDefault()
     {

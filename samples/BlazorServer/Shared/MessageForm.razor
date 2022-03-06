@@ -11,9 +11,9 @@
 
 @code {
 
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
-    string Message { get; set; }
+    string? Message { get; set; }
 
     protected override void OnInitialized() => BlazoredModal.SetTitle("Enter a Message");
 

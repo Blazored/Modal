@@ -17,7 +17,7 @@
 
 @code {
 
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
     readonly Form _form = new();
 
@@ -29,6 +29,6 @@
     public class Form
     {
         [Required(ErrorMessage = "Please enter a message")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }

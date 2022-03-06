@@ -45,12 +45,12 @@ public partial class BlazoredModalInstance
     protected override void OnInitialized() 
         => ConfigureInstance();
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
         {
-            if (ActivateFocusTrap)
-                await JsRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
+            // if (ActivateFocusTrap)
+            //     await JsRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
             _closeBtnAttributes.Clear();
             StateHasChanged();
         }
@@ -70,7 +70,7 @@ public partial class BlazoredModalInstance
     /// Closes the modal with a default Ok result />.
     /// </summary>
     public async Task CloseAsync() 
-        => await CloseAsync(ModalResult.Ok<object>(null));
+        => await CloseAsync(ModalResult.Ok());
 
     /// <summary>
     /// Closes the modal with the specified <paramref name="modalResult"/>.

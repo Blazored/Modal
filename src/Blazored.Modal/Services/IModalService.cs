@@ -36,7 +36,7 @@ public interface IModalService
     /// <param name="title">Modal title.</param>
     /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
     /// <param name="options">Options to configure the modal.</param>
-    IModalReference Show<TComponent>(string title, ModalParameters parameters = null, ModalOptions options = null) where TComponent : IComponent;
+    IModalReference Show<TComponent>(string title, ModalParameters parameters, ModalOptions options) where TComponent : IComponent;
 
     /// <summary>
     /// Shows a modal containing a <paramref name="component"/>.
