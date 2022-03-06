@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+<PageTitle>Blazored Modal Samples</PageTitle>
+
 <h1>Blazored Modal Sample</h1>
 
 <hr class="mb-5" />
@@ -22,7 +24,7 @@
 
 @code {
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
     void ShowModal() => Modal.Show<Confirm>("Welcome to Blazored Modal");
 

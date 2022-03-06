@@ -6,44 +6,44 @@
 }
 else
 {
-<style>
-    #_@(Id.ToString("N")).blazored-modal-fade-in,
-    #_@($"{Id.ToString("N")}-overlay").blazored-modal-fade-in  {
-        animation: @AnimationDuration ease-out 0s ModalFadeIn;
-    }
+    <style>
+        #_@(Id.ToString("N")).blazored-modal-fade-in,
+        #_@($"{Id.ToString("N")}-overlay").blazored-modal-fade-in  {
+            animation: @AnimationDuration ease-out 0s ModalFadeIn;
+        }
 
-    #_@(Id.ToString("N")).blazored-modal-fade-out,
-    #_@($"{Id.ToString("N")}-overlay").blazored-modal-fade-out  {
-        animation: @AnimationDuration ease-out 0s ModalFadeOut;
-        opacity: 0;
-    }
-
-    @@keyframes ModalFadeIn {
-        0% {
+        #_@(Id.ToString("N")).blazored-modal-fade-out,
+        #_@($"{Id.ToString("N")}-overlay").blazored-modal-fade-out  {
+            animation: @AnimationDuration ease-out 0s ModalFadeOut;
             opacity: 0;
         }
 
-        100% {
-            opacity: 1;
-        }
-    }
+        @@keyframes ModalFadeIn {
+            0% {
+                opacity: 0;
+            }
 
-    @@keyframes ModalFadeOut {
-        0% {
-            opacity: 1;
+            100% {
+                opacity: 1;
+            }
         }
 
-        100% {
-            opacity: 0;
+        @@keyframes ModalFadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
         }
-    }
-</style>
+    </style>
 
     <div class="blazored-modal-container @Position" @ref="_modalReference">
 
         <div id="_@($"{Id.ToString("N")}-overlay")" class="blazored-modal-overlay 
         @OverlayCustomClass @OverlayAnimationClass" @onclick="HandleBackgroundClick"></div>
-
+    
         <div id="_@Id.ToString("N")" class="@Class" role="dialog" aria-modal="true" >
             @if (!HideHeader)
             {
@@ -65,4 +65,3 @@ else
         </div>
     </div>
 }
-

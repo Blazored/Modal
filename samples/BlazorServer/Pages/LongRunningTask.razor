@@ -30,9 +30,9 @@
 
 @code {
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
-    string _result;
+    string? _result;
 
     async Task ShowModal()
     {
@@ -48,7 +48,7 @@
 
         loading.Close();
         var result = await loading.Result;
-        if (result.Data == null && result.DataType == typeof(object))
+        if (result.DataType == typeof(object))
             _result = "Modal returned with default ModalResult";
 
         StateHasChanged();
@@ -69,7 +69,7 @@
         loading.Close(ModalResult.Ok("Closed with OK result"));
         var result = await loading.Result;
         if (result.DataType == typeof(string))
-            _result = result.Data.ToString();
+            _result = result.Data.ToString()!;
 
         StateHasChanged();
     }

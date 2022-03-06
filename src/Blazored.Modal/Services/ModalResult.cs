@@ -1,24 +1,27 @@
-﻿using System;
+﻿namespace Blazored.Modal.Services;
 
-namespace Blazored.Modal.Services
+public class ModalResult
 {
-    public class ModalResult
+    public object? Data { get; }
+    public Type? DataType { get; }
+    public bool Cancelled { get; }
+
+    private ModalResult(object? data, Type? resultType, bool cancelled)
     {
-        public object Data { get; }
-        public Type DataType { get; }
-        public bool Cancelled { get; }
-
-        protected ModalResult(object data, Type resultType, bool cancelled)
-        {
-            Data = data;
-            DataType = resultType;
-            Cancelled = cancelled;
-        }
-
-        public static ModalResult Ok<T>(T result) => Ok(result, default);
-
-        public static ModalResult Ok<T>(T result, Type modalType) => new ModalResult(result, modalType, false);
-
-        public static ModalResult Cancel() => new ModalResult(default, typeof(object), true);
+        Data = data;
+        DataType = resultType;
+        Cancelled = cancelled;
     }
+
+    public static ModalResult Ok<T>(T result) 
+        => Ok(result, typeof(T));
+
+    public static ModalResult Ok<T>(T result, Type? modalType) 
+        => new(result, modalType, false);
+
+    public static ModalResult Ok() 
+        => new(null, null, false);
+    
+    public static ModalResult Cancel() 
+        => new(null, null, true);
 }

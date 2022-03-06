@@ -1,4 +1,6 @@
-﻿<div class="simple-form">
+﻿@using System.ComponentModel.DataAnnotations
+
+<div class="simple-form">
     <EditForm Model="_form" OnValidSubmit="SubmitForm">
         <DataAnnotationsValidator />
 
@@ -15,9 +17,9 @@
 
 @code {
 
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
 
-    Form _form = new Form();
+    readonly Form _form = new();
 
     protected override void OnInitialized() => BlazoredModal.SetTitle("Enter a Message");
 
@@ -27,6 +29,6 @@
     public class Form
     {
         [Required(ErrorMessage = "Please enter a message")]
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }

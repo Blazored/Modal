@@ -34,9 +34,9 @@
 
 @code {
 
-    [CascadingParameter] public IModalService Modal { get; set; }
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
 
-    string _message;
+    string? _message;
 
     async Task ShowModal()
     {
@@ -44,7 +44,7 @@
         var result = await messageForm.Result;
 
         if (!result.Cancelled)
-            _message = result.Data?.ToString() ?? string.Empty;
+            _message = result.Data.ToString() ?? string.Empty;
     }
 
 }
