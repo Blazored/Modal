@@ -169,7 +169,7 @@ public partial class BlazoredModalInstance
                 if (!string.IsNullOrWhiteSpace(GlobalModalOptions.PositionCustomClass))
                     return GlobalModalOptions.PositionCustomClass;
 
-                throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set.");
+                throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set");
 
             default:
                 return "blazored-modal-center";

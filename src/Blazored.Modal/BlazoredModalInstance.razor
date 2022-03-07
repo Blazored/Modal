@@ -41,27 +41,31 @@ else
 
     <div class="blazored-modal-container @Position" @ref="_modalReference">
 
-        <div id="_@($"{Id.ToString("N")}-overlay")" class="blazored-modal-overlay 
-        @OverlayCustomClass @OverlayAnimationClass" @onclick="HandleBackgroundClick"></div>
+        <div id="_@($"{Id.ToString("N")}-overlay")" 
+             class="blazored-modal-overlay @OverlayCustomClass @OverlayAnimationClass" 
+             @onclick="HandleBackgroundClick"></div>
     
-        <div id="_@Id.ToString("N")" class="@Class" role="dialog" aria-modal="true" >
-            @if (!HideHeader)
-            {
-                <div class="blazored-modal-header">
-                    <h3 class="blazored-modal-title">@Title</h3>
-                    @if (!HideCloseButton)
-                    {
-                        <button type="button" class="blazored-modal-close" aria-label="close" @onclick="CancelAsync" @attributes="@_closeBtnAttributes"> 
-                            <span>&times;</span>
-                        </button>
-                    }
+        <FocusTrap IsActive="ActivateFocusTrap">
+            <div id="_@Id.ToString("N")" class="@Class" role="dialog" aria-modal="true" >
+                @if (!HideHeader)
+                {
+                    <div class="blazored-modal-header">
+                        <h3 class="blazored-modal-title">@Title</h3>
+                        @if (!HideCloseButton)
+                        {
+                            <button type="button" class="blazored-modal-close" aria-label="close" @onclick="CancelAsync" @attributes="@_closeBtnAttributes"> 
+                                <span>&times;</span>
+                            </button>
+                        }
+                    </div>
+                }
+                <div class="blazored-modal-content">
+                    <CascadingValue Value="this">
+                        @Content
+                    </CascadingValue>
                 </div>
-            }
-            <div class="blazored-modal-content">
-                <CascadingValue Value="this">
-                    @Content
-                </CascadingValue>
             </div>
-        </div>
+        </FocusTrap>
+        
     </div>
 }
