@@ -1,0 +1,54 @@
+<div class="blazored-modal-focus-trap" @ref="_container" @onkeydown="HandleKeyPresses" @onkeyup="HandleKeyPresses">
+    <div tabindex="@(IsActive ? 0 : -1)" @ref="_startSecond" @onfocus="FocusEndAsync"></div>
+    <div tabindex="@(IsActive ? 0 : -1)" @ref="_startFirst" @onfocus="FocusEndAsync"></div>
+    @ChildContent
+    <div tabindex="@(IsActive ? 0 : -1)" @ref="_endFirst" @onfocus="FocusStartAsync"></div>
+    <div tabindex="@(IsActive ? 0 : -1)" @ref="_endSecond" @onfocus="FocusStartAsync"></div>
+</div>
+
+@code {
+    private ElementReference _container;
+    private ElementReference _startFirst;
+    private ElementReference _startSecond;
+    private ElementReference _endFirst;
+    private ElementReference _endSecond;
+    private bool _shiftPressed;
+
+    [Parameter] public RenderFragment ChildContent { get; set; } = default!;
+    [Parameter] public bool IsActive { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await _startFirst.FocusAsync();
+        }
+    }
+
+    internal async Task SetFocus()
+        => await _startFirst.FocusAsync();
+
+    private async Task FocusStartAsync(FocusEventArgs args)
+    {
+        if (!_shiftPressed)
+        {
+            await _startFirst.FocusAsync();
+        }
+    }
+
+    private async Task FocusEndAsync(FocusEventArgs args)
+    {
+        if (_shiftPressed)
+        {
+            await _endFirst.FocusAsync();
+        }
+    }
+
+    private void HandleKeyPresses(KeyboardEventArgs args)
+    {
+        if (args.Key == "Tab")
+        {
+            _shiftPressed = args.ShiftKey;
+        }
+    }
+}

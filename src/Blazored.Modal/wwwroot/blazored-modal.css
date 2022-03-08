@@ -18,9 +18,13 @@
     left: 0;
 }
 
+.blazored-modal-focus-trap {
+    z-index: 102;
+}
+
 .blazored-modal {
     display: flex;
-    z-index: 102;
+    z-index: 103;
     flex-direction: column;
     background-color: #fff;
     border-radius: 4px;

@@ -68,7 +68,7 @@
 
         loading.Close(ModalResult.Ok("Closed with OK result"));
         var result = await loading.Result;
-        if (result.DataType == typeof(string))
+        if (result.Data is not null && result.DataType == typeof(string))
             _result = result.Data.ToString()!;
 
         StateHasChanged();

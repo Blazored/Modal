@@ -30,6 +30,8 @@
     private readonly Collection<ModalReference> _modals = new();
     private readonly ModalOptions _globalModalOptions = new();
 
+    internal event Action? OnModalClosed;
+
     protected override void OnInitialized()
     {
         if (CascadedModalService == null)
@@ -61,23 +63,12 @@
         {
             // Gracefully close the modal
             await modal.ModalInstanceRef.CloseAsync(result);
+            OnModalClosed?.Invoke();
         }
         else
         {
             await DismissInstance(modal, result);
         }
-    }
-
-    internal void CloseInstance(Guid id)
-    {
-        var reference = GetModalReference(id);
-        CloseInstance(reference, ModalResult.Ok());
-    }
-
-    internal void CancelInstance(Guid id)
-    {
-        var reference = GetModalReference(id);
-        CloseInstance(reference, ModalResult.Cancel());
     }
 
     internal Task DismissInstance(Guid id, ModalResult result)
@@ -93,6 +84,7 @@
             modal.Dismiss(result);
             _modals.Remove(modal);
             await InvokeAsync(StateHasChanged);
+            OnModalClosed?.Invoke();
         }
     }
 
