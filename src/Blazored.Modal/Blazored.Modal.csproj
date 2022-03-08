@@ -28,10 +28,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="6.0.2" />
+    <PackageReference Include="Microsoft.JSInterop.WebAssembly" Version="6.0.3" />
   </ItemGroup>
 
   <ItemGroup>

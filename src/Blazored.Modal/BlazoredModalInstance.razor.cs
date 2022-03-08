@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Blazored.Modal;
 
-public partial class BlazoredModalInstance
+public partial class BlazoredModalInstance : IDisposable
 {
     [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
     [CascadingParameter] private BlazoredModal Parent { get; set; } = default!;
@@ -38,6 +38,8 @@ public partial class BlazoredModalInstance
 
     [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
     private ElementReference _modalReference;
+    private FocusTrap _focusTrap = default!;
+    private bool _setFocus;
 
     // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
     private readonly Dictionary<string, object> _closeBtnAttributes = new() { { "tabindex", "-1" } };
@@ -49,10 +51,17 @@ public partial class BlazoredModalInstance
     {
         if (firstRender)
         {
-            // if (ActivateFocusTrap)
-            //     await JsRuntime.InvokeVoidAsync("BlazoredModal.activateFocusTrap", _modalReference, Id);
             _closeBtnAttributes.Clear();
             StateHasChanged();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_setFocus)
+        {
+            await _focusTrap.SetFocus();
+            _setFocus = false;
         }
     }
 
@@ -112,7 +121,11 @@ public partial class BlazoredModalInstance
         OverlayCustomClass = SetOverlayCustomClass();
         ActivateFocusTrap = SetActivateFocusTrap();
         OverlayAnimationClass = SetAnimationClass();
+        Parent.OnModalClosed += AttemptFocus;
     }
+
+    private void AttemptFocus() 
+        => _setFocus = true;
 
     private bool SetUseCustomLayout()
     {
@@ -270,7 +283,7 @@ public partial class BlazoredModalInstance
         if (GlobalModalOptions.ActivateFocusTrap.HasValue)
             return GlobalModalOptions.ActivateFocusTrap.Value;
 
-        return true; // Default to true to match old behaviour
+        return true;
     }
 
     private async Task HandleBackgroundClick()
@@ -279,4 +292,7 @@ public partial class BlazoredModalInstance
 
         await CancelAsync();
     }
+
+    void IDisposable.Dispose() 
+        => Parent.OnModalClosed -= AttemptFocus;
 }

@@ -45,7 +45,7 @@ else
              class="blazored-modal-overlay @OverlayCustomClass @OverlayAnimationClass" 
              @onclick="HandleBackgroundClick"></div>
     
-        <FocusTrap IsActive="ActivateFocusTrap">
+        <FocusTrap @ref="_focusTrap" IsActive="ActivateFocusTrap">
             <div id="_@Id.ToString("N")" class="@Class" role="dialog" aria-modal="true" >
                 @if (!HideHeader)
                 {
