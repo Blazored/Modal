@@ -1,13 +1,11 @@
 ﻿using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Blazored.Modal;
 
 public partial class BlazoredModalInstance : IDisposable
 {
-    [Inject] private IJSRuntime JsRuntime { get; set; } = default!;
     [CascadingParameter] private BlazoredModal Parent { get; set; } = default!;
     [CascadingParameter] private ModalOptions GlobalModalOptions { get; set; } = default!;
 
@@ -108,6 +106,12 @@ public partial class BlazoredModalInstance : IDisposable
     /// </summary>
     public async Task CancelAsync() 
         => await CloseAsync(ModalResult.Cancel());
+    
+    /// <summary>
+    /// Closes the modal returning the specified <paramref name="payload"/> in a cancelled ModalResult.
+    /// </summary>
+    public async Task CancelAsync<TPayload>(TPayload payload) 
+        => await CloseAsync(ModalResult.Cancel(payload));
 
     private void ConfigureInstance()
     {
