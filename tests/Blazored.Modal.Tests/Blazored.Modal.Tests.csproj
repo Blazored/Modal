@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Blazored.Modal\Blazored.Modal.csproj" />
+    <ProjectReference Include="..\..\src\Blazored.Modal\Blazored.Modal.csproj" />
   </ItemGroup>
 
 </Project>
