@@ -15,7 +15,7 @@ public partial class BlazoredModalInstance : IDisposable
     [Parameter] public Guid Id { get; set; }
 
     private string? Position { get; set; }
-    private string? Class { get; set; }
+    private string? ModalClass { get; set; }
     private bool HideHeader { get; set; }
     private bool HideCloseButton { get; set; }
     private bool DisableBackgroundCancel { get; set; }
@@ -88,7 +88,7 @@ public partial class BlazoredModalInstance : IDisposable
         // Fade out the modal, and after that actually remove it
         if (Animation?.Type is ModalAnimationType.FadeOut or ModalAnimationType.FadeInOut)
         {
-            Class += " blazored-modal-fade-out";
+            ModalClass += " blazored-modal-fade-out";
             OverlayAnimationClass += " blazored-modal-fade-out";
             StateHasChanged();
             
@@ -117,7 +117,7 @@ public partial class BlazoredModalInstance : IDisposable
     {
         Animation = SetAnimation();
         Position = SetPosition();
-        Class = SetClass();
+        ModalClass = SetModalClass();
         HideHeader = SetHideHeader();
         HideCloseButton = SetHideCloseButton();
         DisableBackgroundCancel = SetDisableBackgroundCancel();
@@ -166,7 +166,7 @@ public partial class BlazoredModalInstance : IDisposable
         switch (position)
         {
             case ModalPosition.Center:
-                return "blazored-modal-center";
+                return "";
 
             case ModalPosition.TopLeft:
                 return "blazored-modal-topleft";
@@ -189,11 +189,55 @@ public partial class BlazoredModalInstance : IDisposable
                 throw new InvalidOperationException("Position set to Custom without a PositionCustomClass set");
 
             default:
-                return "blazored-modal-center";
+                return "";
+        }
+    }
+    
+    private string SetSize()
+    {
+        ModalSize size;
+
+        if (Options.Size.HasValue)
+        {
+            size = Options.Size.Value;
+        }
+        else if (GlobalModalOptions.Size.HasValue)
+        {
+            size = GlobalModalOptions.Size.Value;
+        }
+        else
+        {
+            size = ModalSize.Medium;
+        }
+
+        switch (size)
+        {
+            case ModalSize.Small:
+                return "bm-size-small";
+
+            case ModalSize.Medium:
+                return "bm-size-medium";
+
+            case ModalSize.Large:
+                return "bm-size-large";
+            
+            case ModalSize.ExtraLarge:
+                return "bm-size-extra-large";
+
+            case ModalSize.Custom:
+                if (!string.IsNullOrWhiteSpace(Options.SizeCustomClass))
+                    return Options.SizeCustomClass;
+                if (!string.IsNullOrWhiteSpace(GlobalModalOptions.SizeCustomClass))
+                    return GlobalModalOptions.SizeCustomClass;
+
+                throw new InvalidOperationException("Size set to Custom without a SizeCustomClass set");
+
+            default:
+                return "bm-size-medium";
         }
     }
 
-    private string SetClass()
+    private string SetModalClass()
     {
         var modalClass = string.Empty;
 
@@ -204,15 +248,14 @@ public partial class BlazoredModalInstance : IDisposable
             modalClass = GlobalModalOptions.Class;
 
         if (string.IsNullOrWhiteSpace(modalClass))
+        {
             modalClass = "blazored-modal";
+            modalClass += $" {SetSize()}";
+        }
 
-        string animationClass = SetAnimationClass();
+        var animationClass = SetAnimationClass();
         if (!string.IsNullOrWhiteSpace(animationClass))
             modalClass += $" {animationClass}";
-
-        string scrollableClass = SetScrollableClass();
-        if (!string.IsNullOrWhiteSpace(scrollableClass))
-            modalClass += $" {scrollableClass}";
 
         return modalClass;
     }
@@ -224,16 +267,6 @@ public partial class BlazoredModalInstance : IDisposable
         => Animation?.Type is ModalAnimationType.FadeIn or ModalAnimationType.FadeInOut 
             ? "blazored-modal-fade-in" 
             : string.Empty;
-
-    private string SetScrollableClass()
-    {
-        if (Options.ContentScrollable == true || GlobalModalOptions.ContentScrollable == true)
-        {
-            return "blazored-modal-scrollable";
-        }
-
-        return string.Empty;
-    }
 
     private bool SetHideHeader()
     {

@@ -190,54 +190,54 @@ namespace Blazored.Modal.Tests
             Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
         }
 
-        [Fact]
-        public void ModalDisplaysCustomStyleWithScrollableContent()
-        {
-            // Arrange
-            var modalService = Services.GetService<IModalService>();
-            var customStyle = "my-custom-style";
-            var options = new ModalOptions { Class = customStyle, ContentScrollable = true };
-            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
-
-            // Act
-            modalService.Show<TestComponent>("", options);
-
-            // Assert
-            Assert.NotNull(cut.Find($"div.{customStyle}"));
-            Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
-        }
-
-        [Fact]
-        public void ModalDisplaysStandardStyleWithScrollableContent()
-        {
-            // Arrange
-            var modalService = Services.GetService<IModalService>();
-            var options = new ModalOptions { ContentScrollable = true };
-            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
-
-            // Act
-            modalService.Show<TestComponent>("", options);
-
-            // Assert
-            Assert.NotNull(cut.Find($"div.blazored-modal"));
-            Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
-        }
-
-        [Fact]
-        public void ModalDisplaysStandardStyleWithScrollableContentAndAnimationFadeInClass()
-        {
-            // Arrange
-            var modalService = Services.GetService<IModalService>();
-            var options = new ModalOptions { ContentScrollable = true, Animation = new ModalAnimation(ModalAnimationType.FadeIn, 100) };
-            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
-
-            // Act
-            modalService.Show<TestComponent>("", options);
-
-            // Assert
-            Assert.NotNull(cut.Find($"div.blazored-modal"));
-            Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
-            Assert.NotNull(cut.Find($"div.blazored-modal-fade-in"));
-        }
+        // [Fact]
+        // public void ModalDisplaysCustomStyleWithScrollableContent()
+        // {
+        //     // Arrange
+        //     var modalService = Services.GetService<IModalService>();
+        //     var customStyle = "my-custom-style";
+        //     var options = new ModalOptions { Class = customStyle, ContentScrollable = true };
+        //     var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+        //
+        //     // Act
+        //     modalService.Show<TestComponent>("", options);
+        //
+        //     // Assert
+        //     Assert.NotNull(cut.Find($"div.{customStyle}"));
+        //     Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
+        // }
+        //
+        // [Fact]
+        // public void ModalDisplaysStandardStyleWithScrollableContent()
+        // {
+        //     // Arrange
+        //     var modalService = Services.GetService<IModalService>();
+        //     var options = new ModalOptions { ContentScrollable = true };
+        //     var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+        //
+        //     // Act
+        //     modalService.Show<TestComponent>("", options);
+        //
+        //     // Assert
+        //     Assert.NotNull(cut.Find($"div.blazored-modal"));
+        //     Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
+        // }
+        //
+        // [Fact]
+        // public void ModalDisplaysStandardStyleWithScrollableContentAndAnimationFadeInClass()
+        // {
+        //     // Arrange
+        //     var modalService = Services.GetService<IModalService>();
+        //     var options = new ModalOptions { ContentScrollable = true, Animation = new ModalAnimation(ModalAnimationType.FadeIn, 100) };
+        //     var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+        //
+        //     // Act
+        //     modalService.Show<TestComponent>("", options);
+        //
+        //     // Assert
+        //     Assert.NotNull(cut.Find($"div.blazored-modal"));
+        //     Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
+        //     Assert.NotNull(cut.Find($"div.blazored-modal-fade-in"));
+        // }
     }
 }
