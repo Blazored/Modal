@@ -5,7 +5,7 @@ namespace Blazored.Modal;
 
 public class ModalReference : IModalReference
 {
-    private readonly TaskCompletionSource<ModalResult> _resultCompletion = new();
+    private readonly TaskCompletionSource<ModalResult> _resultCompletion = new(TaskCreationOptions.RunContinuationsAsynchronously);
     private readonly Action<ModalResult> _closed;
     private readonly ModalService _modalService;
 
