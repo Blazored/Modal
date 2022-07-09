@@ -44,7 +44,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".blazored-modal-container.blazored-modal-center"));
+            Assert.NotNull(cut.Find(".blazored-modal-container"));
         }
 
         [Fact]
@@ -58,13 +58,12 @@ namespace Blazored.Modal.Tests
             // Act
             modalService.Show<TestComponent>("", options);
 
-
             // Assert
             Assert.NotNull(cut.Find(".blazored-modal-container.blazored-modal-topleft"));
         }
 
         [Fact]
-        public void ModalDisplaysCorrectPositionClassWhenUsingCustomPositiopn()
+        public void ModalDisplaysCorrectPositionClassWhenUsingCustomPosition()
         {
             // Arrange
             var options = new ModalOptions
@@ -189,55 +188,83 @@ namespace Blazored.Modal.Tests
             // Assert
             Assert.Equal(testTitle, cut.Find(".test-component h1").InnerHtml);
         }
+        
+        [Fact]
+        public void ModalDisplaysMediumSizeClassWhenSizeNotSet()
+        {
+            // Arrange
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
-        // [Fact]
-        // public void ModalDisplaysCustomStyleWithScrollableContent()
-        // {
-        //     // Arrange
-        //     var modalService = Services.GetService<IModalService>();
-        //     var customStyle = "my-custom-style";
-        //     var options = new ModalOptions { Class = customStyle, ContentScrollable = true };
-        //     var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
-        //
-        //     // Act
-        //     modalService.Show<TestComponent>("", options);
-        //
-        //     // Assert
-        //     Assert.NotNull(cut.Find($"div.{customStyle}"));
-        //     Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
-        // }
-        //
-        // [Fact]
-        // public void ModalDisplaysStandardStyleWithScrollableContent()
-        // {
-        //     // Arrange
-        //     var modalService = Services.GetService<IModalService>();
-        //     var options = new ModalOptions { ContentScrollable = true };
-        //     var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
-        //
-        //     // Act
-        //     modalService.Show<TestComponent>("", options);
-        //
-        //     // Assert
-        //     Assert.NotNull(cut.Find($"div.blazored-modal"));
-        //     Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
-        // }
-        //
-        // [Fact]
-        // public void ModalDisplaysStandardStyleWithScrollableContentAndAnimationFadeInClass()
-        // {
-        //     // Arrange
-        //     var modalService = Services.GetService<IModalService>();
-        //     var options = new ModalOptions { ContentScrollable = true, Animation = new ModalAnimation(ModalAnimationType.FadeIn, 100) };
-        //     var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
-        //
-        //     // Act
-        //     modalService.Show<TestComponent>("", options);
-        //
-        //     // Assert
-        //     Assert.NotNull(cut.Find($"div.blazored-modal"));
-        //     Assert.NotNull(cut.Find($"div.blazored-modal-scrollable"));
-        //     Assert.NotNull(cut.Find($"div.blazored-modal-fade-in"));
-        // }
+            // Act
+            modalService.Show<TestComponent>("");
+
+            // Assert
+            Assert.NotNull(cut.Find(".bm-size-medium"));
+        }
+        
+        [Fact]
+        public void ModalDisplaysSmallSizeClassWhenSizeIsSmall()
+        {
+            // Arrange
+            var options = new ModalOptions { Size = ModalSize.Small };
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show<TestComponent>("", options);
+
+            // Assert
+            Assert.NotNull(cut.Find(".bm-size-small"));
+        }
+        
+        [Fact]
+        public void ModalDisplaysLargeSizeClassWhenSizeIsLarge()
+        {
+            // Arrange
+            var options = new ModalOptions { Size = ModalSize.Large };
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show<TestComponent>("", options);
+
+            // Assert
+            Assert.NotNull(cut.Find(".bm-size-large"));
+        }
+        
+        [Fact]
+        public void ModalDisplaysExtraLargeSizeClassWhenSizeIsExtraLarge()
+        {
+            // Arrange
+            var options = new ModalOptions { Size = ModalSize.ExtraLarge };
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show<TestComponent>("", options);
+
+            // Assert
+            Assert.NotNull(cut.Find(".bm-size-extra-large"));
+        }
+        
+        [Fact]
+        public void ModalDisplaysCustomSizeClassWhenSizeIsCustom()
+        {
+            // Arrange
+            var options = new ModalOptions
+            {
+                Size = ModalSize.Custom,
+                SizeCustomClass = "my-custom-size"
+            };
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
+
+            // Act
+            modalService.Show<TestComponent>("", options);
+
+            // Assert
+            Assert.NotNull(cut.Find(".my-custom-size"));
+        }
     }
 }
