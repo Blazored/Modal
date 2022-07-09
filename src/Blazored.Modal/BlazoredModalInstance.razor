@@ -40,12 +40,12 @@ else
     </style>
 
     <div class="blazored-modal-container @Position @OverlayCustomClass @OverlayAnimationClass" 
-         @ref="_modalReference" 
          id="_@($"{Id.ToString("N")}-overlay")"
+         @ref="_modalReference" 
          @onclick="HandleBackgroundClick">
 
         <FocusTrap @ref="_focusTrap" IsActive="ActivateFocusTrap">
-            <div id="_@Id.ToString("N")" class="@ModalClass" role="dialog" aria-modal="true" >
+            <div id="_@Id.ToString("N")" class="@ModalClass" role="dialog" aria-modal="true" @onclick:stopPropagation="true">
                 @if (!HideHeader)
                 {
                     <div class="blazored-modal-header">
