@@ -2,9 +2,10 @@
 
 public enum ModalPosition
 {
-    Center,
+    TopCenter,
     TopLeft,
     TopRight,
+    Middle,
     BottomLeft,
     BottomRight,
     Custom

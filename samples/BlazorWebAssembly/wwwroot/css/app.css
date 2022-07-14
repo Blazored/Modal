@@ -34,6 +34,18 @@ a, .btn-link {
     color: red;
 }
 
+.my-custom-position .blazored-modal {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+}
+
+.my-custom-size {
+    width: 88%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

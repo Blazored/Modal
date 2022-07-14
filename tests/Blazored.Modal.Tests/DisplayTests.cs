@@ -68,7 +68,11 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>();
+            var options = new ModalOptions
+            {
+                AnimationType = ModalAnimationType.None
+            };
+            modalService.Show<TestComponent>("", options);
             Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
 
             var closeButton = cut.Find(".test-component__close-button");
@@ -86,10 +90,14 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            modalService.Show<TestComponent>();
+            var options = new ModalOptions
+            {
+                AnimationType = ModalAnimationType.None
+            };
+            modalService.Show<TestComponent>("", options);
             Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
 
-            var closeButton = cut.Find(".blazored-modal-close");
+            var closeButton = cut.Find(".close");
             closeButton.Click();
 
             // Assert
@@ -104,7 +112,11 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Act
-            var modalReferece = modalService.Show<TestComponent>();
+            var options = new ModalOptions
+            {
+                AnimationType = ModalAnimationType.None
+            };
+            var modalReferece = modalService.Show<TestComponent>("", options);
             Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
 
             modalReferece.Close();

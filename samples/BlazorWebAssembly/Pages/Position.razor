@@ -35,7 +35,8 @@
 
 <button @onclick="@(() => PositionCustom(ModalPosition.TopLeft))" class="btn btn-secondary">Top left</button>
 <button @onclick="@(() => PositionCustom(ModalPosition.TopRight))" class="btn btn-secondary">Top right</button>
-<button @onclick="PositionCenter" class="btn btn-primary">Center</button>
+<button @onclick="PositionCenter" class="btn btn-primary">Top Center (Default)</button>
+<button @onclick="@(() => PositionCustom(ModalPosition.Middle))" class="btn btn-secondary">Middle</button>
 <button @onclick="@(() => PositionCustom(ModalPosition.BottomLeft))" class="btn btn-secondary">Bottom left</button>
 <button @onclick="@(() => PositionCustom(ModalPosition.BottomRight))" class="btn btn-secondary">Bottom right</button>
 <button @onclick="@(() => PositionCustom(ModalPosition.Custom))" class="btn btn-secondary">Custom</button>
@@ -46,7 +47,7 @@
 
     void PositionCenter()
     {
-        Modal.Show<Confirm>("Centered Modal (Default)");
+        Modal.Show<Confirm>("Top Center Modal (Default)");
     }
 
     void PositionCustom(ModalPosition position)
