@@ -29,7 +29,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>(testTitle);
 
             // Assert
-            Assert.Equal(testTitle, cut.Find(".blazored-modal-title").InnerHtml);
+            Assert.Equal(testTitle, cut.Find(".title").InnerHtml);
         }
         
         [Fact]
@@ -59,7 +59,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".blazored-modal-container.blazored-modal-topleft"));
+            Assert.NotNull(cut.Find(".blazored-modal-container.position-topleft"));
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>();
 
             // Assert
-            Assert.NotNull(cut.Find(".blazored-modal-close"));
+            Assert.NotNull(cut.Find(".close"));
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>();
 
             // Assert
-            Assert.NotNull(cut.Find(".blazored-modal-header"));
+            Assert.NotNull(cut.Find(".header"));
         }
 
         [Fact]
@@ -200,7 +200,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("");
 
             // Assert
-            Assert.NotNull(cut.Find(".bm-size-medium"));
+            Assert.NotNull(cut.Find(".size-medium"));
         }
         
         [Fact]
@@ -215,7 +215,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".bm-size-small"));
+            Assert.NotNull(cut.Find(".size-small"));
         }
         
         [Fact]
@@ -230,7 +230,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".bm-size-large"));
+            Assert.NotNull(cut.Find(".size-large"));
         }
         
         [Fact]
@@ -245,7 +245,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".bm-size-extra-large"));
+            Assert.NotNull(cut.Find(".size-extra-large"));
         }
         
         [Fact]
