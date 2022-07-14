@@ -1,0 +1,30 @@
+﻿@inject IJSRuntime JsRuntime
+@implements IAsyncDisposable
+
+<pre><code @ref="_codeBlock" class="@($"language-{Language}")">@ChildContent</code></pre>
+
+@code {
+    private IJSObjectReference? _codeBlockJs;
+    private ElementReference _codeBlock;
+
+    [Parameter, EditorRequired] public RenderFragment ChildContent { get; set; } = default!;
+    [Parameter] public string Language { get; set; } = "razor";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _codeBlockJs = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Shared/CodeBlock.razor.js");
+        }
+        
+        await _codeBlockJs!.InvokeVoidAsync("highlightCode", _codeBlock);
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (_codeBlockJs is not null)
+        {
+            await _codeBlockJs.DisposeAsync();
+        }
+    }
+}

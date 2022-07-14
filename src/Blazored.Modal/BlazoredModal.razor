@@ -26,7 +26,7 @@
     [Parameter] public ModalSize? Size { get; set; }
     [Parameter] public string? SizeCustomClass { get; set; }
     [Parameter] public string? Class { get; set; }
-    [Parameter] public ModalAnimation? Animation { get; set; }
+    [Parameter] public ModalAnimationType? AnimationType { get; set; }
     [Parameter] public bool? UseCustomLayout { get; set; }
     [Parameter] public bool? ActivateFocusTrap { get; set; }
 
@@ -56,7 +56,7 @@
         _globalModalOptions.PositionCustomClass = PositionCustomClass;
         _globalModalOptions.Size = Size;
         _globalModalOptions.SizeCustomClass = SizeCustomClass;
-        _globalModalOptions.Animation = Animation;
+        _globalModalOptions.AnimationType = AnimationType;
         _globalModalOptions.OverlayCustomClass = OverlayCustomClass;
 
         _globalModalOptions.UseCustomLayout = UseCustomLayout;

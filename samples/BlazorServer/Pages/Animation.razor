@@ -5,7 +5,7 @@
 <hr class="mb-5" />
 
 <p>
-    By default, the modal is shown without animation. The modal can be set to no animation, Fade in, Fade out or both.
+    By default, the modal is shown with a subtle fade in out animation. However, this can be disabled so the modal shows and hides immediately.
 </p>
 
 <div class="card mb-4">
@@ -13,9 +13,9 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("var options = new ModalOptions() { Animation = ModalAnimation.FadeIn(2) };")
+                @("var options = new ModalOptions() { AnimationType = ModalAnimation.None };")
                 <br />
-                @("Modal.Show<Confirm>(\"Animation: Fade-In\", options);")
+                @("Modal.Show<Confirm>(\"Animation Type: None\", options);")
             </code>
         </p>
     </div>
@@ -26,48 +26,41 @@
     <div class="card-body">
         <p class="card-text">
             <code>
-                @("<BlazoredModal Animation=\"@ModalAnimation.FadeIn(2)\"/> ")
+                @("<BlazoredModal AnimationType=\"@ModalAnimationType.None\"/> ")
             </code>
         </p>
     </div>
 </div>
 
-<input type="number" @bind-value="@_duration" />
-
-<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeIn(_duration)))" class="btn btn-secondary">Fade-In</button>
-<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeOut(_duration)))" class="btn btn-secondary">Fade-Out</button>
-<button @onclick="AnimationDefault" class="btn btn-primary">Globally set value (default no animation)</button>
-<button @onclick="@(() => AnimationCustom(ModalAnimation.FadeInOut(_duration)))" class="btn btn-secondary">Fade-in Fade-Out</button>
+<button @onclick="AnimationDefault" class="btn btn-primary">Fade-in Fade-Out (Default)</button>
+<button @onclick="NoAnimation" class="btn btn-secondary">None</button>
 
 <p>
-    It is also possible to have multiple modals (like in the Multiple Modals example) with different animations. With the below modal, the first modal will only fade-in with a duration of 2 seconds. The second modal will fade-in and fade-out in 5.0 seconds.
+    It is also possible to have multiple modals (like in the Multiple Modals example) with different animations. With the below modal, the first modal will appear without an animation. The second modal will fade-in and fade-out.
 </p>
 
 <button @onclick="@MultipleModals" class="btn btn-primary">Multiple Modals</button>
 
 @code {
-
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
-
-    private double _duration = 1.0;
 
     void AnimationDefault()
     {
         Modal.Show<Confirm>("Default Animation");
     }
 
-    void AnimationCustom(ModalAnimation animation)
+    void NoAnimation()
     {
-        var options = new ModalOptions { Animation = animation };
+        var options = new ModalOptions { AnimationType = ModalAnimationType.None };
 
-        Modal.Show<Confirm>($"Animation: {animation.Type}", options);
+        Modal.Show<Confirm>("Animation Type: None", options);
     }
 
     void MultipleModals()
     {
         var options = new ModalOptions
         {
-            Animation = ModalAnimation.FadeIn(2)
+            AnimationType = ModalAnimationType.None
         };
 
         Modal.Show<YesNoPromptAnimation>("Multiple Modals", options);

@@ -11,7 +11,7 @@ public class ModalOptions
     public bool? DisableBackgroundCancel { get; set; }
     public bool? HideHeader { get; set; }
     public bool? HideCloseButton { get; set; }
-    public ModalAnimation? Animation { get; set; }
+    public ModalAnimationType? AnimationType { get; set; }
     public bool? UseCustomLayout { get; set; }
     public bool? ActivateFocusTrap { get; set; }
 }

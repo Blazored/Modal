@@ -21,16 +21,8 @@ public partial class BlazoredModalInstance : IDisposable
     private bool DisableBackgroundCancel { get; set; }
     private string? OverlayAnimationClass { get; set; }
     private string? OverlayCustomClass { get; set; }
-    private ModalAnimation? Animation { get; set; }
+    private ModalAnimationType? AnimationType { get; set; }
     private bool ActivateFocusTrap { get; set; }
-    private string AnimationDuration
-    {
-        get
-        {
-            var duration = Animation?.Duration * 1000;
-            return FormattableString.Invariant($"{duration}ms");
-        }
-    }
 
     public bool UseCustomLayout { get; set; }
 
@@ -86,16 +78,12 @@ public partial class BlazoredModalInstance : IDisposable
     public async Task CloseAsync(ModalResult modalResult)
     {
         // Fade out the modal, and after that actually remove it
-        if (Animation?.Type is ModalAnimationType.FadeOut or ModalAnimationType.FadeInOut)
+        if (AnimationType is ModalAnimationType.FadeInOut)
         {
-            ModalClass += " blazored-modal-fade-out";
-            OverlayAnimationClass += " blazored-modal-fade-out";
+            OverlayAnimationClass += " fade-out";
             StateHasChanged();
             
-            if (Animation.Duration > 0)
-            {
-                await Task.Delay((int)(Animation.Duration * 1000) + 100); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
-            }
+            await Task.Delay(400); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
         }
 
         await Parent.DismissInstance(Id, modalResult);
@@ -115,7 +103,7 @@ public partial class BlazoredModalInstance : IDisposable
 
     private void ConfigureInstance()
     {
-        Animation = SetAnimation();
+        AnimationType = SetAnimation();
         Position = SetPosition();
         ModalClass = SetModalClass();
         HideHeader = SetHideHeader();
@@ -160,25 +148,28 @@ public partial class BlazoredModalInstance : IDisposable
         }
         else
         {
-            position = ModalPosition.Center;
+            position = ModalPosition.TopCenter;
         }
 
         switch (position)
         {
-            case ModalPosition.Center:
+            case ModalPosition.TopCenter:
                 return "";
 
             case ModalPosition.TopLeft:
-                return "blazored-modal-topleft";
+                return "position-topleft";
 
             case ModalPosition.TopRight:
-                return "blazored-modal-topright";
+                return "position-topright";
+            
+            case ModalPosition.Middle:
+                return "position-middle";
 
             case ModalPosition.BottomLeft:
-                return "blazored-modal-bottomleft";
+                return "position-bottomleft";
 
             case ModalPosition.BottomRight:
-                return "blazored-modal-bottomright";
+                return "position-bottomright";
 
             case ModalPosition.Custom:
                 if (!string.IsNullOrWhiteSpace(Options.PositionCustomClass))
@@ -213,16 +204,16 @@ public partial class BlazoredModalInstance : IDisposable
         switch (size)
         {
             case ModalSize.Small:
-                return "bm-size-small";
+                return "size-small";
 
             case ModalSize.Medium:
-                return "bm-size-medium";
+                return "size-medium";
 
             case ModalSize.Large:
-                return "bm-size-large";
+                return "size-large";
             
             case ModalSize.ExtraLarge:
-                return "bm-size-extra-large";
+                return "size-extra-large";
 
             case ModalSize.Custom:
                 if (!string.IsNullOrWhiteSpace(Options.SizeCustomClass))
@@ -233,7 +224,7 @@ public partial class BlazoredModalInstance : IDisposable
                 throw new InvalidOperationException("Size set to Custom without a SizeCustomClass set");
 
             default:
-                return "bm-size-medium";
+                return "size-medium";
         }
     }
 
@@ -253,20 +244,14 @@ public partial class BlazoredModalInstance : IDisposable
             modalClass += $" {SetSize()}";
         }
 
-        var animationClass = SetAnimationClass();
-        if (!string.IsNullOrWhiteSpace(animationClass))
-            modalClass += $" {animationClass}";
-
         return modalClass;
     }
 
-    private ModalAnimation SetAnimation() 
-        => Options.Animation ?? GlobalModalOptions.Animation ?? new ModalAnimation(ModalAnimationType.None, 0);
+    private ModalAnimationType SetAnimation() 
+        => Options.AnimationType ?? GlobalModalOptions.AnimationType ?? ModalAnimationType.FadeInOut;
 
     private string SetAnimationClass() 
-        => Animation?.Type is ModalAnimationType.FadeIn or ModalAnimationType.FadeInOut 
-            ? "blazored-modal-fade-in" 
-            : string.Empty;
+        => AnimationType is ModalAnimationType.FadeInOut ? "fade-in" : string.Empty;
 
     private bool SetHideHeader()
     {
