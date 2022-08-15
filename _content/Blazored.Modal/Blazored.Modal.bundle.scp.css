@@ -1,0 +1,126 @@
+/* _content/Blazored.Modal/BlazoredModalInstance.razor.rz.scp.css */
+.bm-container[b-mwsrhhqq2g] {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.blazored-modal[b-mwsrhhqq2g] {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    padding: 1.5rem;
+    box-shadow: 0 2px 2px rgba(0,0,0,.25);
+    margin: 1.75rem;
+}
+
+.size-small[b-mwsrhhqq2g] {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.size-medium[b-mwsrhhqq2g] {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.size-large[b-mwsrhhqq2g] {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.size-extra-large[b-mwsrhhqq2g] {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bm-header[b-mwsrhhqq2g] {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 0 0 2rem 0;
+}
+
+.bm-title[b-mwsrhhqq2g] {
+    margin-bottom: 0;
+}
+
+.bm-close[b-mwsrhhqq2g] {
+    padding: 1rem;
+    margin: -1rem -1rem -1rem auto;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.position-topleft .blazored-modal[b-mwsrhhqq2g] {
+    margin-left: 1.75rem;
+}
+
+.position-topright .blazored-modal[b-mwsrhhqq2g] {
+    margin-right: 1.75rem;
+}
+
+.position-bottomleft .blazored-modal[b-mwsrhhqq2g] {
+    position: absolute;
+    bottom: 0;
+    left: 1.75rem;
+}
+
+.position-bottomright .blazored-modal[b-mwsrhhqq2g] {
+    position: absolute;
+    bottom: 0;
+    right: 1.75rem;
+}
+
+.position-middle[b-mwsrhhqq2g] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.fade-in[b-mwsrhhqq2g] {
+   animation: 300ms ease-out 0s ModalFadeIn-b-mwsrhhqq2g;
+}
+
+.fade-out[b-mwsrhhqq2g]  {
+   animation: 300ms ease-out 0s ModalFadeOut-b-mwsrhhqq2g;
+   opacity: 0;
+}
+
+@keyframes ModalFadeIn-b-mwsrhhqq2g {
+     0% {
+         opacity: 0;
+     }
+
+     100% {
+         opacity: 1;
+     }
+ }
+
+@keyframes ModalFadeOut-b-mwsrhhqq2g {
+     0% {
+         opacity: 1;
+     }
+
+     100% {
+         opacity: 0;
+     }
+ }
