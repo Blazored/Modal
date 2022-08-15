@@ -129,7 +129,10 @@
         if (!_haveActiveModals)
         {
             _haveActiveModals = true;
-            await _styleFunctions!.InvokeVoidAsync("setBodyStyle");
+            if (_styleFunctions is not null)
+            {
+                await _styleFunctions.InvokeVoidAsync("setBodyStyle");
+            }
         }
         
         await InvokeAsync(StateHasChanged);
@@ -141,7 +144,10 @@
     private async Task ClearBodyStyles()
     {
         _haveActiveModals = false;
-        await _styleFunctions!.InvokeVoidAsync("removeBodyStyle");
+        if (_styleFunctions is not null)
+        {
+            await _styleFunctions.InvokeVoidAsync("removeBodyStyle");
+        }
     }
 
     async ValueTask IAsyncDisposable.DisposeAsync()
