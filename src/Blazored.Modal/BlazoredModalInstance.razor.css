@@ -1,4 +1,4 @@
-﻿.blazored-modal-container {
+﻿.bm-container {
     display: block;
     position: fixed;
     top: 0;
@@ -47,18 +47,18 @@
     margin-right: auto;
 }
 
-.header {
+.bm-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     padding: 0 0 2rem 0;
 }
 
-.title {
+.bm-title {
     margin-bottom: 0;
 }
 
-.close {
+.bm-close {
     padding: 1rem;
     margin: -1rem -1rem -1rem auto;
     background-color: transparent;
