@@ -6,7 +6,7 @@
 }
 else
 {
-    <div class="blazored-modal-container @Position @OverlayCustomClass @OverlayAnimationClass"
+    <div class="bm-container @Position @OverlayCustomClass @OverlayAnimationClass"
          @ref="_modalReference" 
          @onclick="HandleBackgroundClick">
 
@@ -14,17 +14,17 @@ else
             <div class="@ModalClass" role="dialog" aria-modal="true" @onclick:stopPropagation="true">
                 @if (!HideHeader)
                 {
-                    <div class="header">
-                        <h3 class="title">@Title</h3>
+                    <div class="bm-header">
+                        <h3 class="bm-title">@Title</h3>
                         @if (!HideCloseButton)
                         {
-                            <button type="button" class="close" aria-label="close" @onclick="() => CancelAsync()" @attributes="@_closeBtnAttributes"> 
+                            <button type="button" class="bm-close" aria-label="close" @onclick="() => CancelAsync()" @attributes="@_closeBtnAttributes"> 
                                 <span>&times;</span>
                             </button>
                         }
                     </div>
                 }
-                <div class="content">
+                <div class="bm-content">
                     <CascadingValue Value="this">
                         @Content
                     </CascadingValue>

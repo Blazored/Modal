@@ -46,6 +46,15 @@ a, .btn-link {
     margin-right: auto;
 }
 
+.my-custom-modal-class {
+    background-color: #b6effb;
+    width: 90%;
+    margin-top: 64px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 16px;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

@@ -28,7 +28,7 @@ namespace Blazored.Modal.Tests
             var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService));
 
             // Assert
-            Assert.Empty(cut.FindAll(".blazored-modal-container"));
+            Assert.Empty(cut.FindAll(".bm-container"));
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>();
 
             // Assert
-            Assert.Equal(2, cut.FindAll(".blazored-modal-container").Count);
+            Assert.Equal(2, cut.FindAll(".bm-container").Count);
         }
 
         [Fact]
@@ -73,13 +73,13 @@ namespace Blazored.Modal.Tests
                 AnimationType = ModalAnimationType.None
             };
             modalService.Show<TestComponent>("", options);
-            Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
+            Assert.Equal(1, cut.FindAll(".bm-container").Count);
 
             var closeButton = cut.Find(".test-component__close-button");
             closeButton.Click();
 
             // Assert
-            Assert.Empty(cut.FindAll(".blazored-modal-container"));
+            Assert.Empty(cut.FindAll(".bm-container"));
         }
 
         [Fact]
@@ -95,13 +95,13 @@ namespace Blazored.Modal.Tests
                 AnimationType = ModalAnimationType.None
             };
             modalService.Show<TestComponent>("", options);
-            Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
+            Assert.Equal(1, cut.FindAll(".bm-container").Count);
 
-            var closeButton = cut.Find(".close");
+            var closeButton = cut.Find(".bm-close");
             closeButton.Click();
 
             // Assert
-            Assert.Empty(cut.FindAll(".blazored-modal-container"));
+            Assert.Empty(cut.FindAll(".bm-container"));
         }
 
         [Fact]
@@ -117,12 +117,12 @@ namespace Blazored.Modal.Tests
                 AnimationType = ModalAnimationType.None
             };
             var modalReferece = modalService.Show<TestComponent>("", options);
-            Assert.Equal(1, cut.FindAll(".blazored-modal-container").Count);
+            Assert.Equal(1, cut.FindAll(".bm-container").Count);
 
             modalReferece.Close();
 
             // Assert
-            Assert.Empty(cut.FindAll(".blazored-modal-container"));
+            Assert.Empty(cut.FindAll(".bm-container"));
         }
     }
 }
