@@ -29,7 +29,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>(testTitle);
 
             // Assert
-            Assert.Equal(testTitle, cut.Find(".title").InnerHtml);
+            Assert.Equal(testTitle, cut.Find(".bm-title").InnerHtml);
         }
         
         [Fact]
@@ -44,7 +44,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".blazored-modal-container"));
+            Assert.NotNull(cut.Find(".bm-container"));
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".blazored-modal-container.position-topleft"));
+            Assert.NotNull(cut.Find(".bm-container.position-topleft"));
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.NotNull(cut.Find(".blazored-modal-container.my-custom-class"));
+            Assert.NotNull(cut.Find(".bm-container.my-custom-class"));
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>();
 
             // Assert
-            Assert.NotNull(cut.Find(".close"));
+            Assert.NotNull(cut.Find(".bm-close"));
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.Empty(cut.FindAll(".blazored-modal-close"));
+            Assert.Empty(cut.FindAll(".bm-close"));
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>();
 
             // Assert
-            Assert.NotNull(cut.Find(".header"));
+            Assert.NotNull(cut.Find(".bm-header"));
         }
 
         [Fact]
@@ -153,7 +153,7 @@ namespace Blazored.Modal.Tests
             modalService.Show<TestComponent>("", options);
 
             // Assert
-            Assert.Empty(cut.FindAll(".blazored-modal-header"));
+            Assert.Empty(cut.FindAll(".bm-header"));
         }
 
         [Fact]
