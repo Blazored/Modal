@@ -11,8 +11,11 @@ public class ModalParameters : IEnumerable<KeyValuePair<string, object>>
         Parameters = new Dictionary<string, object>();
     }
 
-    public void Add(string parameterName, object value) 
-        => Parameters[parameterName] = value;
+    public ModalParameters Add(string parameterName, object value)
+    {
+        Parameters[parameterName] = value;
+        return this;
+    }
 
     public T Get<T>(string parameterName)
     {
