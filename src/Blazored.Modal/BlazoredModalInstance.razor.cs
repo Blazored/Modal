@@ -28,7 +28,7 @@ public partial class BlazoredModalInstance : IDisposable
 
     [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
     private ElementReference _modalReference;
-    private FocusTrap _focusTrap = default!;
+    public FocusTrap? FocusTrap = default;
     private bool _setFocus;
 
     // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
@@ -50,7 +50,10 @@ public partial class BlazoredModalInstance : IDisposable
     {
         if (_setFocus)
         {
-            await _focusTrap.SetFocus();
+            if (FocusTrap is not null)
+            {
+                await FocusTrap.SetFocus();
+            }
             _setFocus = false;
         }
     }
