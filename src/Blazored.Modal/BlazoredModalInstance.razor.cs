@@ -23,12 +23,12 @@ public partial class BlazoredModalInstance : IDisposable
     private string? OverlayCustomClass { get; set; }
     private ModalAnimationType? AnimationType { get; set; }
     private bool ActivateFocusTrap { get; set; }
-
     public bool UseCustomLayout { get; set; }
+    public FocusTrap? FocusTrap { get; set; }
+
 
     [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
     private ElementReference _modalReference;
-    public FocusTrap? FocusTrap = default;
     private bool _setFocus;
 
     // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
