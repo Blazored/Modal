@@ -71,7 +71,7 @@
         }
     }
 
-    internal async void CloseInstance(ModalReference? modal, ModalResult result)
+    internal async Task CloseInstance(ModalReference? modal, ModalResult result)
     {
         if (modal?.ModalInstanceRef != null)
         {
@@ -122,7 +122,7 @@
         await InvokeAsync(StateHasChanged);
     }
 
-    private async void Update(ModalReference modalReference)
+    private async Task Update(ModalReference modalReference)
     {
         _modals.Add(modalReference);
 
