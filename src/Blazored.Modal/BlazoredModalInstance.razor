@@ -10,7 +10,7 @@ else
          @ref="_modalReference" 
          @onclick="HandleBackgroundClick">
 
-        <FocusTrap @ref="_focusTrap" IsActive="ActivateFocusTrap">
+        <FocusTrap @ref="FocusTrap" IsActive="ActivateFocusTrap">
             <div class="@ModalClass" role="dialog" aria-modal="true" @onclick:stopPropagation="true">
                 @if (!HideHeader)
                 {
