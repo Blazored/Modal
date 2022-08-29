@@ -4,8 +4,8 @@ namespace Blazored.Modal.Services;
 
 public class ModalService : IModalService
 {
-    internal event Action<ModalReference>? OnModalInstanceAdded;
-    internal event Action<ModalReference, ModalResult>? OnModalCloseRequested;
+    internal event Func<ModalReference, Task>? OnModalInstanceAdded;
+    internal event Func<ModalReference, ModalResult, Task>? OnModalCloseRequested;
 
     /// <summary>
     /// Shows the modal with the component type.
