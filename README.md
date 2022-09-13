@@ -84,7 +84,7 @@ Add the `<CascadingBlazoredModal />` component into your applications *App.razor
 
 ### 4. Add reference to style sheet & javascript reference
 
-Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server) or `index.html` (Blazor WebAssembly).
+Add the following line to the `head` tag of your `_Layout.cshtml` (Blazor Server) or `index.html` (Blazor WebAssembly).
 
 ```html
 <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
