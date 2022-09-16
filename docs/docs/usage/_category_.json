@@ -1,0 +1,8 @@
+{
+  "label": "Usage",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Examples of using Blazored Modal"
+  }
+}
