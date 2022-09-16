@@ -8,7 +8,7 @@ By default, modals will display a close button in the top right corner. However,
 
 :::info
 
-If you're hiding the header using the `HideHeader` option, the `HideCloseButton` option will have no effect.
+If you're hiding the header using the [`HideHeader`](./hide-header) option, the `HideCloseButton` option will have no effect.
 
 :::
 
