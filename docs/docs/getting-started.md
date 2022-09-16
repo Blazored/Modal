@@ -10,7 +10,7 @@ sidebar_position: 1
 [![Issues](https://img.shields.io/github/issues/Blazored/Modal?logo=github)](https://github.com/Blazored/Modal/issues)
 ![Nuget](https://img.shields.io/nuget/dt/Blazored.Modal?logo=nuget)
 
-Blazored Modal ia a powerful and customizable modal implementation for [Blazor applications](https://blazor.net).
+Blazored Modal is a powerful and customizable modal implementation for [Blazor applications](https://blazor.net).
 
 ## Getting Started
 
@@ -32,11 +32,13 @@ Blazored Modal uses a service to coordinate modals. To register this service you
 
 ```csharp
 using Blazored.Modal;
+```
 
+```csharp
 builder.Services.AddBlazoredModal();
 ```
 
-The above code assues the use of top level statements. If your application is not using them, please add the call to `AddBlazoredModal` where you are registering services for your app.
+> The above code assumes the use of top level statements. If your application is not using them, please add the call to `AddBlazoredModal` where you're registering services for your app.
 
 
 ### Add Imports
@@ -62,13 +64,13 @@ The `<CascadingBlazoredModal />` component cascades an instance of the `IModalSe
 
 ### Displaying a modal
 
-In order to show a modal, you need to define a cascading parameter on the component that will invoke the modal:
+In order to display a modal, you must define a cascading parameter on the component that will invoke the modal:
 
 ```csharp
 [CascadingParameter] public IModalService Modal { get; set; } = default!;
 ```
 
-Once you have the cascading parameter setup, you can call the `Show` method on the `IModalService` passing in the title for the modal and the type of the component you want the modal to display. For example, if you have a component called `Movies` that you want to display in a modal from the `Index` component on a button click.
+Once you have the cascading parameter setup, you can call the `Show` method on the `IModalService` passing in the title for the modal and the type of the component you want the modal to display. For example, if you have a component called `Movies` that you want to display in a modal from the `Home` component on a button click.
 
 ```html
 @page "/"
@@ -77,7 +79,7 @@ Once you have the cascading parameter setup, you can call the `Show` method on t
 
 Welcome to Blazored Modal.
 
-<button @onclick="@(() => Modal.Show<Movies>("My Movies"))" class="btn btn-primary">View Movies</button>
+<button @onclick="@(() => Modal.Show<Movies>("My Movies"))">View Movies</button>
 
 @code {
     [CascadingParameter] public IModalService Modal { get; set; }

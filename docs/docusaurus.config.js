@@ -8,8 +8,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Blazored Modal',
   tagline: 'Blazored Modal',
-  url: 'https://blazored.github.io/Modal',
-  baseUrl: '/',
+  url: 'https://blazored.github.io',
+  baseUrl: '/Modal/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
