@@ -28,3 +28,21 @@ jobs:
 
     - name: Testing...
       run: dotnet test --no-restore --verbosity normal
+  
+  docs-test-deploy:
+    name: Docs test deployment
+    defaults:
+      run:
+        working-directory: docs
+    working-directory: scripts
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Test build website
+        run: yarn build
