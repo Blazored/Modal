@@ -22,7 +22,7 @@ public partial class BlazoredModalInstance : IDisposable
     private string? OverlayAnimationClass { get; set; }
     private string? OverlayCustomClass { get; set; }
     private ModalAnimationType? AnimationType { get; set; }
-    private bool ActivateFocusTrap { get; set; }
+    private bool UseFocusTrap { get; set; }
     public bool UseCustomLayout { get; set; }
     public FocusTrap? FocusTrap { get; set; }
 
@@ -114,7 +114,7 @@ public partial class BlazoredModalInstance : IDisposable
         DisableBackgroundCancel = SetDisableBackgroundCancel();
         UseCustomLayout = SetUseCustomLayout();
         OverlayCustomClass = SetOverlayCustomClass();
-        ActivateFocusTrap = SetActivateFocusTrap();
+        UseFocusTrap = SetUseFocusTrap();
         OverlayAnimationClass = SetAnimationClass();
         Parent.OnModalClosed += AttemptFocus;
     }
@@ -300,13 +300,13 @@ public partial class BlazoredModalInstance : IDisposable
         return string.Empty;
     }
 
-    private bool SetActivateFocusTrap()
+    private bool SetUseFocusTrap()
     {
-        if (Options.ActivateFocusTrap.HasValue)
-            return Options.ActivateFocusTrap.Value;
+        if (Options.UseFocusTrap.HasValue)
+            return Options.UseFocusTrap.Value;
 
-        if (GlobalModalOptions.ActivateFocusTrap.HasValue)
-            return GlobalModalOptions.ActivateFocusTrap.Value;
+        if (GlobalModalOptions.UseFocusTrap.HasValue)
+            return GlobalModalOptions.UseFocusTrap.Value;
 
         return true;
     }

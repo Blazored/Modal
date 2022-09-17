@@ -28,7 +28,7 @@
     [Parameter] public string? Class { get; set; }
     [Parameter] public ModalAnimationType? AnimationType { get; set; }
     [Parameter] public bool? UseCustomLayout { get; set; }
-    [Parameter] public bool? ActivateFocusTrap { get; set; }
+    [Parameter] public bool? UseFocusTrap { get; set; }
 
     private readonly Collection<ModalReference> _modals = new();
     private readonly ModalOptions _globalModalOptions = new();
@@ -60,7 +60,7 @@
         _globalModalOptions.OverlayCustomClass = OverlayCustomClass;
 
         _globalModalOptions.UseCustomLayout = UseCustomLayout;
-        _globalModalOptions.ActivateFocusTrap = ActivateFocusTrap;
+        _globalModalOptions.UseFocusTrap = UseFocusTrap;
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

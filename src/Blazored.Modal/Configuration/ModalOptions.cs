@@ -13,5 +13,5 @@ public class ModalOptions
     public bool? HideCloseButton { get; set; }
     public ModalAnimationType? AnimationType { get; set; }
     public bool? UseCustomLayout { get; set; }
-    public bool? ActivateFocusTrap { get; set; }
+    public bool? UseFocusTrap { get; set; }
 }
