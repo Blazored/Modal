@@ -13,13 +13,17 @@ If you're hiding the header using the [`HideHeader`](./hide-header) option, the 
 :::
 
 ### Configuring for all modals
-```html
+```razor
 <CascadingBlazoredModal HideCloseButton="true" />
 ```
 
 ### Configuring for a single modal
 
 ```csharp
-var options = new ModalOptions() { HideCloseButton = true };
+var options = new ModalOptions() 
+{ 
+    HideCloseButton = true 
+};
+
 Modal.Show<Confirm>("Are you sure?", options);
 ```

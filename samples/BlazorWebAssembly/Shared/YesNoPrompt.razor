@@ -1,6 +1,4 @@
-﻿@inject IModalService ModalService
-
-<div>
+﻿<div>
     <p>Are you sure you want to delete the record?</p>
 
     <button @onclick="Yes" class="btn btn-outline-danger">Yes</button>
@@ -10,10 +8,11 @@
 @code {
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    [CascadingParameter] private IModalService Modal { get; set; } = default!;
 
     async Task Yes()
     {
-        var confirmationModal = ModalService.Show<Confirm>("Second Modal");
+        var confirmationModal = Modal.Show<Confirm>("Second Modal");
         var result = await confirmationModal.Result;
 
         if (result.Cancelled)
@@ -22,6 +21,6 @@
         await BlazoredModal.CloseAsync();
     }
 
-    async Task No() => await BlazoredModal.CancelAsync();
+    async Task No() => await BlazoredModal.CloseAsync();
 
 }

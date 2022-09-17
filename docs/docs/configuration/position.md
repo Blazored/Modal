@@ -19,14 +19,18 @@ To configure Blazored Modal to use a predefined position, see the code examples 
 
 
 #### Configuring for all modals
-```html
+```razor
 <CascadingBlazoredModal Position="ModalPosition.TopLeft" />
 ```
 
 #### Configuring for a single modal
 
 ```csharp
-var options = new ModalOptions() { Position = ModalPosition.TopLeft };
+var options = new ModalOptions() 
+{ 
+    Position = ModalPosition.TopLeft 
+};
+
 Modal.Show<Confirm>("Are you sure?", options);
 ```
 
@@ -35,7 +39,7 @@ When using the `Custom` position setting, you will need to provide a CSS class, 
 
 #### Configuring for all modals
 
-```html
+```razor
 <CascadingBlazoredModal Position="ModalPosition.Custom" PositionCustomClass="custom-modal-position" />
 ```
 

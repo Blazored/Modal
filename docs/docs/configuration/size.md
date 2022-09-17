@@ -20,7 +20,7 @@ To configure Blazored Modal to use a predefined size, see the code examples belo
 #### Configuring for all modals
 To set the `Size` for all modals in your application, you can use the `Size` parameter on the `CascadingBlazoredModal` component.
 
-```html
+```razor
 <CascadingBlazoredModal Size="ModalSize.Large" />
 ```
 
@@ -28,7 +28,11 @@ To set the `Size` for all modals in your application, you can use the `Size` par
 To set the `Size` for a single modal, use the `ModalOptions` type and pass it into the `Show` method.
 
 ```csharp
-var options = new ModalOptions() { Size = ModalSize.Large };
+var options = new ModalOptions() 
+{ 
+    Size = ModalSize.Large 
+};
+
 Modal.Show<Confirm>("Are you sure?", options);
 ```
 
@@ -38,7 +42,7 @@ If you don't want to use one of the default sizes provided out-of-the-box, you c
 #### Configuring for all modals
 To set a custom size for all modals in your application, use the `CascadingBlazoredModal` component.
 
-```html
+```razor
 <CascadingBlazoredModal Size="ModalSize.Custom" SizeCustomClass="custom-modal" />
 ```
 

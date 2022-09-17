@@ -8,7 +8,7 @@ Data can be returned from a modal by using the `ModalResult.Data` property. You 
 
 In the example below, a message can be entered into the `MessageForm` component and when the form is submitted, the text entered is returned to the calling component in the modal result object.
 
-```csharp title="MessageForm.razor"
+```razor title="MessageForm.razor"
 <div>
     <EditForm Model="_form" OnValidSubmit="SubmitForm">
         <label for="message">Message</label>
@@ -31,7 +31,7 @@ In the example below, a message can be entered into the `MessageForm` component 
 }
 ```
 
-The caller can then access the message using the `Data` property.
+The component that invoked the modal can access the message by awaiting the result of the modal and then accessing the `result.Data` property.
 
 ```csharp
 var messageForm = Modal.Show<MessageForm>();

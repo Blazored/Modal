@@ -72,6 +72,10 @@ const config = {
             title: 'Community',
             items: [
               {
+                label: 'Discord',
+                href: 'https://discord.gg/anPDeyhcyV',
+              },
+              {
                 label: 'Stack Overflow',
                 href: 'https://stackoverflow.com/questions/tagged/blazored',
               },
@@ -85,9 +89,9 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Blazored`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-        additionalLanguages: ['csharp']
+        theme: require('prism-react-renderer/themes/github'),
+        darkTheme: require('prism-react-renderer/themes/vsDark'),
+        additionalLanguages: ['csharp', 'cshtml']
       },
     }),
 };

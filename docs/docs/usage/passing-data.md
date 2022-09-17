@@ -7,7 +7,7 @@ Data can be passed to a modal by using the `ModalParameters` object. The items y
 
 The following component is going to be displayed using Blazored Modal. It defines a `Message` parameter, which is then displayed in a `p`.
 
-```csharp title="DisplayMessage.razor"
+```razor title="DisplayMessage.razor"
 <div>
     <p>@Message</p>
 
