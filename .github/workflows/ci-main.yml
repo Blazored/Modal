@@ -63,20 +63,37 @@ jobs:
       - name: Push to NuGet Feed
         run: dotnet nuget push ./nupkg/*.nupkg --source $NUGET_FEED --api-key $NUGET_KEY --skip-duplicate
       
-      - name: Publish Sample Site
-        run: dotnet publish -c Release samples/BlazorWebAssembly/BlazorWebAssembly.csproj
-
-      - name: Rewrite base href
-        uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
+  docs:
+    name: Publish docs
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
         with:
-          html_path: samples/BlazorWebAssembly/bin/Release/net6.0/publish/wwwroot/index.html
-          base_href: /${{ env.PROJECT_NAME }}/
+          node-version: 18
+          cache: npm
+          cache-dependency-path: './docs/package-lock.json'
 
-      - name: Deploy to Github Pages
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Build website
+        run: npm run build
+
+      # Popular action to deploy to GitHub Pages:
+      # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          ACCESS_TOKEN: $GITHUB_TOKEN
-          BASE_BRANCH: main # The branch the action should deploy from.
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: samples/BlazorWebAssembly/bin/Release/net6.0/publish/wwwroot # The folder the action should deploy.
-          SINGLE_COMMIT: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Build output to publish to the `gh-pages` branch:
+          publish_dir: ./docs/build
+          # The following lines assign commit authorship to the official
+          # GH-Actions bot for deploys to `gh-pages` branch:
+          # https://github.com/actions/checkout/issues/13#issuecomment-724415212
+          # The GH actions bot is used by default if you didn't specify the two fields.
+          # You can swap them out with your own user credentials.
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
