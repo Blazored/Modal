@@ -38,8 +38,11 @@ using Blazored.Modal;
 builder.Services.AddBlazoredModal();
 ```
 
-> The above code assumes the use of top level statements. If your application is not using them, please add the call to `AddBlazoredModal` where you're registering services for your app.
+:::info
 
+The above code assumes the use of top level statements. If your application is not using them, please add the call to `AddBlazoredModal` where you're registering services for your app.
+
+:::
 
 ### Add Imports
 
