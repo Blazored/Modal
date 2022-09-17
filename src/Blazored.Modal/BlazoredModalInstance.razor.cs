@@ -30,9 +30,21 @@ public partial class BlazoredModalInstance : IDisposable
     [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
     private ElementReference _modalReference;
     private bool _setFocus;
+    private bool _disableNextRender;
 
     // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
     private readonly Dictionary<string, object> _closeBtnAttributes = new() { { "tabindex", "-1" } };
+
+    protected override bool ShouldRender()
+    {
+        if (!_disableNextRender)
+        {
+            return true;
+        }
+        
+        _disableNextRender = false;
+        return false;
+    }
 
     protected override void OnInitialized() 
         => ConfigureInstance();
@@ -313,7 +325,11 @@ public partial class BlazoredModalInstance : IDisposable
 
     private async Task HandleBackgroundClick()
     {
-        if (DisableBackgroundCancel) return;
+        if (DisableBackgroundCancel)
+        {
+            _disableNextRender = true;
+            return;
+        }
 
         await CancelAsync();
     }
