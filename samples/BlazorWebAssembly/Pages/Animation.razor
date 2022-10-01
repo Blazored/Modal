@@ -33,6 +33,8 @@
 </div>
 
 <button @onclick="AnimationDefault" class="btn btn-primary">Fade-in Fade-Out (Default)</button>
+<button @onclick="AnimationPopInOut" class="btn btn-primary">Pop-in Pop-Out</button>
+<button @onclick="AnimationPopIn" class="btn btn-primary">Pop-in</button>
 <button @onclick="NoAnimation" class="btn btn-secondary">None</button>
 
 <p>
@@ -47,6 +49,20 @@
     void AnimationDefault()
     {
         Modal.Show<Confirm>("Default Animation");
+    }
+
+    void AnimationPopInOut()
+    {
+        var options = new ModalOptions { AnimationType = ModalAnimationType.PopInOut };
+
+        Modal.Show<Confirm>("Animation Type: PopInOut", options);
+    }
+
+    void AnimationPopIn()
+    {
+        var options = new ModalOptions { AnimationType = ModalAnimationType.PopIn };
+
+        Modal.Show<Confirm>("Animation Type: PopInOut", options);
     }
 
     void NoAnimation()
