@@ -53,6 +53,14 @@ To avoid having to add using statements for Blazored Modal to lots of components
 @using Blazored.Modal.Services
 ```
 
+### Add CSS Reference
+
+Blazored Modal uses CSS isolation. If your application is already using CSS isolation then the styles for Modal will be included automatically and you can skip this step. However, if your application isn't using isolated CSS, you will need to add a reference to the CSS bundle. You can checkout the [Microsoft Docs](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/css-isolation?view=aspnetcore-6.0#css-isolation-bundling) for additional details.
+
+```html
+<link href="{YOUR APP ASSEMBLY NAME}.styles.css" rel="stylesheet">
+```
+
 ### Add the CascadingBlazoredModal Component
 
 The `<CascadingBlazoredModal />` component cascades an instance of the `IModalService` to all decendant components. This should be added to the root component of your application (usually `App.razor`) wrapping the Router as per the example below.
