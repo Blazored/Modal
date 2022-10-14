@@ -42,6 +42,7 @@
     </div>
 </div>
 
+<button @onclick="@(() => SetSize(ModalSize.Automatic))" class="btn btn-secondary">Automatic</button>
 <button @onclick="@(() => SetSize(ModalSize.Small))" class="btn btn-secondary">Small</button>
 <button @onclick="DefaultSize" class="btn btn-primary">Medium (default)</button>
 <button @onclick="@(() => SetSize(ModalSize.Large))" class="btn btn-secondary">Large</button>
