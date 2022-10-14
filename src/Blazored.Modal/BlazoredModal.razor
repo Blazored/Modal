@@ -154,7 +154,14 @@
     {
         if (_styleFunctions is not null)
         {
-            await _styleFunctions.DisposeAsync();
+            try
+            {
+                await _styleFunctions.DisposeAsync();
+            }
+            catch (JSDisconnectedException)
+            {
+                // If the browser is gone, we don't need it to clean up any browser-side state
+            }
         }
     } 
 
