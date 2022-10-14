@@ -47,6 +47,13 @@
     margin-right: auto;
 }
 
+.size-automatic {
+    width: -moz-fit-content;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .bm-header {
     display: flex;
     align-items: flex-start;

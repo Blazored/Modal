@@ -6,5 +6,6 @@ public enum ModalSize
     Medium,
     Large,
     ExtraLarge,
-    Custom
+    Custom,
+    Automatic
 }

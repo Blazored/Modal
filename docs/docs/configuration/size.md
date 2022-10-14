@@ -6,6 +6,7 @@ sidebar_position: 1
 
 The width of a modal can be configured using the `Size` option. Blazored Modal has a range of built-in sizes as well as the ability to define a custom size.
 
+- Automatic (Size is determined by the content)
 - Small (300px)
 - Medium (500px)
 - Large (800px)
