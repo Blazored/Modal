@@ -244,6 +244,9 @@ public partial class BlazoredModalInstance : IDisposable
                     return GlobalModalOptions.SizeCustomClass;
 
                 throw new InvalidOperationException("Size set to Custom without a SizeCustomClass set");
+            
+            case ModalSize.Automatic:
+                return "size-automatic";
 
             default:
                 return "size-medium";

@@ -1,6 +1,6 @@
 ﻿@if (UseCustomLayout)
 {
-    <CascadingValue Value="this">
+    <CascadingValue Value="this" IsFixed="true">
         @Content
     </CascadingValue>
 }
@@ -25,7 +25,7 @@ else
                     </div>
                 }
                 <div class="bm-content">
-                    <CascadingValue Value="this">
+                    <CascadingValue Value="this" IsFixed="true">
                         @Content
                     </CascadingValue>
                 </div>
