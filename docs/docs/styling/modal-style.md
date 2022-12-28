@@ -7,7 +7,7 @@ If you want to change to default look of the modal you can pass in your own CSS 
 
 #### Configuring for all modals
 ```razor
-<BlazoredModal Class="my-custom-modal-class" />
+<CascadingBlazoredModal Class="my-custom-modal-class" />
 ```
 
 
