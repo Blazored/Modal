@@ -5,16 +5,16 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     
-    <Authors>Chris Sainty, Matěj "lofcz" Štágl</Authors>
+    <Authors>Chris Sainty</Authors>
     <Company></Company>
     <Copyright>Copyright 2021 (c) Chris Sainty. All rights reserved.</Copyright>
     
-    <Description>Fork of Blazored.Modal</Description>
+    <Description>A powerful and customizable modal implementation for Blazor applications.</Description>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <!-- NuGet settings -->
-    <PackageId>BlazorModalExperimental</PackageId>
+    <PackageId>Blazored.Modal</PackageId>
     <PackageTags>Blazored;Blazor;Razor;Components;Modal;Dialogue;ASP.NET Core;CSharp;Web</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Blazored/Modal</PackageProjectUrl>
@@ -25,7 +25,6 @@
     <!-- SourceLink settings -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
