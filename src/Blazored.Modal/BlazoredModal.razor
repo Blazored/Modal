@@ -67,7 +67,14 @@
     {
         if (firstRender)
         {
-            _styleFunctions = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/Blazored.Modal/BlazoredModal.razor.js");
+            try
+            {
+                _styleFunctions = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/Blazored.Modal/BlazoredModal.razor.js");
+            }
+            catch (Exception e)
+            {
+                
+            }
         }
     }
 
@@ -131,7 +138,14 @@
             _haveActiveModals = true;
             if (_styleFunctions is not null)
             {
-                await _styleFunctions.InvokeVoidAsync("setBodyStyle");
+                try
+                {
+                    await _styleFunctions.InvokeVoidAsync("setBodyStyle");
+                }
+                catch (Exception e)
+                {
+                    
+                }
             }
         }
         
@@ -146,7 +160,14 @@
         _haveActiveModals = false;
         if (_styleFunctions is not null)
         {
-            await _styleFunctions.InvokeVoidAsync("removeBodyStyle");
+            try
+            {
+                await _styleFunctions.InvokeVoidAsync("removeBodyStyle");
+            }
+            catch (Exception e)
+            {
+                
+            }
         }
     }
 
