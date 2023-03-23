@@ -19,7 +19,8 @@ public partial class BlazoredModalInstance : IDisposable
     private bool HideHeader { get; set; }
     private bool HideCloseButton { get; set; }
     private bool DisableBackgroundCancel { get; set; }
-    private string? OverlayAnimationClass { get; set; }
+    public string? ModalAnimationClass { get; set; }
+    public string? OverlayAnimationClass { get; set; }
     private string? OverlayCustomClass { get; set; }
     private ModalAnimationType? AnimationType { get; set; }
     private bool ActivateFocusTrap { get; set; }
@@ -93,9 +94,21 @@ public partial class BlazoredModalInstance : IDisposable
     public async Task CloseAsync(ModalResult modalResult)
     {
         // Fade out the modal, and after that actually remove it
-        if (AnimationType is ModalAnimationType.FadeInOut)
+        if (AnimationType is not ModalAnimationType.None && AnimationType is not ModalAnimationType.FadeIn && AnimationType is not ModalAnimationType.MoveIn)
         {
-            OverlayAnimationClass += " fade-out";
+            OverlayAnimationClass = AnimationType switch
+            {
+                ModalAnimationType.FadeInOut or ModalAnimationType.FadeOut or
+                ModalAnimationType.MoveInOut or ModalAnimationType.MoveOut => "blazored-fade-out",
+                _ => string.Empty,
+            };
+            
+            ModalAnimationClass = AnimationType switch
+            {
+                ModalAnimationType.FadeInOut or ModalAnimationType.FadeOut => "blazored-fade-out",
+                ModalAnimationType.MoveInOut or ModalAnimationType.MoveOut => "blazored-move-out",
+                _ => string.Empty,
+            };
             StateHasChanged();
             
             await Task.Delay(400); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
@@ -118,16 +131,17 @@ public partial class BlazoredModalInstance : IDisposable
 
     private void ConfigureInstance()
     {
+        UseCustomLayout = SetUseCustomLayout();
         AnimationType = SetAnimation();
         Position = SetPosition();
         ModalClass = SetModalClass();
         HideHeader = SetHideHeader();
         HideCloseButton = SetHideCloseButton();
         DisableBackgroundCancel = SetDisableBackgroundCancel();
-        UseCustomLayout = SetUseCustomLayout();
         OverlayCustomClass = SetOverlayCustomClass();
         ActivateFocusTrap = SetActivateFocusTrap();
-        OverlayAnimationClass = SetAnimationClass();
+        OverlayAnimationClass = SetOverlayAnimationClass();
+        ModalAnimationClass = SetModalAnimationClass();
         Parent.OnModalClosed += AttemptFocus;
     }
 
@@ -265,11 +279,22 @@ public partial class BlazoredModalInstance : IDisposable
         return modalClass;
     }
 
-    private ModalAnimationType SetAnimation() 
-        => Options.AnimationType ?? GlobalModalOptions.AnimationType ?? ModalAnimationType.FadeInOut;
+    private ModalAnimationType SetAnimation()
+        => Options.AnimationType ?? GlobalModalOptions.AnimationType ?? (!UseCustomLayout ? ModalAnimationType.FadeInOut : ModalAnimationType.None);
 
-    private string SetAnimationClass() 
-        => AnimationType is ModalAnimationType.FadeInOut ? "fade-in" : string.Empty;
+    private string SetOverlayAnimationClass() => AnimationType switch
+    {
+        ModalAnimationType.FadeInOut or ModalAnimationType.FadeIn or
+        ModalAnimationType.MoveInOut or ModalAnimationType.MoveIn => "blazored-fade-in",
+        _ => string.Empty
+    };    
+    
+    private string SetModalAnimationClass() => AnimationType switch
+    {
+        ModalAnimationType.FadeInOut or ModalAnimationType.FadeIn => "blazored-fade-in",
+        ModalAnimationType.MoveInOut or ModalAnimationType.MoveIn => "blazored-move-in",
+        _ => string.Empty
+    };
 
     private bool SetHideHeader()
     {

@@ -1,6 +1,7 @@
-﻿<div class="modal fade show d-block" tabindex="-1" role="dialog">
+﻿<div class="modal d-block @BlazoredModal.OverlayAnimationClass" tabindex="-1" role="dialog">
     <div class="modal-backdrop fade show" @onclick="Cancel"></div>
-    <div class="modal-dialog" style="z-index: 1050"> <!-- Pop it above the backdrop -->
+    <div class="modal-dialog @BlazoredModal.ModalAnimationClass" style="z-index: 1050">
+        <!-- Pop it above the backdrop -->
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Modal title</h5>

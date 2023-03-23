@@ -102,31 +102,60 @@
     justify-content: center;
 }
 
-.fade-in {
-   animation: 300ms ease-out 0s ModalFadeIn;
+.blazored-fade-in, ::deep .blazored-fade-in {
+    animation: 300ms ease-out 0s ModalFadeIn;
 }
 
-.fade-out  {
-   animation: 300ms ease-out 0s ModalFadeOut;
-   opacity: 0;
+.blazored-fade-out, ::deep .blazored-fade-out {
+    animation: 300ms ease-out 0s ModalFadeOut;
+    opacity: 0;
 }
 
 @keyframes ModalFadeIn {
-     0% {
-         opacity: 0;
-     }
+    0% {
+        opacity: 0;
+    }
 
-     100% {
-         opacity: 1;
-     }
- }
+    100% {
+        opacity: 1;
+    }
+}
 
 @keyframes ModalFadeOut {
-     0% {
-         opacity: 1;
-     }
+    0% {
+        opacity: 1;
+    }
 
-     100% {
-         opacity: 0;
-     }
- }
+    100% {
+        opacity: 0;
+    }
+}
+
+.blazored-move-in, ::deep .blazored-move-in {
+    animation: 300ms ease-out 0s ModalMoveIn;
+}
+
+.blazored-move-out, ::deep .blazored-move-out {
+    animation: 300ms ease-out 0s ModalMoveOut;
+    transform: translate(0, -50px);
+}
+
+@keyframes ModalMoveIn {
+    0% {
+        transform: translate(0, -50px);
+    }
+
+    100% {
+        transform: none;
+    }
+}
+
+@keyframes ModalMoveOut {
+    0% {
+        transform: none;
+    }
+
+    100% {
+        transform: translate(0, -50px);
+    }
+}

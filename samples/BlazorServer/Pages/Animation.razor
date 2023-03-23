@@ -33,6 +33,8 @@
 </div>
 
 <button @onclick="AnimationDefault" class="btn btn-primary">Fade-in Fade-Out (Default)</button>
+<button @onclick="FadeInAnimation" class="btn btn-primary">Fade-in</button>
+<button @onclick="MoveInOutAnimation" class="btn btn-primary">Move-in Move-Out</button>
 <button @onclick="NoAnimation" class="btn btn-secondary">None</button>
 
 <p>
@@ -49,6 +51,20 @@
         Modal.Show<Confirm>("Default Animation");
     }
 
+    void FadeInAnimation()
+    {
+        var options = new ModalOptions { AnimationType = ModalAnimationType.FadeIn };
+
+        Modal.Show<Confirm>("FadeIn Animation", options);
+    }
+
+    void MoveInOutAnimation()
+    {
+        var options = new ModalOptions { AnimationType = ModalAnimationType.MoveInOut };
+
+        Modal.Show<Confirm>("MoveInOut Animation", options);
+    }
+
     void NoAnimation()
     {
         var options = new ModalOptions { AnimationType = ModalAnimationType.None };
@@ -59,9 +75,9 @@
     void MultipleModals()
     {
         var options = new ModalOptions
-        {
-            AnimationType = ModalAnimationType.None
-        };
+            {
+                AnimationType = ModalAnimationType.None
+            };
 
         Modal.Show<YesNoPromptAnimation>("Multiple Modals", options);
     }
