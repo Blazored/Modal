@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     
-    <Authors>Chris Sainty</Authors>
+    <Authors>Matěj Štágl, Chris Sainty</Authors>
     <Company></Company>
     <Copyright>Copyright 2021 (c) Chris Sainty. All rights reserved.</Copyright>
     
@@ -14,7 +14,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
     <!-- NuGet settings -->
-    <PackageId>Blazored.Modal</PackageId>
+    <PackageId>BlazorModalExperimental</PackageId>
     <PackageTags>Blazored;Blazor;Razor;Components;Modal;Dialogue;ASP.NET Core;CSharp;Web</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Blazored/Modal</PackageProjectUrl>
@@ -25,6 +25,9 @@
     <!-- SourceLink settings -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <Version>1.0.4</Version>
+    <PackageReleaseNotes>fix</PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

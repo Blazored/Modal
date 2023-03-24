@@ -25,6 +25,8 @@ public partial class BlazoredModalInstance : IDisposable
     private bool ActivateFocusTrap { get; set; }
     public bool UseCustomLayout { get; set; }
     public FocusTrap? FocusTrap { get; set; }
+    private int? CloseDelay { get; set; }
+    private string? CloseCssClas { get; set; }
 
 
     [SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "This is assigned in Razor code and isn't currently picked up by the tooling.")]
@@ -100,6 +102,13 @@ public partial class BlazoredModalInstance : IDisposable
             
             await Task.Delay(400); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
         }
+        else if (AnimationType is ModalAnimationType.Custom)
+        {
+            OverlayAnimationClass += $" {CloseCssClas}";
+            StateHasChanged();
+            
+            await Task.Delay(CloseDelay ?? 0);
+        }
 
         await Parent.DismissInstance(Id, modalResult);
     }
@@ -129,6 +138,8 @@ public partial class BlazoredModalInstance : IDisposable
         ActivateFocusTrap = SetActivateFocusTrap();
         OverlayAnimationClass = SetAnimationClass();
         Parent.OnModalClosed += AttemptFocus;
+        CloseDelay = SetCloseDelay();
+        CloseCssClas = SetCloseCss();
     }
 
     private void AttemptFocus() 
@@ -267,9 +278,11 @@ public partial class BlazoredModalInstance : IDisposable
 
     private ModalAnimationType SetAnimation() 
         => Options.AnimationType ?? GlobalModalOptions.AnimationType ?? ModalAnimationType.FadeInOut;
+    
+    private int SetCloseDelay() => Options.CloseDelay ?? GlobalModalOptions.CloseDelay ?? 0;
+    private string SetCloseCss() => Options.CloseCss ?? GlobalModalOptions.CloseCss ?? "";
 
-    private string SetAnimationClass() 
-        => AnimationType is ModalAnimationType.FadeInOut ? "fade-in" : string.Empty;
+    private string SetAnimationClass() => AnimationType is ModalAnimationType.FadeInOut ? "fade-in" : AnimationType is ModalAnimationType.Custom ? OverlayCustomClass ?? "" : string.Empty;
 
     private bool SetHideHeader()
     {

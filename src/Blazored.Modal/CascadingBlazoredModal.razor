@@ -12,7 +12,9 @@
                    OverlayCustomClass="@OverlayCustomClass"
                    Size="@Size"
                    SizeCustomClass="@SizeCustomClass"
-                   ActivateFocusTrap="@ActivateFocusTrap"/>
+                   ActivateFocusTrap="@ActivateFocusTrap"
+                   CloseCss="@CloseCss"
+                   CloseDelay="CloseDelay"/>
     @ChildContent
 </CascadingValue>
 
@@ -31,4 +33,6 @@
     [Parameter] public bool? ActivateFocusTrap { get; set; }
     [Parameter] public string? PositionCustomClass { get; set; }
     [Parameter] public string? SizeCustomClass { get; set; }
+    [Parameter] public int? CloseDelay { get; set; }
+    [Parameter] public string? CloseCss { get; set; }
 }

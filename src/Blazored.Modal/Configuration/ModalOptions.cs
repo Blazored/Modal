@@ -14,4 +14,6 @@ public class ModalOptions
     public ModalAnimationType? AnimationType { get; set; }
     public bool? UseCustomLayout { get; set; }
     public bool? ActivateFocusTrap { get; set; }
+    public int? CloseDelay { get; set; }
+    public string? CloseCss { get; set; }
 }
