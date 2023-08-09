@@ -62,7 +62,8 @@ public partial class BlazoredModalInstance : IDisposable
     {
         if (_setFocus)
         {
-            if (FocusTrap is not null)
+            if (FocusTrap is not null
+                && ActivateFocusTrap)
             {
                 await FocusTrap.SetFocus();
             }
