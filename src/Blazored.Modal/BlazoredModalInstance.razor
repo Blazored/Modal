@@ -15,10 +15,13 @@ else
                 @if (!HideHeader)
                 {
                     <div class="bm-header">
-                        <h3 class="bm-title">@Title</h3>
+                        @if (!string.IsNullOrWhiteSpace(Title))
+                        {
+                            <h3 class="bm-title">@Title</h3>
+                        }
                         @if (!HideCloseButton)
                         {
-                            <button type="button" class="bm-close" aria-label="close" @onclick="() => CancelAsync()" @attributes="@_closeBtnAttributes"> 
+                            <button type="button" class="bm-close" aria-label="close" @onclick="() => CancelAsync()" @attributes="@_closeBtnAttributes">
                                 <span>&times;</span>
                             </button>
                         }
