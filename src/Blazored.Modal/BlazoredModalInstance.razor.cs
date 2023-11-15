@@ -93,6 +93,12 @@ public partial class BlazoredModalInstance : IDisposable
     /// <param name="modalResult"></param>
     public async Task CloseAsync(ModalResult modalResult)
     {
+        //If we have a OnBeforeClose we try to invoke it here
+        if (Options.OnBeforeClose != null)
+        {
+            await Options.OnBeforeClose(modalResult);
+        }
+
         // Fade out the modal, and after that actually remove it
         if (AnimationType is ModalAnimationType.FadeInOut)
         {

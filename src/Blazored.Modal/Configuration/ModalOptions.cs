@@ -1,4 +1,6 @@
-﻿namespace Blazored.Modal;
+﻿using Blazored.Modal.Services;
+
+namespace Blazored.Modal;
 
 public class ModalOptions
 {
@@ -14,4 +16,6 @@ public class ModalOptions
     public ModalAnimationType? AnimationType { get; set; }
     public bool? UseCustomLayout { get; set; }
     public bool? ActivateFocusTrap { get; set; }
+    
+    public Func<ModalResult,Task>? OnBeforeClose { get; set; }
 }
