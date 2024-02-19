@@ -1,17 +1,17 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace Blazored.Modal;
 
-public class ModalParameters : IEnumerable<KeyValuePair<string, object>>
+public class ModalParameters : IEnumerable<KeyValuePair<string, object?>>
 {
-    internal readonly Dictionary<string, object> Parameters;
+    internal readonly Dictionary<string, object?> Parameters;
 
     public ModalParameters()
     {
-        Parameters = new Dictionary<string, object>();
+        Parameters = new Dictionary<string, object?>();
     }
 
-    public ModalParameters Add(string parameterName, object value)
+    public ModalParameters Add(string parameterName, object? value)
     {
         Parameters[parameterName] = value;
         return this;
@@ -19,27 +19,29 @@ public class ModalParameters : IEnumerable<KeyValuePair<string, object>>
 
     public T Get<T>(string parameterName)
     {
-        if (Parameters.TryGetValue(parameterName, out var value))
+        if (!Parameters.TryGetValue(parameterName, out var value))
         {
-            return (T)value;
+            throw new KeyNotFoundException($"{parameterName} does not exist in modal parameters");
         }
-            
-        throw new KeyNotFoundException($"{parameterName} does not exist in modal parameters");
+
+        if (value is not T typedValue)
+        {
+            throw new InvalidOperationException($"The value for parameter '{parameterName}' is not of the expected type {typeof(T)}.");
+        }
+
+        return typedValue;
     }
 
-    public T? TryGet<T>(string parameterName)
+    public T? TryGet<T>(string parameterName) where T : class
     {
-        if (Parameters.TryGetValue(parameterName, out var value))
-        {
-            return (T)value;
-        }
-
-        return default;
+        return Parameters.TryGetValue(parameterName, out var objValue) && objValue is T typedValue
+            ? typedValue
+            : null;
     }
 
-    public IEnumerator<KeyValuePair<string, object>> GetEnumerator() 
+    public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
         => Parameters.GetEnumerator();
 
-    IEnumerator IEnumerable.GetEnumerator() 
+    IEnumerator IEnumerable.GetEnumerator()
         => Parameters.GetEnumerator();
 }

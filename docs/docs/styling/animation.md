@@ -15,7 +15,7 @@ By default, the modal is shown with a subtle fade in out animation. However, thi
 ```csharp
 var options = new ModalOptions() 
 { 
-    AnimationType = ModalAnimation.None 
+    AnimationType = ModalAnimationType.None 
 };
 
 Modal.Show<Confirm>("Are you sure?", options);
