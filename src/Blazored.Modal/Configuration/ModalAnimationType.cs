@@ -3,5 +3,7 @@
 public enum ModalAnimationType
 {
     FadeInOut,
+    PopInOut,
+    PopIn,
     None
 }

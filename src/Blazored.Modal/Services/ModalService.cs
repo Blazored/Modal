@@ -14,6 +14,29 @@ public class ModalService : IModalService
         => Show<T>(string.Empty, new ModalParameters(), new ModalOptions());
 
     /// <summary>
+    /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="options"/>.
+    /// </summary>
+    /// <param name="options">Options to configure the modal.</param>
+    public IModalReference Show<TComponent>(ModalOptions options) where TComponent : IComponent
+        => Show<TComponent>("", new ModalParameters(), options);
+
+    /// <summary>
+    /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="parameters"/>.
+    /// </summary>
+    /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
+    public IModalReference Show<TComponent>(ModalParameters parameters) where TComponent : IComponent
+        => Show<TComponent>("", parameters, new ModalOptions());
+
+    /// <summary>
+    /// Shows a modal containing a <typeparamref name="TComponent"/> with the specified <paramref name="parameters"/>
+    /// and <paramref name="options"/>.
+    /// </summary>
+    /// <param name="parameters">Key/Value collection of parameters to pass to component being displayed.</param>
+    /// <param name="options">Options to configure the modal.</param>
+    public IModalReference Show<TComponent>(ModalParameters parameters, ModalOptions options) where TComponent : IComponent
+        => Show<TComponent>("", parameters, options);
+
+    /// <summary>
     /// Shows the modal with the component type using the specified title.
     /// </summary>
     /// <param name="title">Modal title.</param>

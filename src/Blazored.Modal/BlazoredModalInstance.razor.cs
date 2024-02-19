@@ -31,6 +31,7 @@ public partial class BlazoredModalInstance : IDisposable
     private ElementReference _modalReference;
     private bool _setFocus;
     private bool _disableNextRender;
+    private bool _listenToBackgroundClicks;
 
     // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
     private readonly Dictionary<string, object> _closeBtnAttributes = new() { { "tabindex", "-1" } };
@@ -100,6 +101,13 @@ public partial class BlazoredModalInstance : IDisposable
             StateHasChanged();
             
             await Task.Delay(400); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.
+        }
+        else if (AnimationType is ModalAnimationType.PopInOut)
+        {
+            OverlayAnimationClass += " pop-out";
+            StateHasChanged();
+
+            await Task.Delay(400);
         }
 
         await Parent.DismissInstance(Id, modalResult);
@@ -269,8 +277,12 @@ public partial class BlazoredModalInstance : IDisposable
     private ModalAnimationType SetAnimation() 
         => Options.AnimationType ?? GlobalModalOptions.AnimationType ?? ModalAnimationType.FadeInOut;
 
-    private string SetAnimationClass() 
-        => AnimationType is ModalAnimationType.FadeInOut ? "fade-in" : string.Empty;
+    private string SetAnimationClass() => AnimationType switch
+    {
+        ModalAnimationType.FadeInOut => "fade-in",
+        ModalAnimationType.PopInOut or ModalAnimationType.PopIn => "pop-in",
+        _ => string.Empty,
+    };
 
     private bool SetHideHeader()
     {
@@ -335,8 +347,18 @@ public partial class BlazoredModalInstance : IDisposable
             return;
         }
 
-        await CancelAsync();
+        if (_listenToBackgroundClicks)
+        {
+            await CancelAsync();
+            _listenToBackgroundClicks = false;
+        }
     }
+
+    private void ListenToBackgroundClick()
+    => _listenToBackgroundClicks = true;
+
+    private void StopListeningToBackgroundClick()
+        => _listenToBackgroundClicks = false;
 
     void IDisposable.Dispose() 
         => Parent.OnModalClosed -= AttemptFocus;

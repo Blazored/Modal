@@ -3,17 +3,17 @@ sidebar_position: 4
 ---
 
 # Custom Overlay
-The overlay can be customised by providing one or more custom CSS classes to augment or overwrite the default style.
+The overlay can be customised by providing one or more custom CSS classes to augment or overwrite the default style. Note that you may need to add the `!important` keyword to some properties due the the use of scoped CSS, which can create a higher specificity for the default styles.
 
-If you wanted the overlay to be a transparent red you could define the following CSS class.
+The following example shows how to define a CSS class that overrides the default overlay background colour.
 
 ```css title="my-app.css"
 .custom-modal-overlay {
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(255, 0, 0, 0.5) !important;
 }
 ```
 
-Then apply that to your modal with either of the following options.
+This can then be applied to your modal with either of the following options.
 
 #### Configuring for all modals
 ```razor
