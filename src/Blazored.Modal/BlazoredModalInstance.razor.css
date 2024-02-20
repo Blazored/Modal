@@ -159,3 +159,40 @@
         transform: translate(0, -50px);
     }
 }
+
+.blazored-pop-in, ::deep .blazored-pop-in {
+    animation: 300ms ease-out 0s ModalPopIn;
+}
+
+.blazored-pop-out, ::deep .blazored-pop-out {
+    animation: 300ms ease-in 0s ModalPopOut;
+    transform: scale(0%);
+}
+
+@keyframes ModalPopIn {
+    0% {
+        transform: scale(0%);
+    }
+
+    50% {
+        transform: scale(110%);
+    }
+
+    100% {
+        transform: scale(100%);
+    }
+}
+
+@keyframes ModalPopOut {
+    0% {
+        transform: scale(100%);
+    }
+
+    50% {
+        transform: scale(110%);
+    }
+
+    100% {
+        transform: scale(0%);
+    }
+}

@@ -8,5 +8,7 @@ public enum ModalAnimationType
     MoveInOut,
     MoveIn,
     MoveOut,
+    PopInOut,
+    PopIn,
     None
 }

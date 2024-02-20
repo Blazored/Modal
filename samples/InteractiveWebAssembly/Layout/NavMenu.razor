@@ -1,0 +1,90 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Interactive WASM</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="size">
+                <span class="oi oi-resize-height" aria-hidden="true"></span> Size
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="custom">
+                <span class="oi oi-eye" aria-hidden="true"></span> Styling
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="closebutton">
+                <span class="oi oi-x" aria-hidden="true"></span> Close button
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="backgroundcancel">
+                <span class="oi oi-browser" aria-hidden="true"></span> Background click
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="position">
+                <span class="oi oi-grid-three-up" aria-hidden="true"></span> Position
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="multiplemodals">
+                <span class="oi oi-layers" aria-hidden="true"></span> Multiple Modals
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="passingdata">
+                <span class="oi oi-loop-square" aria-hidden="true"></span> Passing Data
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="returningdata">
+                <span class="oi oi-loop-square" aria-hidden="true"></span> Returning Data
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="longrunningtask">
+                <span class="oi oi-loop-circular" aria-hidden="true"></span> Long running task
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="animation">
+                <span class="oi oi-aperture" aria-hidden="true"></span> Animation
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="customlayout">
+                <span class="oi oi-eye" aria-hidden="true"></span> Custom Layout
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="customoverlay">
+                <span class="oi oi-eye" aria-hidden="true"></span> Custom Overlay
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool _collapseNavMenu = true;
+
+    private string? NavMenuCssClass => _collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        _collapseNavMenu = !_collapseNavMenu;
+    }
+
+}

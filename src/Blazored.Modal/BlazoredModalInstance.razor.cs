@@ -32,6 +32,7 @@ public partial class BlazoredModalInstance : IDisposable
     private ElementReference _modalReference;
     private bool _setFocus;
     private bool _disableNextRender;
+    private bool _listenToBackgroundClicks;
 
     // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
     private readonly Dictionary<string, object> _closeBtnAttributes = new() { { "tabindex", "-1" } };
@@ -63,7 +64,8 @@ public partial class BlazoredModalInstance : IDisposable
     {
         if (_setFocus)
         {
-            if (FocusTrap is not null)
+            if (FocusTrap is not null
+                && ActivateFocusTrap)
             {
                 await FocusTrap.SetFocus();
             }
@@ -94,12 +96,14 @@ public partial class BlazoredModalInstance : IDisposable
     public async Task CloseAsync(ModalResult modalResult)
     {
         // Fade out the modal, and after that actually remove it
-        if (AnimationType is not ModalAnimationType.None && AnimationType is not ModalAnimationType.FadeIn && AnimationType is not ModalAnimationType.MoveIn)
+        if (AnimationType is not ModalAnimationType.None && AnimationType is not ModalAnimationType.FadeIn && 
+            AnimationType is not ModalAnimationType.MoveIn && AnimationType is not ModalAnimationType.PopIn)
         {
             OverlayAnimationClass = AnimationType switch
             {
                 ModalAnimationType.FadeInOut or ModalAnimationType.FadeOut or
-                ModalAnimationType.MoveInOut or ModalAnimationType.MoveOut => "blazored-fade-out",
+                ModalAnimationType.MoveInOut or ModalAnimationType.MoveOut or
+                ModalAnimationType.PopInOut => "blazored-fade-out",
                 _ => string.Empty,
             };
             
@@ -107,6 +111,7 @@ public partial class BlazoredModalInstance : IDisposable
             {
                 ModalAnimationType.FadeInOut or ModalAnimationType.FadeOut => "blazored-fade-out",
                 ModalAnimationType.MoveInOut or ModalAnimationType.MoveOut => "blazored-move-out",
+                ModalAnimationType.PopInOut => "blazored-pop-out",
                 _ => string.Empty,
             };
             StateHasChanged();
@@ -279,21 +284,23 @@ public partial class BlazoredModalInstance : IDisposable
         return modalClass;
     }
 
-    private ModalAnimationType SetAnimation()
+    private ModalAnimationType SetAnimation() 
         => Options.AnimationType ?? GlobalModalOptions.AnimationType ?? (!UseCustomLayout ? ModalAnimationType.FadeInOut : ModalAnimationType.None);
 
     private string SetOverlayAnimationClass() => AnimationType switch
     {
         ModalAnimationType.FadeInOut or ModalAnimationType.FadeIn or
-        ModalAnimationType.MoveInOut or ModalAnimationType.MoveIn => "blazored-fade-in",
+        ModalAnimationType.MoveInOut or ModalAnimationType.MoveIn or
+        ModalAnimationType.PopInOut or ModalAnimationType.PopIn => "blazored-fade-in",
         _ => string.Empty
-    };    
-    
+    };
+
     private string SetModalAnimationClass() => AnimationType switch
     {
         ModalAnimationType.FadeInOut or ModalAnimationType.FadeIn => "blazored-fade-in",
         ModalAnimationType.MoveInOut or ModalAnimationType.MoveIn => "blazored-move-in",
-        _ => string.Empty
+        ModalAnimationType.PopInOut or ModalAnimationType.PopIn => "blazored-pop-in",
+        _ => string.Empty,
     };
 
     private bool SetHideHeader()
@@ -359,8 +366,18 @@ public partial class BlazoredModalInstance : IDisposable
             return;
         }
 
-        await CancelAsync();
+        if (_listenToBackgroundClicks)
+        {
+            await CancelAsync();
+            _listenToBackgroundClicks = false;
+        }
     }
+
+    private void ListenToBackgroundClick()
+    => _listenToBackgroundClicks = true;
+
+    private void StopListeningToBackgroundClick()
+        => _listenToBackgroundClicks = false;
 
     void IDisposable.Dispose() 
         => Parent.OnModalClosed -= AttemptFocus;

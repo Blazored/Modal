@@ -9,15 +9,20 @@
 else
 {
     <div class="bm-container @Position @OverlayCustomClass @OverlayAnimationClass"
-     @ref="_modalReference"
-     @onclick="HandleBackgroundClick">
+        @ref="_modalReference"
+        @onmousedown="ListenToBackgroundClick"
+        @onmouseup="HandleBackgroundClick"
+        @onclick="StopListeningToBackgroundClick">
 
         <FocusTrap @ref="FocusTrap" IsActive="ActivateFocusTrap">
-            <div class="@ModalClass @ModalAnimationClass" role="dialog" aria-modal="true" @onclick:stopPropagation="true">
+            <div class="@ModalClass @ModalAnimationClass" role="dialog" aria-modal="true" @onmouseup:stopPropagation="true" @onmousedown:stopPropagation="true">
                 @if (!HideHeader)
                 {
                     <div class="bm-header">
-                        <h3 class="bm-title">@Title</h3>
+                        @if (!string.IsNullOrWhiteSpace(Title))
+                        {
+                            <h3 class="bm-title">@Title</h3>
+                        }
                         @if (!HideCloseButton)
                         {
                             <button type="button" class="bm-close" aria-label="close" @onclick="() => CancelAsync()" @attributes="@_closeBtnAttributes">
