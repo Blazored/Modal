@@ -1,0 +1,84 @@
+﻿@page "/animation"
+
+<h1>Animating the modal</h1>
+
+<hr class="mb-5" />
+
+<p>
+    By default, the modal is shown with a subtle fade in out animation. However, this can be disabled so the modal shows and hides immediately.
+</p>
+
+<div class="card mb-4">
+    <h5 class="card-header">Setting on a per modal basis</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("var options = new ModalOptions() { AnimationType = ModalAnimation.None };")
+                <br />
+                @("Modal.Show<Confirm>(\"Animation Type: None\", options);")
+            </code>
+        </p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <h5 class="card-header">Setting globally for all modals</h5>
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("<BlazoredModal AnimationType=\"@ModalAnimationType.None\"/> ")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="AnimationDefault" class="btn btn-primary">Fade-in Fade-Out (Default)</button>
+<button @onclick="AnimationPopInOut" class="btn btn-primary">Pop-in Pop-Out</button>
+<button @onclick="AnimationPopIn" class="btn btn-primary">Pop-in</button>
+<button @onclick="NoAnimation" class="btn btn-secondary">None</button>
+
+<p>
+    It is also possible to have multiple modals (like in the Multiple Modals example) with different animations. With the below modal, the first modal will appear without an animation. The second modal will fade-in and fade-out.
+</p>
+
+<button @onclick="@MultipleModals" class="btn btn-primary">Multiple Modals</button>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+
+    void AnimationDefault()
+    {
+        Modal.Show<Confirm>("Default Animation");
+    }
+
+    void AnimationPopInOut()
+    {
+        var options = new ModalOptions { AnimationType = ModalAnimationType.PopInOut };
+
+        Modal.Show<Confirm>("Animation Type: PopInOut", options);
+    }
+
+    void AnimationPopIn()
+    {
+        var options = new ModalOptions { AnimationType = ModalAnimationType.PopIn };
+
+        Modal.Show<Confirm>("Animation Type: PopIn", options);
+    }
+
+    void NoAnimation()
+    {
+        var options = new ModalOptions { AnimationType = ModalAnimationType.None };
+
+        Modal.Show<Confirm>("Animation Type: None", options);
+    }
+
+    void MultipleModals()
+    {
+        var options = new ModalOptions
+        {
+            AnimationType = ModalAnimationType.None
+        };
+
+        Modal.Show<YesNoPromptAnimation>("Multiple Modals", options);
+    }
+}
