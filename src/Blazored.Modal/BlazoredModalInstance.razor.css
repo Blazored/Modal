@@ -102,11 +102,11 @@
     align-items: center;
 }
 
-.blazored-fade-in, ::deep .blazored-fade-in {
+.fade-in, ::deep .fade-in {
     animation: 300ms ease-out 0s ModalFadeIn;
 }
 
-.blazored-fade-out, ::deep .blazored-fade-out {
+.fade-out, ::deep .fade-out {
     animation: 300ms ease-out 0s ModalFadeOut;
     opacity: 0;
 }
@@ -131,11 +131,11 @@
     }
 }
 
-.blazored-move-in, ::deep .blazored-move-in {
+.move-in, ::deep .move-in {
     animation: 300ms ease-out 0s ModalMoveIn;
 }
 
-.blazored-move-out, ::deep .blazored-move-out {
+.move-out, ::deep .move-out {
     animation: 300ms ease-out 0s ModalMoveOut;
     transform: translate(0, -50px);
 }
@@ -160,11 +160,11 @@
     }
 }
 
-.blazored-pop-in, ::deep .blazored-pop-in {
+.pop-in, ::deep .pop-in {
     animation: 300ms ease-out 0s ModalPopIn;
 }
 
-.blazored-pop-out, ::deep .blazored-pop-out {
+.pop-out, ::deep .pop-out {
     animation: 300ms ease-in 0s ModalPopOut;
     transform: scale(0%);
 }

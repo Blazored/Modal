@@ -103,15 +103,15 @@ public partial class BlazoredModalInstance : IDisposable
             {
                 ModalAnimationType.FadeInOut or ModalAnimationType.FadeOut or
                 ModalAnimationType.MoveInOut or ModalAnimationType.MoveOut or
-                ModalAnimationType.PopInOut => "blazored-fade-out",
+                ModalAnimationType.PopInOut => "fade-out",
                 _ => string.Empty,
             };
             
             ModalAnimationClass = AnimationType switch
             {
-                ModalAnimationType.FadeInOut or ModalAnimationType.FadeOut => "blazored-fade-out",
-                ModalAnimationType.MoveInOut or ModalAnimationType.MoveOut => "blazored-move-out",
-                ModalAnimationType.PopInOut => "blazored-pop-out",
+                ModalAnimationType.FadeInOut or ModalAnimationType.FadeOut => "fade-out",
+                ModalAnimationType.MoveInOut or ModalAnimationType.MoveOut => "move-out",
+                ModalAnimationType.PopInOut => "pop-out",
                 _ => string.Empty,
             };
             StateHasChanged();
@@ -291,15 +291,15 @@ public partial class BlazoredModalInstance : IDisposable
     {
         ModalAnimationType.FadeInOut or ModalAnimationType.FadeIn or
         ModalAnimationType.MoveInOut or ModalAnimationType.MoveIn or
-        ModalAnimationType.PopInOut or ModalAnimationType.PopIn => "blazored-fade-in",
+        ModalAnimationType.PopInOut or ModalAnimationType.PopIn => "fade-in",
         _ => string.Empty
     };
 
     private string SetModalAnimationClass() => AnimationType switch
     {
-        ModalAnimationType.FadeInOut or ModalAnimationType.FadeIn => "blazored-fade-in",
-        ModalAnimationType.MoveInOut or ModalAnimationType.MoveIn => "blazored-move-in",
-        ModalAnimationType.PopInOut or ModalAnimationType.PopIn => "blazored-pop-in",
+        ModalAnimationType.FadeInOut or ModalAnimationType.FadeIn => "fade-in",
+        ModalAnimationType.MoveInOut or ModalAnimationType.MoveIn => "move-in",
+        ModalAnimationType.PopInOut or ModalAnimationType.PopIn => "pop-in",
         _ => string.Empty,
     };
 
