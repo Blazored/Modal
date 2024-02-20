@@ -1,5 +1,6 @@
 ﻿const el = document.body;
-const originalProps = {overflow: el.style.overflow, paddingRight: el.style.paddingRight};
+const computedBodyStyle = getComputedStyle(el);
+const originalProps = { overflow: computedBodyStyle.overflow, paddingRight: computedBodyStyle.paddingRight };
 const getScrollBarWidth = () => {
     let el = document.createElement("div");
     el.style.cssText = "overflow:scroll; visibility:hidden; position:absolute;";
