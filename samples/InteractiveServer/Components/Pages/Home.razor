@@ -1,0 +1,30 @@
+﻿@page "/"
+
+<PageTitle>Blazored Modal Samples</PageTitle>
+
+<h1>Blazored Modal Sample</h1>
+
+<hr class="mb-5" />
+
+<p>
+    This is an example of using Blazored Modal in its most simplistic form. <a href="https://www.google.com">google</a>
+</p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("Modal.Show<Confirm>(\"Welcome to Blazored Modal\", options);")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+
+    void ShowModal() 
+        => Modal.Show<Confirm>("Welcome to Blazored Modal");
+}

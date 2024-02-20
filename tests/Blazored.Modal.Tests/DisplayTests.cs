@@ -73,7 +73,7 @@ namespace Blazored.Modal.Tests
                 AnimationType = ModalAnimationType.None
             };
             modalService.Show<TestComponent>("", options);
-            Assert.Equal(1, cut.FindAll(".bm-container").Count);
+            Assert.Single(cut.FindAll(".bm-container"));
 
             var closeButton = cut.Find(".test-component__close-button");
             closeButton.Click();
@@ -95,7 +95,7 @@ namespace Blazored.Modal.Tests
                 AnimationType = ModalAnimationType.None
             };
             modalService.Show<TestComponent>("", options);
-            Assert.Equal(1, cut.FindAll(".bm-container").Count);
+            Assert.Single(cut.FindAll(".bm-container"));
 
             var closeButton = cut.Find(".bm-close");
             closeButton.Click();
@@ -117,7 +117,7 @@ namespace Blazored.Modal.Tests
                 AnimationType = ModalAnimationType.None
             };
             var modalReferece = modalService.Show<TestComponent>("", options);
-            Assert.Equal(1, cut.FindAll(".bm-container").Count);
+            Assert.Single(cut.FindAll(".bm-container"));
 
             modalReferece.Close();
 
