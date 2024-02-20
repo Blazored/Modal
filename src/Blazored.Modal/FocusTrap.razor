@@ -13,12 +13,16 @@
     private ElementReference _endFirst;
     private ElementReference _endSecond;
     private bool _shiftPressed;
+    private bool _shouldRender = false;
 
     [Parameter] public RenderFragment ChildContent { get; set; } = default!;
     [Parameter] public bool IsActive { get; set; }
 
     protected override bool ShouldRender()
-        => false;
+        => _shouldRender;
+
+    public void SetShouldRender(bool shouldRender = true)
+        => _shouldRender = shouldRender;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

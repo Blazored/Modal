@@ -106,7 +106,9 @@ public partial class BlazoredModalInstance : IDisposable
                 ModalAnimationType.PopInOut => "fade-out",
                 _ => string.Empty,
             };
-            
+
+            FocusTrap?.SetShouldRender();
+
             ModalAnimationClass = AnimationType switch
             {
                 ModalAnimationType.FadeInOut or ModalAnimationType.FadeOut => "fade-out",
