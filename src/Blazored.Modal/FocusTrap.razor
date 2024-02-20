@@ -1,3 +1,4 @@
+<p style="background-color: #0a53be">@_renderCount</p>
 <div class="blazored-modal-focus-trap" @ref="_container" @onkeydown="HandleKeyPresses" @onkeyup="HandleKeyPresses">
     <div tabindex="@(IsActive ? 0 : -1)" @ref="_startSecond" @onfocus="FocusEndAsync"></div>
     <div tabindex="@(IsActive ? 0 : -1)" @ref="_startFirst" @onfocus="FocusEndAsync"></div>
@@ -13,9 +14,13 @@
     private ElementReference _endFirst;
     private ElementReference _endSecond;
     private bool _shiftPressed;
+    private int _renderCount;
 
     [Parameter] public RenderFragment ChildContent { get; set; } = default!;
     [Parameter] public bool IsActive { get; set; }
+
+    protected override bool ShouldRender()
+        => false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -23,6 +28,8 @@
         {
             await _startFirst.FocusAsync();
         }
+
+        _renderCount++;
     }
 
     internal async Task SetFocus()

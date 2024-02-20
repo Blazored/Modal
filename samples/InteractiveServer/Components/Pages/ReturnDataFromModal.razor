@@ -40,7 +40,12 @@
 
     async Task ShowModal()
     {
-        var messageForm = Modal.Show<MessageForm>();
+        var parameters = new ModalParameters
+        {
+            { nameof(MessageForm.TestClass), new TestClass() }
+        };
+        
+        var messageForm = Modal.Show<MessageForm>(parameters);
         var result = await messageForm.Result;
 
         if (!result.Cancelled)

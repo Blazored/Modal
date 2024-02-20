@@ -12,6 +12,8 @@
 @code {
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    
+    [Parameter] public TestClass? TestClass { get; set; }
 
     string? Message { get; set; }
 

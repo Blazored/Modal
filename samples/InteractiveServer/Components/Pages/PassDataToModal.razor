@@ -41,7 +41,7 @@
     {
         var parameters = new ModalParameters
         {
-            { nameof(DisplayMessage.Message), _message }
+            { nameof(DisplayMessage.Message), _message },
         };
 
         Modal.Show<DisplayMessage>("Passing Data", parameters);
