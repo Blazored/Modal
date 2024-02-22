@@ -97,9 +97,9 @@
 }
 
 .position-middle {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     justify-content: center;
+    align-items: center;
 }
 
 .fade-in {
@@ -132,7 +132,7 @@
  }
 
 .bm-container.pop-in .blazored-modal {
-    animation: 200ms ease-out 0s ModalPopIn;
+    animation: 300ms ease-out 0s ModalPopIn;
 }
 
 .bm-container.pop-out .blazored-modal {

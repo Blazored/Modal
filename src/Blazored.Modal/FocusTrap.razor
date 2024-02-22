@@ -17,6 +17,9 @@
     [Parameter] public RenderFragment ChildContent { get; set; } = default!;
     [Parameter] public bool IsActive { get; set; }
 
+    protected override bool ShouldRender()
+        => false;
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

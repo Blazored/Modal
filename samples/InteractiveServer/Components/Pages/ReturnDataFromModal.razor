@@ -1,0 +1,55 @@
+﻿@page "/returningdata"
+
+<h1>Returning Data From a Modal</h1>
+
+<hr class="mb-5" />
+
+<p>
+    Data can be returned from a modal by using the <code>ModalResult.Data</code> property. You can return simple strings as well as complex objects.
+    In the example below, you can add a message in the modal that will be show here when you close the modal.
+</p>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <p class="card-text">
+            <code>
+                @("var messageForm = Modal.Show<MessageForm>();")<br />
+                @("var result = await messageForm.Result;")<br />
+                <br />
+                @("if (!result.Cancelled)")<br />
+                @("    _message = result.Data.ToString();")
+            </code>
+        </p>
+    </div>
+</div>
+
+<button @onclick="ShowModal" class="btn btn-primary">Show Modal</button>
+
+@if (!string.IsNullOrWhiteSpace(_message))
+{
+    <hr />
+    <p><strong>Your message was:</strong></p>
+    <p>@_message</p>
+}
+
+@code {
+
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+
+    string? _message;
+
+    async Task ShowModal()
+    {
+        var parameters = new ModalParameters
+        {
+            { nameof(MessageForm.TestClass), new TestClass() }
+        };
+        
+        var messageForm = Modal.Show<MessageForm>(parameters);
+        var result = await messageForm.Result;
+
+        if (!result.Cancelled)
+            _message = result.Data?.ToString() ?? string.Empty;
+    }
+
+}
