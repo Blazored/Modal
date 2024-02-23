@@ -107,7 +107,7 @@ public partial class BlazoredModalInstance : IDisposable
                 _ => string.Empty,
             };
 
-            FocusTrap?.SetShouldRender();
+            FocusTrap?.TriggerRender();
 
             ModalAnimationClass = AnimationType switch
             {
@@ -116,6 +116,7 @@ public partial class BlazoredModalInstance : IDisposable
                 ModalAnimationType.PopInOut => "pop-out",
                 _ => string.Empty,
             };
+
             StateHasChanged();
             
             await Task.Delay(400); // Needs to be a bit more than the animation time because of delays in the animation being applied between server and client (at least when using blazor server side), I think.

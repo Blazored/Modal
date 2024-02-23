@@ -21,9 +21,12 @@
     protected override bool ShouldRender()
         => _shouldRender;
 
-    public void SetShouldRender(bool shouldRender = true)
-        => _shouldRender = shouldRender;
-
+    public void TriggerRender()
+    {
+        _shouldRender = true;
+        StateHasChanged();
+        _shouldRender = false;
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
