@@ -11,7 +11,7 @@ public partial class BlazoredModalInstance : IDisposable
 
     [Parameter, EditorRequired] public RenderFragment Content { get; set; } = default!;
     [Parameter, EditorRequired] public ModalOptions Options { get; set; } = default!;
-    [Parameter] public string? Title { get => _title; set => _title ??= value; }
+    [Parameter] public string? Title { get => _title; init => _title ??= value; }
     [Parameter] public Guid Id { get; set; }
 
     private string? Position { get; set; }
