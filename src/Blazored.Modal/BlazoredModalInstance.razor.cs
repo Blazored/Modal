@@ -11,7 +11,7 @@ public partial class BlazoredModalInstance : IDisposable
 
     [Parameter, EditorRequired] public RenderFragment Content { get; set; } = default!;
     [Parameter, EditorRequired] public ModalOptions Options { get; set; } = default!;
-    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Title { get => _title; init => _title ??= value; }
     [Parameter] public Guid Id { get; set; }
 
     private string? Position { get; set; }
@@ -32,6 +32,7 @@ public partial class BlazoredModalInstance : IDisposable
     private bool _setFocus;
     private bool _disableNextRender;
     private bool _listenToBackgroundClicks;
+    private string? _title { get; set; }
 
     // Temporarily add a tabindex of -1 to the close button so it doesn't get selected as the first element by activateFocusTrap
     private readonly Dictionary<string, object> _closeBtnAttributes = new() { { "tabindex", "-1" } };
@@ -78,7 +79,7 @@ public partial class BlazoredModalInstance : IDisposable
     /// <param name="title">Text to display as the title of the modal</param>
     public void SetTitle(string title)
     {
-        Title = title;
+        _title = title;
         StateHasChanged();
     }
 
