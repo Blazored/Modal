@@ -11,9 +11,9 @@ In the following example, `ModalOne` is displayed from the `Homepage` component.
 <button @onclick="ShowModal">Show Modal</button>
 
 @code {
-    [CascadingParameter] IModalService Modal { get; set; } = default!;
+    [CascadingParameter] IModalService ModalService { get; set; } = default!;
 
-    private void ShowModal() => Modal.Show<ModalOne>("First Modal");
+    private void ShowModal() => ModalService.Show<ModalOne>("First Modal");
 }
 ```
 
@@ -27,7 +27,7 @@ In the following example, `ModalOne` is displayed from the `Homepage` component.
 
 @code {
     [CascadingParameter] BlazoredModalInstance ModalOne { get; set; } = default!;
-    [CascadingParameter] IModalService Modal { get; set; } = default!;
+    [CascadingParameter] IModalService ModalService { get; set; } = default!;
 
     private async Task ShowModalTwo()
     {
