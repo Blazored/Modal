@@ -1,4 +1,5 @@
-﻿using Blazored.Modal.Services;
+﻿using System.Threading.Tasks;
+using Blazored.Modal.Services;
 using Blazored.Modal.Tests.Assets;
 using Bunit;
 using Microsoft.AspNetCore.Components;
@@ -265,6 +266,30 @@ namespace Blazored.Modal.Tests
 
             // Assert
             Assert.NotNull(cut.Find(".my-custom-size"));
+        }
+        
+        [Fact]
+        public void ModalTriggersOnBeforeCloseWhenModalCloses()
+        {
+            // Arrange
+            var onBeforeCloseTriggered = false;
+            var options = new ModalOptions
+            {
+                OnBeforeClose = result =>
+                {
+                    onBeforeCloseTriggered = result != null; 
+                    return Task.CompletedTask;
+                }
+            };
+            var modalService = Services.GetService<IModalService>();
+            var cut = RenderComponent<BlazoredModal>(CascadingValue(modalService!));
+
+            // Act
+            modalService.Show<TestComponent>("", options);
+            cut.Find(".bm-close").Click();
+            
+            // Assert
+            Assert.True(onBeforeCloseTriggered);
         }
     }
 }
