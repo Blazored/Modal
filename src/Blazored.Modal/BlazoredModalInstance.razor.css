@@ -102,40 +102,69 @@
     align-items: center;
 }
 
-.fade-in {
-   animation: 300ms ease-out 0s ModalFadeIn;
+.fade-in, ::deep .fade-in {
+    animation: 300ms ease-out 0s ModalFadeIn;
 }
 
-.fade-out  {
-   animation: 300ms ease-out 0s ModalFadeOut;
-   opacity: 0;
+.fade-out, ::deep .fade-out {
+    animation: 300ms ease-out 0s ModalFadeOut;
+    opacity: 0;
 }
 
 @keyframes ModalFadeIn {
-     0% {
-         opacity: 0;
-     }
+    0% {
+        opacity: 0;
+    }
 
-     100% {
-         opacity: 1;
-     }
- }
+    100% {
+        opacity: 1;
+    }
+}
 
 @keyframes ModalFadeOut {
-     0% {
-         opacity: 1;
-     }
+    0% {
+        opacity: 1;
+    }
 
-     100% {
-         opacity: 0;
-     }
- }
+    100% {
+        opacity: 0;
+    }
+}
 
-.bm-container.pop-in .blazored-modal {
+.move-in, ::deep .move-in {
+    animation: 300ms ease-out 0s ModalMoveIn;
+}
+
+.move-out, ::deep .move-out {
+    animation: 300ms ease-out 0s ModalMoveOut;
+    transform: translate(0, -50px);
+}
+
+@keyframes ModalMoveIn {
+    0% {
+        transform: translate(0, -50px);
+    }
+
+    100% {
+        transform: none;
+    }
+}
+
+@keyframes ModalMoveOut {
+    0% {
+        transform: none;
+    }
+
+    100% {
+        transform: translate(0, -50px);
+    }
+}
+
+.pop-in, ::deep .pop-in {
     animation: 300ms ease-out 0s ModalPopIn;
 }
 
-.bm-container.pop-out .blazored-modal {
+.pop-out, ::deep .pop-out {
     animation: 300ms ease-in 0s ModalPopOut;
     transform: scale(0%);
 }

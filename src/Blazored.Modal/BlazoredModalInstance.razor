@@ -1,8 +1,10 @@
 ﻿@if (UseCustomLayout)
 {
-    <CascadingValue Value="this" IsFixed="true">
-        @Content
-    </CascadingValue>
+    <div>
+        <CascadingValue Value="this" IsFixed="true">
+            @Content
+        </CascadingValue>
+    </div>
 }
 else
 {
@@ -13,7 +15,7 @@ else
         @onclick="StopListeningToBackgroundClick">
 
         <FocusTrap @ref="FocusTrap" IsActive="ActivateFocusTrap">
-            <div class="@ModalClass" role="dialog" aria-modal="true" @onmouseup:stopPropagation="true" @onmousedown:stopPropagation="true">
+            <div class="@ModalClass @ModalAnimationClass" role="dialog" aria-modal="true" @onmouseup:stopPropagation="true" @onmousedown:stopPropagation="true">
                 @if (!HideHeader)
                 {
                     <div class="bm-header">
@@ -36,6 +38,5 @@ else
                 </div>
             </div>
         </FocusTrap>
-        
     </div>
 }

@@ -33,6 +33,8 @@
 
 <button @onclick="ShowModalCustomLayout" class="btn btn-primary">Show Modal</button>
 
+<button @onclick="ShowAnimatedModalCustomLayout" class="btn btn-primary">Show Animated Modal</button>
+
 @code {
 
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
@@ -40,8 +42,17 @@
     void ShowModalCustomLayout()
     {
         var options = new ModalOptions { UseCustomLayout = true };
-        var parameters = new ModalParameters {{nameof(CustomBootstrapModal.Message), "Hello custom modal!!"}};
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(CustomBootstrapModal.Message), "Hello Bootstrap modal!!");
         Modal.Show<CustomBootstrapModal>("Custom Layout", parameters, options);
+    }
+
+    void ShowAnimatedModalCustomLayout()
+    {
+        var options = new ModalOptions { UseCustomLayout = true, AnimationType = ModalAnimationType.MoveInOut };
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(CustomBootstrapModal.Message), "Hello Bootstrap modal!!");
+        Modal.Show<CustomAnimatedBootstrapModal>("Custom Layout", parameters, options);
     }
 
 }
